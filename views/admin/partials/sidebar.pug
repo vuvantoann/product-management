@@ -1,0 +1,42 @@
+section.sidebar
+  a(href=`${prefixAdmin}/dashboard` class='logo') 
+    .sidebar__logo
+      img(src="/admin/images/logo-transparent.png", alt="logo-brand")
+  ul.sidebar__menu.top 
+    li(class=(activePage === 'dashboard' ? 'active' : ''))
+      a(href=`${prefixAdmin}/dashboard`)
+        i(class="bx bxs-dashboard") 
+        span.sidebar__text Tổng quan 
+    li(class=(activePage === 'product' ? 'active' : ''))
+      a(href=`${prefixAdmin}/product`)
+        i(class='bx bx-package') 
+        span.sidebar__text sản phẩm
+    li
+      a(href="#")
+        i(class='bx bx-basket')
+        span.sidebar__text đơn hàng
+    li
+      a(href="#")
+        i(class="bx bxs-doughnut-chart")
+        span.sidebar__text báo cáo
+    li
+      a(href="#")
+        i(class="bx bxs-group")
+        span.sidebar__text Khách hàng
+    li
+      a(href="#")
+        i(class="bx bxs-message-dots")
+        span.sidebar__text Bình luận/đánh giá
+    li
+      a(href="#")
+        i(class='bx bx-mail-send')
+        span.sidebar__text Liên hệ
+  ul.sidebar__menu
+    li
+      a(href="#")
+        i(class="bx bxs-cog")
+        span.sidebar__text Cài đặt
+    li
+      a(href="#" class='logout')
+        i(class='bx bx-log-out')
+        span.sidebar__text Đăng xuất

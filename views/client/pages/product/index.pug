@@ -1,0 +1,22 @@
+extends ../../layout/default.pug
+include ../../mixins/client/box-head.pug
+
+block content
+  +box-head('Tất cả sản phẩm')
+  .product__grid
+     .container 
+        .row  
+          each item in products
+            .col-3.mb-3
+              .product__item
+                .product__image 
+                  img(src= item.thumbnail, alt= item.title)
+                .product__content 
+                  .product__title 
+                    p #{item.title}
+                  .product__expense 
+                    span.product__price #{item.price}đ
+                    span.product__discount #{item.discountPercentage}%
+
+
+

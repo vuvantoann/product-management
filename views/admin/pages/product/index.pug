@@ -1,0 +1,74 @@
+extends ../../layout/default.pug 
+
+block content
+  main.main-wrapper
+    .main__header 
+      h2 Danh sách sản phẩm 
+      .actions 
+        button + Thêm sản phẩm 
+        button
+          i.bx.bx-network-chart
+          | Hành động 
+    .main__filters 
+      form(id="form-search")
+        input(type="text" name="q" placeholder="Tìm kiếm..." value=keyword)
+        button(type="submit")
+          i.bx.bx-search
+      select#status-filter
+        option(value="" disabled selected) -- Trạng thái --
+        option(value="active") Hoạt động
+        option(value="iactive") Dừng hoạt động
+        option(value="") Tất cả
+      select
+        option -- Danh mục -- 
+
+    table
+      thead
+        tr
+          th 
+            input(type="checkbox")
+          th Tên sản phẩm
+          th Thuộc tính
+          th Hình ảnh
+          th Giá / Giá đặc biệt
+          th Số lượng
+          th TT
+          th Vị trí
+          th Trạng thái
+      tbody
+        each item in products
+          tr
+            td
+              input(type="checkbox")
+            td
+              | #{item.title}
+              br
+              .action-links
+                a(href="#") Sửa
+                a(href="#", style="color: red") Xóa
+                if(item.status === 'active') 
+                  span.status-active Hoạt động
+                else 
+                  span.status-inactive Ngừng hoạt động
+            td
+              if(item.isItem) 
+                span.status-active Sản phẩm mới
+              else 
+                span.status-inactive Sản phẩm cũ
+            td
+              img(src=item.thumbnail, alt="")
+              img(src="https://via.placeholder.com/32", alt="")
+            td
+              span.price #{item.price}đ
+              span.price-special / 2,550,000đ
+              //- br
+              //- span.price 350,000
+              //- span.price-special / 330,000
+            td.stock #{item.stock}
+            td •
+            td.position #{item.position}
+            td
+              if(item.status === 'active') 
+                span.status-active Hoạt động
+              else 
+                span.status-inactive Ngừng hoạt động
