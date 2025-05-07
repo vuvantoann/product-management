@@ -1,4 +1,5 @@
 extends ../../layout/default.pug 
+include ../../mixins/search.pug
 
 block content
   main.main-wrapper
@@ -10,10 +11,7 @@ block content
           i.bx.bx-network-chart
           | Hành động 
     .main__filters 
-      form(id="form-search")
-        input(type="text" name="q" placeholder="Tìm kiếm..." value=keyword)
-        button(type="submit")
-          i.bx.bx-search
+      +search(keyword)
       select#status-filter
         option(value="" disabled selected) -- Trạng thái --
         option(value="active") Hoạt động

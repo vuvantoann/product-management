@@ -1,4 +1,5 @@
 const Product = require('../../modals/product.modal')
+const searchHelper = require('../../helper/search')
 //[get]admin/product
 module.exports.product = async (req, res) => {
   let find = {
@@ -9,11 +10,9 @@ module.exports.product = async (req, res) => {
   if (req.query.status) {
     find.status = req.query.status
   }
-
-  let keyword = ''
-  if (req.query.keyword) {
-    keyword = req.query.keyword
-    find.title = keyword
+  const objectSearch = searchHelper(req.query)
+  if (objectSearch.regex) {
+    find.title = objectSearch.regex
   }
 
   const products = await Product.find(find)
@@ -21,6 +20,6 @@ module.exports.product = async (req, res) => {
     title: 'Sản phẩm',
     activePage: 'product',
     products: products,
-    keyword: keyword,
+    keyword: objectSearch.keyword,
   })
 }
