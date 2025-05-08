@@ -1,5 +1,6 @@
 const Product = require('../../modals/product.modal')
 const searchHelper = require('../../helper/search')
+const paginationHelper = require('../../helper/pagination')
 //[get]admin/product
 module.exports.product = async (req, res) => {
   let find = {
@@ -17,23 +18,16 @@ module.exports.product = async (req, res) => {
     find.title = objectSearch.regex
   }
   // phân trang
-
-  let objectPagination = {
-    limitItem: 4,
-    currentPage: 1,
-  }
-
-  if (req.query.page) {
-    objectPagination.currentPage = parseInt(req.query.page)
-  }
-
-  objectPagination.skip =
-    (objectPagination.currentPage - 1) * objectPagination.limitItem
-
   const countProduct = await Product.countDocuments(find) // đếm số sản phẩm trong database
-  const totalPage = Math.ceil(countProduct / objectPagination.limitItem)
+  let objectPagination = paginationHelper(
+    {
+      limitItem: 4,
+      currentPage: 1,
+    },
+    req.query,
+    countProduct
+  )
 
-  objectPagination.totalPage = totalPage
   // end phân trang
   const products = await Product.find(find)
     .limit(objectPagination.limitItem)
