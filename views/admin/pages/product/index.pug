@@ -1,5 +1,7 @@
 extends ../../layout/default.pug 
 include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+
 
 block content
   main.main-wrapper
@@ -70,3 +72,5 @@ block content
                 span.status-active Hoạt động
               else 
                 span.status-inactive Ngừng hoạt động
+    +paginationStatic(pagination)
+

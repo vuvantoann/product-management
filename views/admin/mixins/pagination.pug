@@ -1,0 +1,30 @@
+
+mixin paginationStatic(pagination)
+  nav
+    ul.pagination.justify-content-center
+
+      //- First <<
+      li.page-item(class=(pagination.currentPage === 1 ? 'disabled' : ''))
+        button.page-link(type="button" button-pagination=1)
+          i.bx.bx-chevrons-left
+
+      //- Previous <
+      li.page-item(class=(pagination.currentPage === 1 ? 'disabled' : ''))
+        button.page-link(type="button" button-pagination=pagination.currentPage-1)
+          i.bx.bx-chevron-left
+
+      //- Page numbers
+      //- div #{pagination.totalPage}
+      - for(var i = 1; i <= pagination.totalPage; i++)
+          li.page-item(class=(i === pagination.currentPage ? 'active' : ''))
+            button.page-link(type="button" button-pagination=i) #{i}
+    
+      //- Next >
+      li.page-item(class=(pagination.currentPage === pagination.totalPage ? 'disabled' : ''))
+        button.page-link(type="button" button-pagination=pagination.currentPage+1)
+          i.bx.bx-chevron-right
+
+      //- Last >>
+      li.page-item(class=(pagination.currentPage === pagination.totalPage ? 'disabled' : ''))
+        button.page-link(type="button"  button-pagination=pagination.totalPage)
+          i.bx.bx-chevrons-right

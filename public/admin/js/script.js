@@ -108,3 +108,18 @@ if (formSearch) {
   })
 }
 // kết thúc sử lý logic phầm tìm kiếm
+
+// logic phần pagination
+const buttonPagination = document.querySelectorAll('[button-pagination]')
+
+if (buttonPagination) {
+  const url = new URL(window.location.href)
+  buttonPagination.forEach((button) => {
+    button.addEventListener('click', () => {
+      const page = button.getAttribute('button-pagination')
+      url.searchParams.set('page', page)
+      window.location.href = url.href
+    })
+  })
+}
+// end logic pagination

@@ -422,3 +422,28 @@ td img {
   text-decoration: none;
 }
 /* end section product */
+
+/* pagination */
+.pagination .page-link {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2px;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--blue);
+  border-color: var(--blue);
+  color: var(--light);
+}
+
+.pagination .page-item.disabled .page-link {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* end pagination */
