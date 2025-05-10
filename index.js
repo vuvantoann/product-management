@@ -5,6 +5,7 @@ const route = require('./routes/client/index.route')
 const routeAdmin = require('./routes/admin/index.route')
 const systemConfig = require('./config/system')
 var methodOverride = require('method-override')
+const bodyParser = require('body-parser')
 
 const app = express()
 
@@ -17,6 +18,9 @@ app.use(express.static('public'))
 
 // use method-override
 app.use(methodOverride('_method'))
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // app locals
 app.locals.prefixAdmin = systemConfig.prefixAdmin

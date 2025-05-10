@@ -22,11 +22,30 @@ block content
       select
         option -- Danh mục -- 
 
-    table
+      form(
+        action=`${prefixAdmin}/product/change-multi?_method=PATCH`,
+        method="POST",
+        class="form-change-multi"
+      )
+        .d-flex.align-items-start
+          .form-group
+            select(name="type" class="form-control")
+              option(value="active") Hoạt động
+              option(value="inactive") Dừng hoạt động
+          .form-group
+            input(
+              type="text"
+              name="ids"
+              value=""
+              class="form-control d-none"
+            )
+          button(type="submit" class="btn btn-primary") Áp dụng
+
+    table(checkbox-multi)
       thead
         tr
           th 
-            input(type="checkbox")
+            input(type="checkbox" name="checkAll")
           th Tên sản phẩm
           th Thuộc tính
           th Hình ảnh
@@ -39,7 +58,7 @@ block content
         each item in products
           tr
             td
-              input(type="checkbox")
+              input(type="checkbox" name='id' value=item.id)
             td
               | #{item.title}
               br

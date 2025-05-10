@@ -42,11 +42,22 @@ module.exports.product = async (req, res) => {
   })
 }
 
+// thay đổi trạng thái sản phẩm
 module.exports.changeProductStatus = async (req, res) => {
   const status = req.params.status
   const id = req.params.id
 
   await Product.updateOne({ _id: id }, { status: status })
 
+  res.redirect(req.get('Referer') || '/')
+}
+
+// thay đổi theo trạng thái nhiều sản phẩm
+module.exports.changeMultipleStates = async (req, res) => {
+  const status = req.body.type
+  const ids = req.body.ids
+  const arrayIds = ids.split(', ')
+
+  await Product.updateMany({ _id: { $in: arrayIds } }, { status: status })
   res.redirect(req.get('Referer') || '/')
 }
