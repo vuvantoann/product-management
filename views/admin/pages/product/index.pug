@@ -17,7 +17,7 @@ block content
       select#status-filter
         option(value="" disabled selected) -- Trạng thái --
         option(value="active") Hoạt động
-        option(value="iactive") Dừng hoạt động
+        option(value="inactive") Dừng hoạt động
         option(value="") Tất cả
       select
         option -- Danh mục -- 
@@ -47,9 +47,9 @@ block content
                 a(href="#") Sửa
                 a(href="#", style="color: red") Xóa
                 if(item.status === 'active') 
-                  span.status-active Hoạt động
+                  span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
                 else 
-                  span.status-inactive Ngừng hoạt động
+                  span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
             td
               if(item.isItem) 
                 span.status-active Sản phẩm mới
@@ -73,4 +73,7 @@ block content
               else 
                 span.status-inactive Ngừng hoạt động
     +paginationStatic(pagination)
+  
+  form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/product/change-status/`) 
+  script(src='/admin/js/product.js')
 
