@@ -1,6 +1,7 @@
 extends ../../layout/default.pug 
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/modal.pug
 
 
 block content
@@ -63,8 +64,8 @@ block content
               | #{item.title}
               br
               .action-links
-                a(href="#") Sửa
-                a(href="#", style="color: red") Xóa
+                span  Sửa
+                span( style="color: red" button-delete data-id=item.id ) Xóa
                 if(item.status === 'active') 
                   span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
                 else 
@@ -92,7 +93,10 @@ block content
               else 
                 span.status-inactive Ngừng hoạt động
     +paginationStatic(pagination)
+    +modal()
+
   
   form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/product/change-status/`) 
+  form(action="" method='POST' id='form-delete-product' path=`${prefixAdmin}/product/delete/`) 
   script(src='/admin/js/product.js')
 

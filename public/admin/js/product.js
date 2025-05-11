@@ -81,3 +81,37 @@ if (formChangeMulti) {
   })
 }
 // end form multi
+
+// logic phần xóa sản phẩm
+
+const buttonDeletes = document.querySelectorAll('[button-delete]')
+const buttonCancel = document.querySelector('[button-cancel]')
+const buttonConfirm = document.querySelector('[button-confirm]')
+const modal = document.querySelector('#modal')
+const formDeleteProduct = document.querySelector('#form-delete-product')
+let currentId = null
+if (buttonDeletes.length > 0) {
+  const path = formDeleteProduct.getAttribute('path')
+
+  buttonDeletes.forEach((button) => {
+    button.addEventListener('click', () => {
+      modal.style.display = 'flex'
+
+      currentId = button.getAttribute('data-id')
+      const action = path + `${currentId}?_method=DELETE`
+      formDeleteProduct.action = action
+    })
+  })
+}
+
+buttonConfirm.addEventListener('click', () => {
+  if (currentId) {
+    formDeleteProduct.submit()
+  }
+})
+
+buttonCancel.addEventListener('click', () => {
+  modal.style.display = 'none'
+})
+
+// end logic phần xóa sản phẩm

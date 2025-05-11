@@ -61,3 +61,11 @@ module.exports.changeMultipleStates = async (req, res) => {
   await Product.updateMany({ _id: { $in: arrayIds } }, { status: status })
   res.redirect(req.get('Referer') || '/')
 }
+
+// xóa sản phẩm
+module.exports.deleteProduct = async (req, res) => {
+  const id = req.params.id
+  // await Product.deleteOne({ _id: id })
+  await Product.updateOne({ _id: id }, { deleted: true, deleteAt: new Date() })
+  res.redirect(req.get('Referer') || '/')
+}
