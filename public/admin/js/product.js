@@ -74,8 +74,18 @@ window.addEventListener('click', function (e) {
 // Xử lý form
 const formChangeMulti = document.querySelector('.form-change-multi')
 const dropdownItems = document.querySelectorAll('.dropdown-item')
-
+const buttonDeletes = document.querySelectorAll('[button-delete]')
+const buttonCancel = document.querySelector('[button-cancel]')
+const buttonConfirm = document.querySelector('[button-confirm]')
+const modal = document.querySelector('#modal')
+const modalTitle = document.querySelector('.modal-title')
+const modalMessage = document.querySelector('.modal-message')
+let pendingDeleteAll = {
+  ids: [],
+  type: '',
+}
 dropdownItems.forEach((item) => {
+  console.log(item.value)
   item.addEventListener('click', function (e) {
     e.preventDefault()
 
@@ -105,20 +115,25 @@ dropdownItems.forEach((item) => {
 
     const inputIds = formChangeMulti.querySelector('input[name="ids"]')
     const inputType = formChangeMulti.querySelector('input[name="type"]')
-
-    inputIds.value = ids.join(',')
-    inputType.value = item.value
     dropdownMenu.classList.remove('show')
-    formChangeMulti.submit()
+    if (item.value === 'delete-all') {
+      pendingDeleteAll.ids = ids
+      pendingDeleteAll.type = item.value
+      modalTitle.innerText = 'Xóa tất cả'
+      modalMessage.innerText =
+        'Bạn có chắc chắn muốn xóa tất cả các mục đã chọn?'
+      modal.style.display = 'flex'
+    } else {
+      inputIds.value = ids.join(',')
+      inputType.value = item.value
+
+      formChangeMulti.submit()
+    }
   })
 })
 
 // logic phần xóa sản phẩm
 
-const buttonDeletes = document.querySelectorAll('[button-delete]')
-const buttonCancel = document.querySelector('[button-cancel]')
-const buttonConfirm = document.querySelector('[button-confirm]')
-const modal = document.querySelector('#modal')
 const formDeleteProduct = document.querySelector('#form-delete-product')
 let currentId = null
 if (buttonDeletes.length > 0) {
@@ -136,13 +151,26 @@ if (buttonDeletes.length > 0) {
 }
 
 buttonConfirm.addEventListener('click', () => {
-  if (currentId) {
+  if (pendingDeleteAll.ids.length > 0) {
+    const inputIds = formChangeMulti.querySelector('input[name="ids"]')
+    const inputType = formChangeMulti.querySelector('input[name="type"]')
+    inputIds.value = pendingDeleteAll.ids.join(',')
+    inputType.value = pendingDeleteAll.type
+    modal.style.display = 'none'
+    formChangeMulti.submit()
+
+    pendingDeleteAll.ids = []
+    pendingDeleteAll.type = ''
+  } else if (currentId) {
     formDeleteProduct.submit()
   }
 })
 
 buttonCancel.addEventListener('click', () => {
   modal.style.display = 'none'
+  pendingDeleteAll = { ids: [], type: '' }
+  modalTitle.innerText = 'Xóa bản ghi'
+  modalMessage.innerText = 'Bạn có chắc chắn muốn xóa bản ghi này?'
 })
 
 // end logic phần xóa sản phẩm

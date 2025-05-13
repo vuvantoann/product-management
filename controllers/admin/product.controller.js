@@ -42,7 +42,7 @@ module.exports.product = async (req, res) => {
   })
 }
 
-// thay đổi trạng thái sản phẩm
+//[patch]admin/product/change-status/:status/:id
 module.exports.changeProductStatus = async (req, res) => {
   const status = req.params.status
   const id = req.params.id
@@ -51,15 +51,32 @@ module.exports.changeProductStatus = async (req, res) => {
 
   res.redirect(req.get('Referer') || '/')
 }
-
-// thay đổi theo trạng thái nhiều sản phẩm
+//[patch]admin/product/change-multi
 module.exports.changeMultipleStates = async (req, res) => {
-  const status = req.body.type
+  const type = req.body.type
   const ids = req.body.ids
   console.log(req.body)
   const arrayIds = ids.split(',')
+  switch (type) {
+    case 'active':
+      await Product.updateMany({ _id: { $in: arrayIds } }, { status: 'active' })
+      break
+    case 'inactive':
+      await Product.updateMany(
+        { _id: { $in: arrayIds } },
+        { status: 'inactive' }
+      )
+      break
+    case 'delete-all':
+      await Product.updateMany(
+        { _id: { $in: arrayIds } },
+        { deleted: true, deleteAt: new Date() }
+      )
+      break
+    default:
+      break
+  }
 
-  await Product.updateMany({ _id: { $in: arrayIds } }, { status: status })
   res.redirect(req.get('Referer') || '/')
 }
 
