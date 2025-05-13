@@ -56,31 +56,62 @@ if (checkboxMulti) {
 
 // end phần này
 
-// sử lý form multi sau khi đã checked để thay đỏi trạng thái
+// Mở và đóng dropdown
+const toggleButton = document.getElementById('dropdownToggle')
+const dropdownMenu = document.getElementById('dropdownMenu')
+
+toggleButton.addEventListener('click', function (e) {
+  e.stopPropagation()
+  dropdownMenu.classList.toggle('show')
+})
+
+window.addEventListener('click', function (e) {
+  if (!dropdownMenu.contains(e.target)) {
+    dropdownMenu.classList.remove('show')
+  }
+})
+
+// Xử lý form
 const formChangeMulti = document.querySelector('.form-change-multi')
-if (formChangeMulti) {
-  formChangeMulti.addEventListener('submit', (e) => {
+const dropdownItems = document.querySelectorAll('.dropdown-item')
+
+dropdownItems.forEach((item) => {
+  item.addEventListener('click', function (e) {
     e.preventDefault()
+
     const checkboxMulti = document.querySelector('[checkbox-multi]')
     const inputsChecked = checkboxMulti.querySelectorAll(
       'input[name="id"]:checked'
     )
 
-    if (inputsChecked.length > 0) {
-      const inputIds = formChangeMulti.querySelector('input[name="ids"]')
-      let ids = []
-      inputsChecked.forEach((input) => {
-        ids.push(input.value)
-      })
-
-      inputIds.value = ids.join(', ')
-      formChangeMulti.submit()
-    } else {
-      alert('bạn cần chọn 1 ô trước ')
+    if (inputsChecked.length === 0) {
+      alert('Bạn cần chọn ít nhất một mục')
+      dropdownMenu.classList.remove('show')
+      return
     }
+
+    // Thu thập ID từ checkbox
+    let ids = []
+    inputsChecked.forEach((input) => {
+      const value = input.value.trim()
+      if (value) ids.push(value)
+    })
+
+    if (ids.length === 0) {
+      alert('Danh sách ID không hợp lệ')
+      dropdownMenu.classList.remove('show')
+      return
+    }
+
+    const inputIds = formChangeMulti.querySelector('input[name="ids"]')
+    const inputType = formChangeMulti.querySelector('input[name="type"]')
+
+    inputIds.value = ids.join(',')
+    inputType.value = item.value
+    dropdownMenu.classList.remove('show')
+    formChangeMulti.submit()
   })
-}
-// end form multi
+})
 
 // logic phần xóa sản phẩm
 

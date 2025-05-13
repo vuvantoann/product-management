@@ -1,5 +1,6 @@
 mixin search(keyword)
   form(id="form-search")
-          input(type="text" name="q" placeholder="Tìm kiếm..." value=keyword)
-          button(type="submit")
-            i.bx.bx-search
+    .form-input
+      input(type="search", name="q" placeholder="Search..." value=keyword)
+      button.search-btn(type="submit")
+        i.bx.bx-search

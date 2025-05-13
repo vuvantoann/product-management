@@ -5,95 +5,112 @@ include ../../mixins/modal.pug
 
 
 block content
-  main.main-wrapper
-    .main__header 
-      h2 Danh sách sản phẩm 
-      .actions 
-        button + Thêm sản phẩm 
-        button
-          i.bx.bx-network-chart
-          | Hành động 
-    .main__filters 
-      +search(keyword)
-      select#status-filter
-        option(value="" disabled selected) -- Trạng thái --
-        option(value="active") Hoạt động
-        option(value="inactive") Dừng hoạt động
-        option(value="") Tất cả
-      select
-        option -- Danh mục -- 
+  main
+    .filter-section
+      h2 Danh sách sản phẩm
+      .filter-wrap
+        +search(keyword)
+        select#status-filter
+          option(value="" disabled selected) -- Trạng thái --
+          option(value="") Tất cả 
+          option(value="active") Hoạt động
+          option(value="inactive") Dừng hoạt động
+        select
+          option -- Danh mục -- 
+        button 
+          i.bx.bx-refresh
+    .action-section
+      .action-wrap
+        .button-group
+          button
+            i.bx.bx-plus
+            span  Thêm sản phẩm
+        form(
+          action=`${prefixAdmin}/product/change-multi?_method=PATCH`,
+          method="POST",
+          class="form-change-multi"
+        )
+          input(
+            type="text"
+            name="ids"
+            value=""
+            class="form-control d-none"
+          )
+          input(
+            type="text"
+            name="type"
+            value=""
+            class="form-control d-none"
+          )
 
-      form(
-        action=`${prefixAdmin}/product/change-multi?_method=PATCH`,
-        method="POST",
-        class="form-change-multi"
-      )
-        .d-flex.align-items-start
-          .form-group
-            select(name="type" class="form-control")
-              option(value="active") Hoạt động
-              option(value="inactive") Dừng hoạt động
-          .form-group
-            input(
-              type="text"
-              name="ids"
-              value=""
-              class="form-control d-none"
-            )
-          button(type="submit" class="btn btn-primary") Áp dụng
+          .dropdown
+            button.dropdown-btn#dropdownToggle(type="button")  
+              span Hành động
+              i.bx.bx-chevron-down
+            .dropdown-content#dropdownMenu
+              button.dropdown-item(type="submit" name="type" value="active")
+                i.bx.bx-check-circle(style="color: #28a745") 
+                span Hoạt động
+              button.dropdown-item(type="submit" name="type" value="inactive")
+                i.bx.bx-block(style="color: #dc3545")
+                span Dừng hoạt động
+              button.dropdown-item(type="submit" name="type" value="delete")
+                i.bx.bx-trash(style="color: #6c757d")
+                span Xóa
+              button.dropdown-item(type="submit" name="type" value="pending")
+                i.bx.bx-time(style="color: #ffc107")
+                span Chờ duyệt
 
-    table(checkbox-multi)
-      thead
-        tr
-          th 
-            input(type="checkbox" name="checkAll")
-          th Tên sản phẩm
-          th Thuộc tính
-          th Hình ảnh
-          th Giá / Giá đặc biệt
-          th Số lượng
-          th TT
-          th Vị trí
-          th Trạng thái
-      tbody
-        each item in products
+      table(checkbox-multi)
+        thead
           tr
-            td
-              input(type="checkbox" name='id' value=item.id)
-            td
-              | #{item.title}
-              br
-              .action-links
-                span  Sửa
-                span( style="color: red" button-delete data-id=item.id ) Xóa
-                if(item.status === 'active') 
-                  span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
+            th 
+              input(type="checkbox" name="checkAll")
+            th Tên sản phẩm
+            th Thuộc tính
+            th Hình ảnh
+            th Giá / Giá đặc biệt
+            th Số lượng
+            th TT
+            th Vị trí
+            th Trạng thái
+        tbody
+          each item in products
+            tr
+              td
+                input(type="checkbox" name='id' value=item.id)
+              td
+                | #{item.title}
+                br
+                .action-links
+                  span  Sửa
+                  span( style="color: red" button-delete data-id=item.id ) Xóa
+                  if(item.status === 'active') 
+                    span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
+                  else 
+                    span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
+              td
+                if(item.isItem) 
+                  span.status-active Sản phẩm mới
                 else 
-                  span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
-            td
-              if(item.isItem) 
-                span.status-active Sản phẩm mới
-              else 
-                span.status-inactive Sản phẩm cũ
-            td
-              img(src=item.thumbnail, alt="")
-              img(src="https://via.placeholder.com/32", alt="")
-            td
-              span.price #{item.price}đ
-              span.price-special / 2,550,000đ
-              //- br
-              //- span.price 350,000
-              //- span.price-special / 330,000
-            td.stock #{item.stock}
-            td •
-            td.position #{item.position}
-            td
-              if(item.status === 'active') 
-                span.status-active Hoạt động
-              else 
-                span.status-inactive Ngừng hoạt động
-    +paginationStatic(pagination)
-    +modal()
+                  span.status-inactive Sản phẩm cũ
+              td
+                img(src=item.thumbnail, alt="")
+                //- img(src="https://via.placeholder.com/32", alt="")
+              td
+                span.price #{item.price}đ
+                span.price-special / 2,550,000đ
+
+              td.stock #{item.stock}
+              td •
+              td.position #{item.position}
+              td
+                if(item.status === 'active') 
+                  span.status-active Hoạt động
+                else 
+                  span.status-inactive Ngừng hoạt động
+      +paginationStatic(pagination)
+      +modal()
 
   
   form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/product/change-status/`) 

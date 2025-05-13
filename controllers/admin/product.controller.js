@@ -56,7 +56,8 @@ module.exports.changeProductStatus = async (req, res) => {
 module.exports.changeMultipleStates = async (req, res) => {
   const status = req.body.type
   const ids = req.body.ids
-  const arrayIds = ids.split(', ')
+  console.log(req.body)
+  const arrayIds = ids.split(',')
 
   await Product.updateMany({ _id: { $in: arrayIds } }, { status: status })
   res.redirect(req.get('Referer') || '/')
