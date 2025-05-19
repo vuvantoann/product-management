@@ -57,11 +57,11 @@ block content
               button.dropdown-item(type="button" name="type" value="delete-all")
                 i.bx.bx-trash(style="color: #6c757d")
                 span Xóa tất cả
-              button.dropdown-item(type="button" name="type" value="pending")
+              button.dropdown-item(type="button" name="type" value="change-position")
                 i.bx.bx-time(style="color: #ffc107")
-                span Chờ duyệt
+                span Thay đổi vị trí
 
-      table(checkbox-multi)
+      table(table-checkbox-multi)
         thead
           tr
             th 
@@ -103,12 +103,13 @@ block content
 
               td.stock #{item.stock}
               td •
-              td.position #{item.position}
+              td.position
+                input(type="number" name='position' class='square-number' value=item.position )
               td
                 if(item.status === 'active') 
-                  span.status-active Hoạt động
+                  span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
                 else 
-                  span.status-inactive Ngừng hoạt động
+                  span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
       +paginationStatic(pagination)
       +modal()
 

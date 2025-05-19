@@ -50,16 +50,31 @@ document.addEventListener('DOMContentLoaded', () => {
 // end  phần sử lý logic khi toggle button sidebar và active khi sidebar được trỏ
 
 // Phần sử lý logic show sidebar
-const menuBar = document.querySelector('#content nav .bx.bx-menu')
-const sidebar = document.querySelector('.sidebar')
-const submenus = document.querySelectorAll('.submenu')
+
 document.addEventListener('DOMContentLoaded', () => {
+  const menuBar = document.querySelector('#content nav .bx.bx-menu')
+  const sidebar = document.querySelector('.sidebar')
+  const submenus = document.querySelectorAll('.submenu')
+  const menuItems = document.querySelectorAll('.sidebar__menu.top .menu-item')
   const sidebarState = localStorage.getItem('sidebar') // 'hide' hoặc 'show'
   if (sidebarState === 'hide') {
+    menuItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        if (sidebar.classList.contains('hide')) {
+          sidebar.classList.remove('hide')
+          localStorage.setItem('sidebar', 'show')
+        }
+
+        // const submenu = item.nextElementSibling
+        // if (submenu && submenu.classList.contains('submenu')) {
+        //   submenu.style.display = 'flex'
+        // }
+      })
+    })
     sidebar.classList.add('hide')
 
-    submenus.forEach((item) => {
-      item.style.display = 'none'
+    submenus.forEach((ul) => {
+      ul.style.display = 'none'
     })
   }
 
@@ -67,18 +82,20 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebar.classList.add('hide')
     submenus.forEach((ul) => (ul.style.display = 'none'))
   }
-})
 
-menuBar.addEventListener('click', () => {
-  sidebar.classList.toggle('hide')
-  if (sidebar.classList.contains('hide')) {
-    submenus.forEach((ul) => (ul.style.display = 'none'))
-    localStorage.setItem('sidebar', 'hide')
-  } else {
-    const activeParent = document.querySelector('.menu-item.active + .submenu')
-    if (activeParent) activeParent.style.display = 'flex'
-    localStorage.setItem('sidebar', 'show')
-  }
+  menuBar.addEventListener('click', () => {
+    sidebar.classList.toggle('hide')
+    if (sidebar.classList.contains('hide')) {
+      submenus.forEach((ul) => (ul.style.display = 'none'))
+      localStorage.setItem('sidebar', 'hide')
+    } else {
+      const activeParent = document.querySelector(
+        '.menu-item.active + .submenu'
+      )
+      if (activeParent) activeParent.style.display = 'flex'
+      localStorage.setItem('sidebar', 'show')
+    }
+  })
 })
 
 // kết thúc

@@ -30,6 +30,7 @@ module.exports.product = async (req, res) => {
 
   // end phân trang
   const products = await Product.find(find)
+    .sort({ position: 'desc' })
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip)
 
@@ -73,6 +74,13 @@ module.exports.changeMultipleStates = async (req, res) => {
         { _id: { $in: arrayIds } },
         { deleted: true, deleteAt: new Date() }
       )
+      break
+    case 'change-position':
+      for (let item of arrayIds) {
+        const [id, position] = item.split('-')
+        position = parseInt(position)
+        await Product.updateOne({ _id: id }, { position: parseInt(position) })
+      }
       break
     default:
       break

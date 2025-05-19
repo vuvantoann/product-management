@@ -22,7 +22,7 @@ if (buttonChangeStatus.length > 0) {
 
 // logic thay đổi trạng thái nhiều sản phẩm
 
-const checkboxMulti = document.querySelector('[checkbox-multi]')
+const checkboxMulti = document.querySelector('[table-checkbox-multi]')
 if (checkboxMulti) {
   const inputCheckAll = checkboxMulti.querySelector('input[name="checkAll"]')
   const inputIds = checkboxMulti.querySelectorAll('input[name="id"]')
@@ -71,10 +71,10 @@ window.addEventListener('click', function (e) {
   }
 })
 
-// Xử lý form
+// Xử lý form multi thay đổi trạng thái, xóa nhiều sản phẩm, thay đổi vị trí
 const formChangeMulti = document.querySelector('.form-change-multi')
 const dropdownItems = document.querySelectorAll('.dropdown-item')
-const buttonDeletes = document.querySelectorAll('[button-delete]')
+
 const buttonCancel = document.querySelector('[button-cancel]')
 const buttonConfirm = document.querySelector('[button-confirm]')
 const modal = document.querySelector('#modal')
@@ -89,7 +89,7 @@ dropdownItems.forEach((item) => {
   item.addEventListener('click', function (e) {
     e.preventDefault()
 
-    const checkboxMulti = document.querySelector('[checkbox-multi]')
+    const checkboxMulti = document.querySelector('[table-checkbox-multi]')
     const inputsChecked = checkboxMulti.querySelectorAll(
       'input[name="id"]:checked'
     )
@@ -103,8 +103,19 @@ dropdownItems.forEach((item) => {
     // Thu thập ID từ checkbox
     let ids = []
     inputsChecked.forEach((input) => {
-      const value = input.value.trim()
-      if (value) ids.push(value)
+      const id = input.value.trim()
+
+      if (id) {
+        if (item.value === 'change-position') {
+          const position = input
+            .closest('tr')
+            .querySelector('input[name="position"]').value
+
+          ids.push(`${id}-${position}`)
+        } else {
+          ids.push(id)
+        }
+      }
     })
 
     if (ids.length === 0) {
@@ -133,7 +144,7 @@ dropdownItems.forEach((item) => {
 })
 
 // logic phần xóa sản phẩm
-
+const buttonDeletes = document.querySelectorAll('[button-delete]')
 const formDeleteProduct = document.querySelector('#form-delete-product')
 let currentId = null
 if (buttonDeletes.length > 0) {

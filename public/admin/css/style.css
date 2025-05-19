@@ -544,6 +544,32 @@ td img {
   color: var(--blue);
   text-decoration: none;
 }
+
+/* input in table */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+table .square-number {
+  width: 30px;
+  height: 30px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 15px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--dark);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+/* input in table */
+
 /* end section table */
 
 /* pagination */
