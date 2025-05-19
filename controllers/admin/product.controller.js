@@ -33,9 +33,10 @@ module.exports.product = async (req, res) => {
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip)
 
-  res.render('admin/pages/product/index', {
+  res.render('admin/pages/product/product-list/index', {
     title: 'Sản phẩm',
     activePage: 'product',
+    activeSub: 'product-list',
     products: products,
     keyword: objectSearch.keyword,
     pagination: objectPagination,

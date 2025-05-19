@@ -1,37 +1,82 @@
-// phần sử lý logic khi sidebar được trỏ
-const allSideMenu = document.querySelectorAll('.sidebar__menu.top li a')
-allSideMenu.forEach((item) => {
-  const li = item.parentElement
+// phần sử lý logic khi toggle button sidebar và active khi sidebar được trỏ
+document.addEventListener('DOMContentLoaded', () => {
+  const activeArrows = document.querySelectorAll(
+    '.menu-item.active .bx-chevron-right'
+  )
+  activeArrows.forEach((arrow) => arrow.classList.add('rotate'))
 
-  item.addEventListener('click', () => {
-    allSideMenu.forEach((i) => {
-      i.parentElement.classList.remove('active')
+  const menuItems = document.querySelectorAll('.sidebar__menu.top .menu-item')
+  const submenus = document.querySelectorAll('.submenu')
+  const allArrow = document.querySelectorAll('.menu-item .bx-chevron-right')
+  const submenuItems = document.querySelectorAll('.submenu li')
+
+  if (menuItems) {
+    menuItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        const submenu = item.nextElementSibling
+        const arrow = item.querySelector('.bx-chevron-right')
+        // let isOpen = false
+        // if (submenu && submenu.style.display === 'flex') {
+        //   isOpen = true
+        // }
+        if (item.classList.contains('active')) return
+
+        // reset
+        menuItems.forEach((itemMenu) => itemMenu.classList.remove('active'))
+        submenus.forEach((itemSub) => (itemSub.style.display = 'none'))
+        allArrow.forEach((itemArrow) => itemArrow.classList.remove('rotate'))
+
+        item.classList.add('active')
+        if (submenu && submenu.classList.contains('submenu')) {
+          submenu.style.display = 'flex'
+          arrow?.classList.add('rotate')
+        }
+      })
     })
-    li.classList.add('active')
-  })
+  }
+
+  if (submenuItems) {
+    submenuItems.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation()
+        submenuItems.forEach((i) => {
+          i.classList.remove('active')
+        })
+        item.classList.add('active')
+      })
+    })
+  }
 })
-// kết thúc
+// end  phần sử lý logic khi toggle button sidebar và active khi sidebar được trỏ
 
 // Phần sử lý logic show sidebar
 const menuBar = document.querySelector('#content nav .bx.bx-menu')
 const sidebar = document.querySelector('.sidebar')
-
+const submenus = document.querySelectorAll('.submenu')
 document.addEventListener('DOMContentLoaded', () => {
   const sidebarState = localStorage.getItem('sidebar') // 'hide' hoặc 'show'
   if (sidebarState === 'hide') {
     sidebar.classList.add('hide')
+
+    submenus.forEach((item) => {
+      item.style.display = 'none'
+    })
   }
 
   if (window.innerWidth < 768) {
     sidebar.classList.add('hide')
+    submenus.forEach((ul) => (ul.style.display = 'none'))
   }
 })
 
 menuBar.addEventListener('click', () => {
   sidebar.classList.toggle('hide')
   if (sidebar.classList.contains('hide')) {
+    submenus.forEach((ul) => (ul.style.display = 'none'))
     localStorage.setItem('sidebar', 'hide')
   } else {
+    const activeParent = document.querySelector('.menu-item.active + .submenu')
+    if (activeParent) activeParent.style.display = 'flex'
     localStorage.setItem('sidebar', 'show')
   }
 })

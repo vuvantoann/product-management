@@ -3,40 +3,72 @@ section.sidebar
     .sidebar__logo
       img(src="/admin/images/logo-transparent.png", alt="logo-brand")
   ul.sidebar__menu.top 
-    li(class=(activePage === 'dashboard' ? 'active' : ''))
-      a(href=`${prefixAdmin}/dashboard`)
-        i(class="bx bxs-dashboard") 
-        span.sidebar__text Tổng quan 
-    li(class=(activePage === 'product' ? 'active' : ''))
-      a(href=`${prefixAdmin}/product`)
-        i(class='bx bx-package') 
-        span.sidebar__text sản phẩm
     li
-      a(href="#")
-        i(class='bx bx-basket')
-        span.sidebar__text đơn hàng
+      .menu-item(class=(activePage === 'dashboard' ? 'active' : ''))
+        a.trigger(href=`${prefixAdmin}/dashboard`)
+          .left 
+            i(class="bx bxs-dashboard") 
+            span.sidebar__text Tổng quan 
     li
-      a(href="#")
-        i(class="bx bxs-doughnut-chart")
-        span.sidebar__text báo cáo
+      .menu-item(class=(activePage === 'product' ? 'active' : ''))
+        .trigger
+          .left 
+            i(class='bx bx-package') 
+            span.sidebar__text Sản phẩm
+          i(class="bx bx-chevron-right")
+      ul.submenu
+        li(class=(activeSub === 'product-list' ? 'active' : ''))
+          a(href=`${prefixAdmin}/product`)
+            i.bx.bx-circle
+            span.text Danh sách sản phẩm
+        li
+          a(href="#")
+            i.bx.bx-circle
+            span.text Thêm sản phẩm
+        li
+          a(href="#")
+            i.bx.bx-circle
+            span.text Danh mục sản phẩm        
     li
-      a(href="#")
-        i(class="bx bxs-group")
-        span.sidebar__text Khách hàng
+      .menu-item
+        a.trigger(href="#")
+          .left
+            i.bx.bx-basket
+            span.sidebar__text Đơn hàng
     li
-      a(href="#")
-        i(class="bx bxs-message-dots")
-        span.sidebar__text Bình luận/đánh giá
+      .menu-item
+        a.trigger(href="#")
+          .left 
+            i.bx.bxs-doughnut-chart
+            span.sidebar__text Báo cáo
     li
-      a(href="#")
-        i(class='bx bx-mail-send')
-        span.sidebar__text Liên hệ
+      .menu-item
+        a.trigger(href="#")
+          .left 
+            i.bx.bxs-group
+            span.sidebar__text Khách hàng
+    li
+      .menu-item
+        a.trigger(href="#")
+          .left 
+            i.bx.bxs-message-dots
+            span.sidebar__text Bình luận/đánh giá
+    li
+      .menu-item
+        a.trigger(href="#")
+          .left
+            i.bx.bx-mail-send
+            span.sidebar__text Liên hệ
   ul.sidebar__menu
     li
-      a(href="#")
-        i(class="bx bxs-cog")
-        span.sidebar__text Cài đặt
+      .menu-item
+        a.trigger(href="#")
+          .left 
+            i.bx.bxs-cog
+            span.sidebar__text Cài đặt
     li
-      a(href="#" class='logout')
-        i(class='bx bx-log-out')
-        span.sidebar__text Đăng xuất
+      .menu-item
+        a.trigger.logout(href="#")
+          .left 
+            i.bx.bx-log-out
+            span.sidebar__text Đăng xuất
