@@ -50,23 +50,30 @@ module.exports.changeProductStatus = async (req, res) => {
   const id = req.params.id
 
   await Product.updateOne({ _id: id }, { status: status })
-
+  req.flash('success', 'Bạn đã cập nhật trạng thái sản phẩm thành công.')
   res.redirect(req.get('Referer') || '/')
 }
 //[patch]admin/product/change-multi
 module.exports.changeMultipleStates = async (req, res) => {
   const type = req.body.type
   const ids = req.body.ids
-  console.log(req.body)
   const arrayIds = ids.split(',')
   switch (type) {
     case 'active':
       await Product.updateMany({ _id: { $in: arrayIds } }, { status: 'active' })
+      req.flash(
+        'success',
+        `Bạn đã cập nhật thành công trạng thái active của ${arrayIds.length} sản phẩm`
+      )
       break
     case 'inactive':
       await Product.updateMany(
         { _id: { $in: arrayIds } },
         { status: 'inactive' }
+      )
+      req.flash(
+        'success',
+        `Bạn đã cập nhật thành công trạng thái inactive của ${arrayIds.length} sản phẩm`
       )
       break
     case 'delete-all':
@@ -74,13 +81,18 @@ module.exports.changeMultipleStates = async (req, res) => {
         { _id: { $in: arrayIds } },
         { deleted: true, deleteAt: new Date() }
       )
+      req.flash('success', `Bạn đã xóa thành công  ${arrayIds.length} sản phẩm`)
       break
     case 'change-position':
       for (let item of arrayIds) {
-        const [id, position] = item.split('-')
+        let [id, position] = item.split('-')
         position = parseInt(position)
         await Product.updateOne({ _id: id }, { position: parseInt(position) })
       }
+      req.flash(
+        'success',
+        `Bạn đã thay đổi vị trí thành công của ${arrayIds.length} sản phẩm`
+      )
       break
     default:
       break

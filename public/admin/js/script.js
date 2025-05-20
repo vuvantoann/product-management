@@ -185,3 +185,28 @@ if (buttonPagination) {
   })
 }
 // end logic pagination
+
+// logic alert
+document.querySelectorAll('.alert-container').forEach((container) => {
+  const span = container.querySelector('span')
+  const close = container.querySelector('.close')
+  const time = parseInt(container.getAttribute('data-time')) || 5000
+  span.style.animationDuration = time + 'ms'
+  span.addEventListener('animationend', () => {
+    span.style.display = 'none'
+  })
+
+  const timeout = setTimeout(() => {
+    container.classList.add('hide')
+
+    setTimeout(() => {
+      container.style.display = 'none'
+    }, 500)
+  }, time)
+
+  close.addEventListener('click', () => {
+    clearTimeout(timeout)
+    container.classList.add('hide')
+  })
+})
+// end logic alert

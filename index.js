@@ -4,9 +4,11 @@ require('dotenv').config()
 const route = require('./routes/client/index.route')
 const routeAdmin = require('./routes/admin/index.route')
 const systemConfig = require('./config/system')
-var methodOverride = require('method-override')
+const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
-
+const flash = require('express-flash')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
 const app = express()
 
 port = process.env.PORT
@@ -15,6 +17,14 @@ database.connect()
 app.set('views', './views')
 app.set('view engine', 'pug')
 app.use(express.static('public'))
+
+// use express-flash
+
+app.use(cookieParser('authToken'))
+app.use(session({ cookie: { maxAge: 60000 } }))
+app.use(flash())
+
+// end express-flash
 
 // use method-override
 app.use(methodOverride('_method'))
