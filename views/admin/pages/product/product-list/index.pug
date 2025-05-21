@@ -1,7 +1,7 @@
 extends ../../../layout/default.pug 
 include ../../../mixins/search.pug
 include ../../../mixins/pagination.pug
-include ../../../mixins/modal.pug
+
 
 
 block content
@@ -29,12 +29,14 @@ block content
           option -- Danh mục -- 
         button 
           i.bx.bx-refresh
+        
     .action-section
       .action-wrap
         .button-group
-          button
+          a(href=prefixAdmin + '/product/create-product' class='button')
             i.bx.bx-plus
-            span  Thêm sản phẩm
+            span Thêm sản phẩm 
+        //- dòng ngăn cách giữa form lam sang thằng ở trên     
         form(
           action=`${prefixAdmin}/product/change-multi?_method=PATCH`,
           method="POST",
@@ -121,7 +123,7 @@ block content
                 else 
                   span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
       +paginationStatic(pagination)
-      +modal()
+      
 
   
   form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/product/change-status/`) 

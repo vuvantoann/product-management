@@ -22,6 +22,7 @@ li {
   --inter: 'Inter', sans-serif;
 
   --light: #f9f9f9;
+  --purple: #7c3aed;
   --sky: #4e73df;
   --blue: #3c91e6;
   --grass: #3ce68d;
@@ -38,9 +39,10 @@ li {
   --light-blue: #cfe8ff;
   --light-white: #f9fafb;
   --grey: #eee;
-  --dark-grey: #aaaaaa;
   --dark: #342e37;
   --white: white;
+  --gray: #888;
+  --dark-grey: #ddd;
 }
 
 html {
@@ -51,6 +53,8 @@ body.dark {
   --light: #0c0c1e;
   --grey: #060714;
   --dark: #fbfbfb;
+  --dark-grey: #aaaaaa;
+  --gray: #ccc;
   --white: #6b7280;
 }
 
@@ -411,7 +415,8 @@ body.dark .sidebar__logo {
   margin-bottom: 10px;
 }
 
-.button-group button {
+.dropdown-btn,
+.button-group .button {
   background: var(--blue);
   color: var(--light);
   border: none;
@@ -423,6 +428,10 @@ body.dark .sidebar__logo {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.button-group .button:hover {
+  background: var(--sky);
 }
 
 /* section dropdown */
@@ -430,18 +439,8 @@ body.dark .sidebar__logo {
   position: relative;
 }
 
-.dropdown-btn {
-  background: var(--blue);
-  color: var(--light);
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  margin-left: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.dropdown-btn:hover {
+  background: var(--sky);
 }
 
 .dropdown-content {
@@ -614,10 +613,11 @@ table .square-number {
   font-family: var(--inter);
   background: rgba(0, 0, 0, 0.4);
   height: 100vh;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  z-index: 9999;
   display: none;
 }
 
@@ -838,3 +838,118 @@ table .square-number {
 /* end alert */
 
 /* END SECTION ADMIN PRODUCT*/
+
+/* Create Product */
+
+.form-wrapper .form-block {
+  font-family: var(--inter);
+  margin: 20px;
+
+  background: var(--light);
+  border-radius: 12px;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  padding: 18px 32px;
+}
+
+.form-wrapper .form-header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.form-wrapper .form-header h2 {
+  font-size: 24px;
+  color: var(--dark);
+}
+.form-wrapper .form-header p {
+  font-size: 14px;
+  color: var(--gray);
+  margin: 0;
+}
+
+.form-wrapper .form-header .form-actions {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.form-wrapper .form-actions button {
+  padding: 10px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: 0.3s ease;
+}
+.form-wrapper .btn-cancel {
+  background: var(--dark-grey);
+  color: var(--dark);
+}
+.form-wrapper .btn-draft {
+  background: var(--light-blue);
+  color: var(--purple);
+}
+.form-wrapper .btn-submit {
+  background: var(--blue);
+  color: var(--light);
+  font-weight: 600;
+}
+
+.form-wrapper .btn-cancel:hover,
+.form-wrapper .btn-submit:hover {
+  background: var(--sky);
+}
+
+.form-wrapper .form-group {
+  margin-bottom: 24px;
+}
+.form-wrapper .form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+.form-wrapper .form-group label span {
+  color: var(--gray);
+  font-weight: 400;
+  font-size: 13px;
+}
+.form-wrapper .form-group input,
+.form-wrapper .form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--dark-grey);
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--dark);
+  background: transparent;
+}
+
+.form-wrapper .form-group textarea {
+  resize: vertical;
+  height: 150px;
+}
+
+.form-wrapper .radio-group {
+  display: flex;
+  gap: 20px;
+}
+.form-wrapper .form-radio label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gray);
+  margin: 0;
+}
+
+.form-wrapper .radio-group .form-radio {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+/*end Create Product */

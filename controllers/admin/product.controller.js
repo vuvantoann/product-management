@@ -1,6 +1,8 @@
 const Product = require('../../modals/product.modal')
 const searchHelper = require('../../helper/search')
 const paginationHelper = require('../../helper/pagination')
+const systemConfig = require('../../config/system')
+
 //[get]admin/product
 module.exports.product = async (req, res) => {
   let find = {
@@ -107,4 +109,38 @@ module.exports.deleteProduct = async (req, res) => {
   // await Product.deleteOne({ _id: id })
   await Product.updateOne({ _id: id }, { deleted: true, deleteAt: new Date() })
   res.redirect(req.get('Referer') || '/')
+}
+
+//[get]admin/product/create-product
+module.exports.createProduct = async (req, res) => {
+  res.render('admin/pages/product/add-product/create', {
+    title: 'Thêm mới sản phẩm',
+    activePage: 'product',
+    activeSub: 'add-product',
+  })
+}
+
+//[post]admin/product/create-product
+module.exports.createProductPost = async (req, res) => {
+  try {
+    req.body.price = parseInt(req.body.price)
+    req.body.discountPercentage = parseInt(req.body.discountPercentage)
+    req.body.stock = parseInt(req.body.stock)
+
+    if (req.body.position === '') {
+      const countProduct = await Product.countDocuments()
+      req.body.position = countProduct + 1
+    } else {
+      req.body.position = parseInt(req.body.position)
+    }
+
+    const newProduct = new Product(req.body)
+    await newProduct.save()
+
+    const PATH_ADMIN = systemConfig.prefixAdmin
+    res.redirect(PATH_ADMIN + '/product')
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Tạo sản phẩm thất bại' })
+  }
 }

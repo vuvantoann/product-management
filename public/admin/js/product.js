@@ -85,7 +85,6 @@ let pendingDeleteAll = {
   type: '',
 }
 dropdownItems.forEach((item) => {
-  console.log(item.value)
   item.addEventListener('click', function (e) {
     e.preventDefault()
 

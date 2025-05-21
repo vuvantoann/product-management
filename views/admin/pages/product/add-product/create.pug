@@ -1,0 +1,65 @@
+extends ../../../layout/default.pug 
+
+
+block content
+  main
+    form(
+          action=`${prefixAdmin}/product/create-product`,
+          method="POST",
+          class="form-wrapper"
+        )
+      // Block 1: Header
+      .form-block
+        .form-header
+          div
+            h2 Thêm mới sản phẩm
+            p Sản phẩm sẽ được đặt ở cửu hàng của bạn
+          .form-actions
+            button.btn-cancel(type="button") Quay lại trang danh sách
+            button.btn-draft(type="button") Lưu nháp
+            button.btn-submit(type="submit") Thêm mới
+
+      // Block 2: Tiêu đề và mô tả
+      .form-block
+        .form-group
+          label(for="title") Tiêu đề sản phẩm
+          input(type="text", id="title", placeholder="Nhập tiêu đề sản phẩm", name='title',
+          required)
+        .form-group
+          label(for="description") Mô tả 
+            span (tuỳ chọn)
+          textarea(id="description", rows="4", placeholder="Mô tả chi tiết sản phẩm", name='description')
+
+      // Block 3: Giá, giảm giá, số lượng
+      .form-block
+        .form-group
+          label(for="price") Giá
+          input(type="number", id="price", value="0", min='0', name='price' )
+        .form-group
+          label(for="discount") Giảm giá (%)
+          input(type="number", id="discount", value="0", min='0', name='discountPercentage')
+        .form-group
+          label(for="quantity") Số lượng
+          input(type="number", id="quantity", value="1", name='stock')
+
+      // Block 4: Hình ảnh
+      .form-block
+        .form-group
+          label(for="imageUpload") Tải ảnh sản phẩm
+          input(type="text", id='imageUpload', name="thumbnail")
+          
+
+      // Block 5: Vị trí và trạng thái
+      .form-block
+        .form-group
+          label(for="position") Vị trí hiển thị
+          input(type="text", id="position", name="position", placeholder="tự động tăng" )
+        .form-group
+          label Trạng thái
+        .radio-group
+          .form-radio
+            input(type="radio",id="statusActive", name="status", value="active", checked)
+            label(for="statusActive") Hoạt động
+          .form-radio
+            input(type="radio",id="statusInActive", name="status", value="active")
+            label(for="statusInActive") Dừng hoạt động
