@@ -6,7 +6,8 @@ block content
     form(
           action=`${prefixAdmin}/product/create-product`,
           method="POST",
-          class="form-wrapper"
+          class="form-wrapper",
+          enctype="multipart/form-data"
         )
       // Block 1: Header
       .form-block
@@ -44,9 +45,14 @@ block content
 
       // Block 4: Hình ảnh
       .form-block
-        .form-group
-          label(for="imageUpload") Tải ảnh sản phẩm
-          input(type="text", id='imageUpload', name="thumbnail")
+        .form-image(upload-image) 
+          input(type="file", id='file-upload', name="thumbnail" 
+          multiple , input-upload)
+          label(for="file-upload")
+            i.bx.bx-upload
+            span Chọn một ảnh 
+          p.num-of-files chưa có file nào được chọn
+          .images
           
 
       // Block 5: Vị trí và trạng thái
@@ -63,3 +69,5 @@ block content
           .form-radio
             input(type="radio",id="statusInActive", name="status", value="active")
             label(for="statusInActive") Dừng hoạt động
+  
+  script(src='/admin/js/create-product.js')

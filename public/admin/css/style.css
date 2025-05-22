@@ -844,10 +844,8 @@ table .square-number {
 .form-wrapper .form-block {
   font-family: var(--inter);
   margin: 20px;
-
   background: var(--light);
   border-radius: 12px;
-
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
   padding: 18px 32px;
 }
@@ -952,4 +950,91 @@ table .square-number {
   align-items: center;
   flex-wrap: wrap;
 }
+
+/* image */
+.form-wrapper .form-image {
+  border: 2px dashed var(--dark-grey);
+  border-radius: 10px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.form-wrapper .form-image:hover {
+  border-color: var(--purple);
+}
+
+.form-wrapper .form-image input[type='file'] {
+  display: none;
+}
+.form-wrapper .form-image label {
+  display: block;
+  position: relative;
+  background-color: var(--blue);
+  color: var(--light);
+  font-size: 18px;
+  text-align: center;
+  width: 300px;
+  padding: 18px 0;
+  margin: auto;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.form-wrapper .form-image label:hover {
+  background: var(--purple);
+}
+.form-wrapper .form-image label i {
+  margin-right: 10px;
+}
+.form-wrapper .form-image p {
+  text-align: center;
+  margin: 20px 0 30px 0;
+}
+
+.form-wrapper .form-image .images {
+  width: 90%;
+  position: relative;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.form-wrapper .form-image .file-item {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 10px;
+  width: 150px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  position: relative;
+}
+
+.form-wrapper .form-image .file-item img {
+  width: 100%;
+  border-radius: 6px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.form-wrapper .form-image .file-item .file-name {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.form-wrapper .form-image .file-item .file-size {
+  color: var(--gray);
+  font-size: 13px;
+  font-style: italic;
+}
+
+.form-wrapper .form-image .file-item button {
+  margin-top: 5px;
+  background: transparent;
+  border: none;
+  color: var(--purple);
+  cursor: pointer;
+}
+/* end image */
 /*end Create Product */

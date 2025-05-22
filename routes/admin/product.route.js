@@ -1,4 +1,9 @@
 const express = require('express')
+const multer = require('multer')
+
+const storageMulter = require('../../helper/storageMulter')
+const upload = multer({ storage: storageMulter() })
+
 const router = express.Router()
 
 const controller = require('../../controllers/admin/product.controller')
@@ -9,6 +14,10 @@ router.patch('/change-multi', controller.changeMultipleStates)
 router.delete('/delete/:id', controller.deleteProduct)
 
 router.get('/create-product', controller.createProduct)
-router.post('/create-product', controller.createProductPost)
+router.post(
+  '/create-product',
+  upload.single('thumbnail'),
+  controller.createProductPost
+)
 
 module.exports = router
