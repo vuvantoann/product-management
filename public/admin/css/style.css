@@ -741,6 +741,16 @@ table .square-number {
   color: var(--grass);
 }
 
+.alert-container.warning .alert-icon {
+  font-size: 24px;
+  color: var(--yellow);
+}
+
+.alert-container.error .alert-icon {
+  font-size: 24px;
+  color: var(--red);
+}
+
 .alert-container .alert-content {
   flex: 1;
 }
@@ -752,7 +762,7 @@ table .square-number {
 
 .alert-container .alert-message {
   font-size: 14px;
-  color: var(--dark-grey);
+  color: var(--gray);
 }
 
 .alert-container .alert-close {

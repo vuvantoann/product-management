@@ -108,6 +108,7 @@ module.exports.deleteProduct = async (req, res) => {
   const id = req.params.id
   // await Product.deleteOne({ _id: id })
   await Product.updateOne({ _id: id }, { deleted: true, deleteAt: new Date() })
+  req.flash('success', `Bạn đã xóa sản phẩm thành công`)
   res.redirect(req.get('Referer') || '/')
 }
 
@@ -134,7 +135,8 @@ module.exports.createProductPost = async (req, res) => {
       req.body.position = parseInt(req.body.position)
     }
 
-    req.body.thumbnail = `/uploads/${req.file.filename}`
+    console.log(req.file)
+    if (req.file) req.body.thumbnail = `/uploads/${req.file.filename}`
 
     const newProduct = new Product(req.body)
     await newProduct.save()

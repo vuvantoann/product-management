@@ -1,0 +1,23 @@
+mixin alert-success(time)
+  - if (messages.success)
+      #alertBox
+        .alert-container.success(data-time=time)
+          i(class="bx bxs-error-circle alert-icon")
+          .alert-content
+            .alert-title Chúc mừng!
+            .alert-message #{messages.success}
+          .close
+            i(class="bx bx-x alert-close")
+          span 
+
+mixin alert-error(time)
+  - if (messages.error)
+      #alertBox
+        .alert-container.error(data-time=time)
+          i(class="bx bxs-error-circle alert-icon")
+          .alert-content
+            .alert-title Lỗi!
+            .alert-message #{messages.error}
+          .close
+            i(class="bx bx-x alert-close")
+          span 

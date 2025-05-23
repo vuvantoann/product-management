@@ -1,8 +1,10 @@
 extends ../../../layout/default.pug 
-
+include ../../../mixins/alert.pug
 
 block content
   main
+    +alert-error(7000)
+
     form(
           action=`${prefixAdmin}/product/create-product`,
           method="POST",
@@ -16,7 +18,8 @@ block content
             h2 Thêm mới sản phẩm
             p Sản phẩm sẽ được đặt ở cửu hàng của bạn
           .form-actions
-            button.btn-cancel(type="button") Quay lại trang danh sách
+            a(href=prefixAdmin + '/product' class='btn-cancel')
+              span Quay lại trang danh sách
             button.btn-draft(type="button") Lưu nháp
             button.btn-submit(type="submit") Thêm mới
 
@@ -24,8 +27,7 @@ block content
       .form-block
         .form-group
           label(for="title") Tiêu đề sản phẩm
-          input(type="text", id="title", placeholder="Nhập tiêu đề sản phẩm", name='title',
-          required)
+          input(type="text", id="title", placeholder="Nhập tiêu đề sản phẩm", name='title')
         .form-group
           label(for="description") Mô tả 
             span (tuỳ chọn)

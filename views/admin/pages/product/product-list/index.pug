@@ -1,21 +1,14 @@
 extends ../../../layout/default.pug 
 include ../../../mixins/search.pug
 include ../../../mixins/pagination.pug
+include ../../../mixins/alert.pug
 
 
 
 block content
   main
-    - if (messages.success)
-        #alertBox
-          .alert-container.success(data-time='5000')
-            i(class="bx bxs-error-circle alert-icon")
-            .alert-content
-              .alert-title Chúc mừng!
-              .alert-message #{messages.success}
-            .close
-              i(class="bx bx-x alert-close")
-            span 
+    +alert-success(5000)
+
     .filter-section
       h2 Danh sách sản phẩm
       .filter-wrap
