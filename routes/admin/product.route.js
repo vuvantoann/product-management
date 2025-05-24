@@ -14,6 +14,7 @@ router.patch('/change-status/:status/:id', controller.changeProductStatus)
 router.patch('/change-multi', controller.changeMultipleStates)
 router.delete('/delete/:id', controller.deleteProduct)
 
+//create product
 router.get('/create-product', controller.createProduct)
 router.post(
   '/create-product',
@@ -22,4 +23,13 @@ router.post(
   controller.createProductPost
 )
 
+// edit product
+router.get('/edit-product/:id', controller.editProduct)
+
+router.patch(
+  '/edit-product/:id',
+  upload.single('thumbnail'),
+  validate.createPost,
+  controller.editProductPatch
+)
 module.exports = router

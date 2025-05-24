@@ -1031,6 +1031,9 @@ table .square-number {
 .form-wrapper .form-image .file-item .file-name {
   margin-top: 5px;
   font-size: 14px;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .form-wrapper .form-image .file-item .file-size {

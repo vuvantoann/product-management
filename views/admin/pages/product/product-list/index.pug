@@ -8,7 +8,8 @@ include ../../../mixins/alert.pug
 block content
   main
     +alert-success(5000)
-
+    +alert-error(7000)
+    
     .filter-section
       h2 Danh sách sản phẩm
       .filter-wrap
@@ -88,7 +89,8 @@ block content
                 | #{item.title}
                 br
                 .action-links
-                  span  Sửa
+                  a(href= `${prefixAdmin}/product/edit-product/${item.id}` )
+                    span Sửa
                   span( style="color: red" button-delete data-id=item.id ) Xóa
                   if(item.status === 'active') 
                     span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động

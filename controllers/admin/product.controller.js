@@ -141,10 +141,50 @@ module.exports.createProductPost = async (req, res) => {
     const newProduct = new Product(req.body)
     await newProduct.save()
 
-    const PATH_ADMIN = systemConfig.prefixAdmin
-    res.redirect(PATH_ADMIN + '/product')
+    res.redirect(`${systemConfig.prefixAdmin}/product`)
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'Tạo sản phẩm thất bại' })
+  }
+}
+
+//[get]admin/product/edit-product/id
+module.exports.editProduct = async (req, res) => {
+  try {
+    let find = {
+      deleted: false,
+      _id: req.params.id,
+    }
+    const product = await Product.findOne(find)
+    res.render('admin/pages/product/edit-product/edit', {
+      title: 'Chỉnh sửa sản phẩm',
+      activePage: 'product',
+      activeSub: 'product-list',
+      product: product,
+    })
+  } catch (error) {
+    req.flash('error', `Sản phẩm này không tồn tại`)
+
+    res.redirect(`${systemConfig.prefixAdmin}/product`)
+  }
+}
+
+//[patch]admin/product/edit-product/:id
+module.exports.editProductPatch = async (req, res) => {
+  try {
+    const id = req.params.id
+    req.body.price = parseInt(req.body.price)
+    req.body.discountPercentage = parseInt(req.body.discountPercentage)
+    req.body.stock = parseInt(req.body.stock)
+    req.body.position = parseInt(req.body.position)
+
+    if (req.file) req.body.thumbnail = `/uploads/${req.file.filename}`
+
+    await Product.updateOne({ _id: id }, req.body)
+    req.flash('success', 'Bạn đã chỉnh sửa sản phẩm thành công.')
+    res.redirect(req.get('Referer') || '/')
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Chỉnh sửa sản phẩm thất bại' })
   }
 }
