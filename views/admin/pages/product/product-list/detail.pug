@@ -11,49 +11,51 @@ block content
             a(href=prefixAdmin + '/product' class='btn-cancel')
               span Quay lại trang danh sách
       .detail-product-content
-        .detail-product-section
-          .detail-product-label Sản phẩm:
-          .detail-product-value
-            img.product-img(src=product.thumbnail)
-            div
-              strong #{product.title}
-        .detail-product-section
-          .detail-product-label Mô tả:
-          .detail-product-value #{product.description}
+        if(product.title)
+          .detail-product-section
+            .detail-product-label Sản phẩm:
+            .detail-product-value
+              img.product-img(src=product.thumbnail)
+              div
+                strong #{product.title}
+        if(product.description)
+          .detail-product-section
+            .detail-product-label Mô tả:
+            .detail-product-value #{product.description}
+        
+          .detail-product-section
+            .detail-product-label Danh mục:
+            .detail-product-value
+              i.bx.bx-category.category-icon
+              |  sửa sau
+        if(product.price)
+          .detail-product-section
+            .detail-product-label Giá:
+            .detail-product-value #{product.price}
+        if(product.price)
+          .detail-product-section
+            .detail-product-label Giảm giá:
+            .detail-product-value #{product.stock}
+        if(product.discountPercentage)
+          .detail-product-section
+            .detail-product-label Số lượng:
+            .detail-product-value #{product.discountPercentage}
+        if(product.position)
+          .detail-product-section
+            .detail-product-label Vị trí:
+            .detail-product-value #{product.position}
+        if(product.status)
+          .detail-product-section
+            .detail-product-label Trạng thái:
+            .detail-product-value
+              if(product.status === 'active') 
+                span.status-active Hoạt động
+              else 
+                span.status-inactive Ngừng hoạt động
 
-        .detail-product-section
-          .detail-product-label Danh mục:
-          .detail-product-value
-            i.bx.bx-category.category-icon
-            |  sửa sau
-
-        .detail-product-section
-          .detail-product-label Giá:
-          .detail-product-value #{product.price}
-
-        .detail-product-section
-          .detail-product-label Giảm giá:
-          .detail-product-value #{product.stock}
-
-        .detail-product-section
-          .detail-product-label Số lượng:
-          .detail-product-value #{product.discountPercentage}
-
-        .detail-product-section
-          .detail-product-label Vị trí:
-          .detail-product-value #{product.position}
-
-        .detail-product-section
-          .detail-product-label Trạng thái:
-          .detail-product-value
-            if(product.status === 'active') 
-              span.status-active Hoạt động
-            else 
-              span.status-inactive Ngừng hoạt động
-
-        .detail-product-section
-          .detail-product-label Hành động:
-          .detail-product-value.actions
-            i.bx.bx-edit-alt
-            i.bx.bx-dots-horizontal-rounded
+          .detail-product-section
+            .detail-product-label Hành động:
+            .detail-product-value.actions
+              i.bx.bx-edit-alt
+              i.bx.bx-dots-horizontal-rounded
 

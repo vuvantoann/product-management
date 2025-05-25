@@ -1,0 +1,43 @@
+extends ../../layout/default.pug
+include ../../mixins/client/box-head.pug
+
+block content
+  .detail-product   
+    .container
+      .detail-product-wrapper
+        .row
+          .col-md-5
+            .detail-product-image
+              img.product-img(src=product.thumbnail, alt=product.title)
+
+          .col-md-7
+            .detail-product-content 
+              .detail-product-title 
+                h1 #{product.title}
+              .detail-product-price
+                .detail-product-new-price
+                  span #{product.priceNew}đ
+                .detail-product-old-price
+                  span #{product.price}đ
+                .detail-product-discount
+                  span -#{product.discountPercentage}%
+
+              .detail-product-quantity
+                .quantity-btn
+                  i.bx.bx-minus
+                input(type="number", value="1", class='quantity-display',  )
+                .quantity-btn
+                  i.bx.bx-plus
+              
+              .detail-product-action
+                a.btn.btn-cart(href="#")
+                  i.bx.bx-cart-alt
+                  span  Thêm Vào Giỏ Hàng
+                a.btn.btn-buy(href="#") Mua Ngay
+
+
+            // Mô tả
+            .mt-4
+              h5.font-weight-bold Mô tả
+              p #{product.description}
+              
