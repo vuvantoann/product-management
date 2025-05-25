@@ -142,7 +142,7 @@ dropdownItems.forEach((item) => {
   })
 })
 
-// logic phần xóa sản phẩm
+// logic phần xóa sản phẩm và modal xóa
 const buttonDeletes = document.querySelectorAll('[button-delete]')
 const formDeleteProduct = document.querySelector('#form-delete-product')
 let currentId = null

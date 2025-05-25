@@ -32,4 +32,8 @@ router.patch(
   validate.createPost,
   controller.editProductPatch
 )
+
+// detail product
+router.get('/detail-product/:id', controller.detailProduct)
+
 module.exports = router

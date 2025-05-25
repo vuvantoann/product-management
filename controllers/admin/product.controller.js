@@ -188,3 +188,24 @@ module.exports.editProductPatch = async (req, res) => {
     res.status(500).json({ error: 'Chỉnh sửa sản phẩm thất bại' })
   }
 }
+
+//[get]admin/product/detail-product/id
+module.exports.detailProduct = async (req, res) => {
+  try {
+    let find = {
+      deleted: false,
+      _id: req.params.id,
+    }
+    const product = await Product.findOne(find)
+    res.render('admin/pages/product/product-list/detail', {
+      title: 'Chi tiết sản phẩm',
+      activePage: 'product',
+      activeSub: 'product-list',
+      product: product,
+    })
+  } catch (error) {
+    req.flash('error', `Sản phẩm này không tồn tại`)
+
+    res.redirect(`${systemConfig.prefixAdmin}/product`)
+  }
+}

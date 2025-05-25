@@ -1,4 +1,4 @@
-mixin modal()
+mixin modal-delete()
   .modal#modal
     .modal-content
       i.bx.bx-error-circle.icon
@@ -11,3 +11,51 @@ mixin modal()
         button.btn-cancel(button-cancel)
           i.bx.bx-x
           span  Hủy bỏ
+
+
+  .modal
+    .madal-content
+      i.bx.bx-x.close
+      h2 Details of Air Jordan
+
+      .modal-section
+        .modal-label Product:
+        .modal-value
+          img.product-img(src="https://i.imgur.com/Z6PHc8z.png")
+          div
+            strong Air Jordan
+            small Air Jordan is a line of basketball shoes produced by Nike
+
+      .modal-section
+        .modal-label Category:
+        .modal-value
+          i.bx.bx-category.category-icon
+          |  Shoes
+
+      .modal-section
+        .modal-label Stock:
+        .modal-value
+          .toggle-switch
+
+      .modal-section
+        .modal-label SKU:
+        .modal-value 31063
+
+      .modal-section
+        .modal-label Price:
+        .modal-value $125
+
+      .modal-section
+        .modal-label Qty:
+        .modal-value 942
+
+      .modal-section
+        .modal-label Status:
+        .modal-value
+          span.inactive-status Inactive
+
+      .modal-section
+        .modal-label Actions:
+        .modal-value.actions
+          i.bx.bx-edit-alt
+          i.bx.bx-dots-horizontal-rounded

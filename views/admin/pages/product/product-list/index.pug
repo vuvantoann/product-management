@@ -9,7 +9,7 @@ block content
   main
     +alert-success(5000)
     +alert-error(7000)
-    
+
     .filter-section
       h2 Danh sách sản phẩm
       .filter-wrap
@@ -77,9 +77,9 @@ block content
             th Hình ảnh
             th Giá / Giá đặc biệt
             th Số lượng
-            th TT
             th Vị trí
             th Trạng thái
+            th Chi tiết
         tbody
           each item in products
             tr
@@ -109,7 +109,6 @@ block content
                 span.price-special / 2,550,000đ
 
               td.stock #{item.stock}
-              td •
               td.position
                 input(type="number" name='position' class='square-number' value=item.position )
               td
@@ -117,6 +116,9 @@ block content
                   span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
                 else 
                   span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
+              td 
+                a(href= `${prefixAdmin}/product/detail-product/${item.id}` )
+                  span Xem
       +paginationStatic(pagination)
       
 
