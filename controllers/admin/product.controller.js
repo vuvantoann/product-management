@@ -2,7 +2,7 @@ const Product = require('../../modals/product.modal')
 const searchHelper = require('../../helper/search')
 const paginationHelper = require('../../helper/pagination')
 const systemConfig = require('../../config/system')
-
+const { formatCurrency } = require('../../helper/format')
 //[get]admin/product
 module.exports.product = async (req, res) => {
   let find = {
@@ -36,11 +36,28 @@ module.exports.product = async (req, res) => {
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip)
 
+  const newProducts = products.map((item) => {
+    const priceNew = Math.round(
+      (item.price * (100 - (item.discountPercentage || 0))) / 100
+    )
+    return {
+      id: item.id,
+      _id: item._id,
+      title: item.title,
+      price: formatCurrency(item.price),
+      priceNew: formatCurrency(priceNew),
+      stock: item.stock,
+      position: item.position,
+      status: item.status,
+      thumbnail: item.thumbnail,
+    }
+  })
+
   res.render('admin/pages/product/product-list/index', {
     title: 'Sản phẩm',
     activePage: 'product',
     activeSub: 'product-list',
-    products: products,
+    products: newProducts,
     keyword: objectSearch.keyword,
     pagination: objectPagination,
   })
@@ -197,6 +214,7 @@ module.exports.detailProduct = async (req, res) => {
       _id: req.params.id,
     }
     const product = await Product.findOne(find)
+    console.log(product)
     res.render('admin/pages/product/product-list/detail', {
       title: 'Chi tiết sản phẩm',
       activePage: 'product',
