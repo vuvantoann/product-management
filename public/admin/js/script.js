@@ -151,6 +151,40 @@ if (selectStatus) {
 
 //kết thúc lọc sản phẩm theo trạng thái
 
+// sử lý logic sắp xếp sản phẩm theo từng tiếu chí
+const sortSelect = document.getElementById('sort-select')
+
+if (sortSelect) {
+  const url = new URL(window.location.href)
+  sortSelect.addEventListener('change', (e) => {
+    const [sortKey, sortValue] = e.target.value.split('-')
+
+    if (e.target.value) {
+      url.searchParams.set('sortKey', sortKey)
+      url.searchParams.set('sortValue', sortValue)
+    } else {
+      url.searchParams.delete('sortKey')
+      url.searchParams.delete('sortValue')
+    }
+
+    window.location.href = url.href
+  })
+
+  const sortKey = url.searchParams.get('sortKey')
+  const sortValue = url.searchParams.get('sortValue')
+
+  if (sortKey && sortValue) {
+    const stringSort = `${sortKey}-${sortValue}`
+
+    const OptionSelected = sortSelect.querySelector(
+      `option[value='${stringSort}']`
+    )
+    OptionSelected.selected = true
+  }
+}
+
+//kết thúc sắp xếp sản phẩm theo từng tiếu chí
+
 // sử lý logic phầm tìm kiếm
 const formSearch = document.querySelector('#form-search')
 
