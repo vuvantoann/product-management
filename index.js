@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const database = require('./config/database')
 require('dotenv').config()
 const route = require('./routes/client/index.route')
@@ -17,7 +18,12 @@ database.connect()
 app.set('views', `${__dirname}/views`)
 app.set('view engine', 'pug')
 app.use(express.static(`${__dirname}/public`))
-
+// tinyMCE
+app.use(
+  '/tinymce',
+  express.static(path.join(__dirname, 'node_modules', 'tinymce'))
+)
+// end tinyMCE
 // use express-flash
 
 app.use(cookieParser('authToken'))
