@@ -1,0 +1,26 @@
+mixin table-tree(categories, level = 1)
+  each item in categories
+    - const prefix = Array(level + 1).join("-- ")
+    tr
+      td
+        input(type="checkbox" name='id' value=item.id)
+      td
+        .box
+          img(src=item.thumbnail, alt="") 
+          span   #{prefix}#{item.title} 
+
+      td.position
+        input(type="number" name='position' class='square-number' value=item.position )
+      td
+        if(item.status === 'active') 
+          span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
+        else 
+          span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
+      td
+        .action-links
+          a(href= `${prefixAdmin}/product/edit-product/${item.id}` )
+            span Sửa
+          span( style="color: red" button-delete data-id=item.id ) Xóa
+      if(item.children && item.children.length > 0)
+        +table-tree(item.children, level + 1)
+    

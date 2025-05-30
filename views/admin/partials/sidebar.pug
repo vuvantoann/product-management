@@ -25,8 +25,8 @@ section.sidebar
           a(href=`${prefixAdmin}/product/create-product`)
             i.bx.bx-circle
             span.text Thêm sản phẩm
-        li
-          a(href="#")
+        li(class=(activeSub === 'category-list' ? 'active' : ''))
+          a(href=`${prefixAdmin}/category`)
             i.bx.bx-circle
             span.text Danh mục sản phẩm        
     li

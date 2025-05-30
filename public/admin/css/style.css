@@ -349,6 +349,7 @@ body.dark .sidebar__logo {
 }
 
 /* filter */
+.action-section h2,
 .filter-section h2 {
   font-size: 20px;
   font-weight: 600;
@@ -933,6 +934,7 @@ table .square-number {
   font-size: 13px;
 }
 .form-wrapper .form-group input,
+.form-wrapper .form-group select,
 .form-wrapper .form-group textarea {
   width: 100%;
   padding: 12px 16px;
