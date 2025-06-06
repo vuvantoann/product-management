@@ -18,7 +18,7 @@ mixin table-tree(categories, level = 1)
           span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
       td
         .action-links
-          a(href= `${prefixAdmin}/product/edit-product/${item.id}` )
+          a(href= `${prefixAdmin}/category/edit-product/${item.id}` )
             span Sửa
           span( style="color: red" button-delete data-id=item.id ) Xóa
       if(item.children && item.children.length > 0)

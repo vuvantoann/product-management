@@ -7,6 +7,9 @@ const uploadCloud = require('../../middlewares/admin/uploadCloud.middleware')
 const controller = require('../../controllers/admin/category.controller')
 
 router.get('/', controller.category)
+router.patch('/change-status/:status/:id', controller.changeCategoryStatus)
+router.patch('/change-multi', controller.changeMultipleStates)
+router.delete('/delete/:id', controller.deleteCategory)
 
 router.get('/create', controller.createCategory)
 router.post(

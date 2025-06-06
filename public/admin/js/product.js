@@ -3,7 +3,7 @@
 const buttonChangeStatus = document.querySelectorAll('[button-change-status]')
 const formChangeStatus = document.querySelector('#form-change-status')
 
-if (buttonChangeStatus.length > 0) {
+if (formChangeStatus && buttonChangeStatus.length > 0) {
   const path = formChangeStatus.getAttribute('path')
   buttonChangeStatus.forEach((button) => {
     button.addEventListener('click', () => {
@@ -57,17 +57,21 @@ if (checkboxMulti) {
 // end phần này
 
 // Mở và đóng dropdown
-const toggleButton = document.getElementById('dropdownToggle')
-const dropdownMenu = document.getElementById('dropdownMenu')
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleButton = document.getElementById('dropdownToggle')
+  const dropdownMenu = document.getElementById('dropdownMenu')
 
-toggleButton.addEventListener('click', function (e) {
-  e.stopPropagation()
-  dropdownMenu.classList.toggle('show')
-})
+  if (toggleButton && dropdownMenu) {
+    toggleButton.addEventListener('click', function (e) {
+      e.stopPropagation()
+      dropdownMenu.classList.toggle('show')
+    })
 
-window.addEventListener('click', function (e) {
-  if (!dropdownMenu.contains(e.target)) {
-    dropdownMenu.classList.remove('show')
+    window.addEventListener('click', function (e) {
+      if (!dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.remove('show')
+      }
+    })
   }
 })
 
@@ -146,7 +150,7 @@ dropdownItems.forEach((item) => {
 const buttonDeletes = document.querySelectorAll('[button-delete]')
 const formDeleteProduct = document.querySelector('#form-delete-product')
 let currentId = null
-if (buttonDeletes.length > 0) {
+if (formDeleteProduct && buttonDeletes.length > 0) {
   const path = formDeleteProduct.getAttribute('path')
 
   buttonDeletes.forEach((button) => {

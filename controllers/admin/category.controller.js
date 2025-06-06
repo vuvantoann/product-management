@@ -10,14 +10,131 @@ module.exports.category = async (req, res) => {
     deleted: false,
   }
 
+  // sử lý logic phần tìm kiếm danh mục
+  const objectSearch = searchHelper(req.query)
+  if (objectSearch.regex) {
+    find.title = objectSearch.regex
+  }
+  // kết thúc sử lý logic phần tìm kiếm danh mục
+
+  // sử lý phần phân trang cho danh mục sản phẩm
+  const countCategory = await Category.countDocuments(find)
+  let objectPagination = paginationHelper(
+    {
+      limitItem: 5,
+      currentPage: 1,
+    },
+    req.query,
+    countCategory
+  )
+
+  // kết thúc sử lý phân trang cho danh mục
   const categories = await Category.find(find)
+    .limit(objectPagination.limitItem)
+    .skip(objectPagination.skip)
   const newCategories = createTreeHelper.tree(categories)
   res.render('admin/pages/category/category-list/index', {
     title: 'Danh mục',
     activePage: 'product',
     activeSub: 'category-list',
     categories: newCategories,
+    keyword: objectSearch.keyword,
+    pagination: objectPagination,
   })
+}
+
+//[patch]admin/category/change-status/:status/:id
+module.exports.changeCategoryStatus = async (req, res) => {
+  try {
+    const status = req.params.status
+    const id = req.params.id
+
+    await Category.updateOne({ _id: id }, { status: status })
+    req.flash('success', 'Bạn đã cập nhật trạng thái danh mục thành công.')
+    res.redirect(req.get('Referer') || '/')
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Cập nhật trạng thái bại' })
+  }
+}
+
+//[patch]admin/category/change-multi
+module.exports.changeMultipleStates = async (req, res) => {
+  try {
+    const type = req.body.type
+    const ids = req.body.ids
+    const arrayIds = ids.split(',')
+    switch (type) {
+      case 'active':
+        await Category.updateMany(
+          { _id: { $in: arrayIds } },
+          { status: 'active' }
+        )
+        req.flash(
+          'success',
+          `Bạn đã cập nhật thành công trạng thái của ${arrayIds.length} danh mục`
+        )
+        break
+      case 'inactive':
+        await Category.updateMany(
+          { _id: { $in: arrayIds } },
+          { status: 'inactive' }
+        )
+        req.flash(
+          'success',
+          `Bạn đã cập nhật thành công trạng thái inactive của ${arrayIds.length} danh mục`
+        )
+        break
+      case 'delete-all':
+        await Category.updateMany(
+          { _id: { $in: arrayIds } },
+          { deleted: true, deleteAt: new Date() }
+        )
+        req.flash(
+          'success',
+          `Bạn đã xóa thành công  ${arrayIds.length} danh mục`
+        )
+        break
+      case 'change-position':
+        for (let item of arrayIds) {
+          let [id, position] = item.split('-')
+          position = parseInt(position)
+          await Category.updateOne(
+            { _id: id },
+            { position: parseInt(position) }
+          )
+        }
+        req.flash(
+          'success',
+          `Bạn đã thay đổi vị trí thành công của ${arrayIds.length} danh mục`
+        )
+        break
+      default:
+        break
+    }
+
+    res.redirect(req.get('Referer') || '/')
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: ' thất bại' })
+  }
+}
+
+// xóa sản phẩm
+module.exports.deleteCategory = async (req, res) => {
+  try {
+    const id = req.params.id
+    // await Product.deleteOne({ _id: id })
+    await Category.updateOne(
+      { _id: id },
+      { deleted: true, deleteAt: new Date() }
+    )
+    req.flash('success', `Bạn đã xóa danh mục thành công`)
+    res.redirect(req.get('Referer') || '/')
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Xóa sản  bại' })
+  }
 }
 
 //[get]admin/category/create

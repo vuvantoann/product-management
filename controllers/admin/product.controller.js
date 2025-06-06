@@ -30,7 +30,7 @@ module.exports.product = async (req, res) => {
       req.query,
       countProduct
     )
-
+    // end phân trang
     let sort = {}
 
     if (req.query.sortKey && req.query.sortValue) {
@@ -39,7 +39,6 @@ module.exports.product = async (req, res) => {
       sort.position = 'desc'
     }
 
-    // end phân trang
     const products = await Product.find(find)
       .sort(sort)
       .limit(objectPagination.limitItem)

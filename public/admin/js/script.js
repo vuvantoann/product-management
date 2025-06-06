@@ -244,3 +244,18 @@ document.querySelectorAll('.alert-container').forEach((container) => {
   })
 })
 // end logic alert
+
+// // Mở và đóng dropdown
+// const toggleButton = document.getElementById('dropdownToggle')
+// const dropdownMenu = document.getElementById('dropdownMenu')
+
+// toggleButton.addEventListener('click', function (e) {
+//   e.stopPropagation()
+//   dropdownMenu.classList.toggle('show')
+// })
+
+// window.addEventListener('click', function (e) {
+//   if (!dropdownMenu.contains(e.target)) {
+//     dropdownMenu.classList.remove('show')
+//   }
+// })

@@ -442,6 +442,7 @@ body.dark .sidebar__logo {
 /* section dropdown */
 .dropdown {
   position: relative;
+  z-index: 1;
 }
 
 .dropdown-btn:hover {
@@ -528,6 +529,7 @@ td img {
   font-size: 12px;
   text-align: center;
   display: inline-block;
+  cursor: pointer;
 }
 
 .status-inactive {
@@ -539,6 +541,11 @@ td img {
   font-size: 12px;
   text-align: center;
   display: inline-block;
+  cursor: pointer;
+}
+
+.action-links span {
+  cursor: pointer;
 }
 
 .price {
@@ -712,6 +719,7 @@ table .square-number {
   position: fixed;
   top: 70px;
   right: 20px;
+  z-index: 100000;
 }
 
 .alert-container {
