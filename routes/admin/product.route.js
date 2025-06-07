@@ -30,6 +30,7 @@ router.get('/edit-product/:id', controller.editProduct)
 router.patch(
   '/edit-product/:id',
   upload.single('thumbnail'),
+  uploadCloud.upload,
   validate.createPost,
   controller.editProductPatch
 )

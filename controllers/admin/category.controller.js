@@ -172,3 +172,46 @@ module.exports.createCategoryPost = async (req, res) => {
     res.status(500).json({ error: 'Tạo danh mục thất bại' })
   }
 }
+
+//[get]admin/category/edit/id
+module.exports.editCategory = async (req, res) => {
+  try {
+    let find = {
+      deleted: false,
+      _id: req.params.id,
+    }
+    const category = await Category.findOne(find)
+    const categories = await Category.find({
+      deleted: false,
+    })
+    const newCategories = createTreeHelper.tree(categories)
+    res.render('admin/pages/category/edit-category/edit', {
+      title: 'Chỉnh sửa danh mục',
+      activePage: 'product',
+      activeSub: 'category-list',
+      category: category,
+      categories: newCategories,
+    })
+  } catch (error) {
+    req.flash('error', `danh mục này không tồn tại`)
+
+    res.redirect(`${systemConfig.prefixAdmin}/category`)
+  }
+}
+
+//[patch]admin/category/edit/:id
+module.exports.editCategoryPatch = async (req, res) => {
+  try {
+    const id = req.params.id
+    req.body.position = parseInt(req.body.position)
+
+    // if (req.file) req.body.thumbnail = `/uploads/${req.file.filename}`
+
+    await Category.updateOne({ _id: id }, req.body)
+    req.flash('success', 'Bạn đã chỉnh sửa danh mục thành công.')
+    res.redirect(req.get('Referer') || '/')
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Chỉnh sửa danh mục thất bại' })
+  }
+}

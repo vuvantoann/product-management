@@ -11,6 +11,7 @@ router.patch('/change-status/:status/:id', controller.changeCategoryStatus)
 router.patch('/change-multi', controller.changeMultipleStates)
 router.delete('/delete/:id', controller.deleteCategory)
 
+// create category
 router.get('/create', controller.createCategory)
 router.post(
   '/create',
@@ -18,6 +19,16 @@ router.post(
   uploadCloud.upload,
   validate.createPost,
   controller.createCategoryPost
+)
+// edit category
+router.get('/edit/:id', controller.editCategory)
+
+router.patch(
+  '/edit/:id',
+  upload.single('thumbnail'),
+  uploadCloud.upload,
+  validate.createPost,
+  controller.editCategoryPatch
 )
 
 module.exports = router
