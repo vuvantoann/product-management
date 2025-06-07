@@ -1,5 +1,6 @@
 extends ../../../layout/default.pug 
 include ../../../mixins/alert.pug
+include ../../../mixins/select-tree.pug
 
 block content
   main
@@ -29,6 +30,13 @@ block content
         .form-group
           label(for="title") Tiêu đề sản phẩm
           input(type="text", id="title", placeholder="Nhập tiêu đề sản phẩm", name='title' value=product.title)
+        .form-group
+          label(for="product_category_id") Danh mục 
+          //- input(type="text", id="parent_id", placeholder="Nhập danh mục cha", name='parent_id')
+          select(name="product_category_id", id="product_category_id") 
+            option(value="") -- Chọn danh mục --
+              if(categories) 
+                +select-tree(categories, 1, product.product_category_id)
         .form-group
           label(for="description") Mô tả 
             span (tuỳ chọn)

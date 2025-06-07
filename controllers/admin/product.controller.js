@@ -1,7 +1,9 @@
 const Product = require('../../modals/product.modal')
+const Category = require('../../modals/category.modal')
 const searchHelper = require('../../helper/search')
 const paginationHelper = require('../../helper/pagination')
 const systemConfig = require('../../config/system')
+const createTreeHelper = require('../../helper/createTree')
 
 //[get]admin/product
 module.exports.product = async (req, res) => {
@@ -150,10 +152,17 @@ module.exports.deleteProduct = async (req, res) => {
 
 //[get]admin/product/create-product
 module.exports.createProduct = async (req, res) => {
+  let find = {
+    deleted: false,
+  }
+
+  const categories = await Category.find(find)
+  const newCategories = createTreeHelper.tree(categories)
   res.render('admin/pages/product/add-product/create', {
     title: 'Thêm mới sản phẩm',
     activePage: 'product',
     activeSub: 'add-product',
+    categories: newCategories,
   })
 }
 
@@ -188,12 +197,18 @@ module.exports.editProduct = async (req, res) => {
       deleted: false,
       _id: req.params.id,
     }
+
+    const categories = await Category.find({
+      deleted: false,
+    })
+    const newCategories = createTreeHelper.tree(categories)
     const product = await Product.findOne(find)
     res.render('admin/pages/product/edit-product/edit', {
       title: 'Chỉnh sửa sản phẩm',
       activePage: 'product',
       activeSub: 'product-list',
       product: product,
+      categories: newCategories,
     })
   } catch (error) {
     req.flash('error', `Sản phẩm này không tồn tại`)
