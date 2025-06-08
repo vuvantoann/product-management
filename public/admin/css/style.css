@@ -1167,3 +1167,66 @@ table .square-number {
 
 /*end detail-product */
 /*end Create Product */
+
+/* SETTING */
+
+.setting .section {
+  font-family: var(--inter);
+  margin: 20px;
+  background: var(--light);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  padding: 18px 32px;
+}
+
+.setting .section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--gray);
+}
+
+.setting .items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.setting .item {
+  display: flex;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+  background: var(--grey);
+  padding: 15px 20px;
+  border-radius: 8px;
+  min-width: 250px;
+  flex: 1 1 250px;
+  transition: background 0.2s ease;
+}
+
+.setting .item:hover {
+  background: var(--dark-grey);
+}
+
+.setting .item i {
+  font-size: 28px;
+  margin-right: 15px;
+  color: var(--dark-gray);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.setting .item-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--gray);
+}
+
+.setting .item-desc {
+  font-size: 14px;
+  color: var(--dark-gray);
+}
+
+/*END SETTING */

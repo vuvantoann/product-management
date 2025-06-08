@@ -61,8 +61,8 @@ section.sidebar
             span.sidebar__text Liên hệ
   ul.sidebar__menu
     li
-      .menu-item
-        a.trigger(href="#")
+      .menu-item(class=(activePage === 'setting' ? 'active' : ''))
+        a.trigger(href=`${prefixAdmin}/setting`)
           .left 
             i.bx.bxs-cog
             span.sidebar__text Cài đặt
