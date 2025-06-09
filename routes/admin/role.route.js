@@ -8,4 +8,7 @@ router.get('/', controller.role)
 router.get('/create', controller.createRole)
 router.post('/create', validate.createPost, controller.createRolePost)
 
+router.get('/permissions', controller.permissions)
+router.patch('/permissions', controller.permissionsPatch)
+
 module.exports = router

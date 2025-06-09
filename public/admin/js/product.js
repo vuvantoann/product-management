@@ -188,3 +188,5 @@ buttonCancel.addEventListener('click', () => {
 })
 
 // end logic phần xóa sản phẩm
+
+console.log('Toàn đẹp trai ')

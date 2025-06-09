@@ -33,3 +33,36 @@ module.exports.createRolePost = async (req, res) => {
     res.status(500).json({ error: 'Tạo nhóm quyền thất bại' })
   }
 }
+
+//[get]admin/role/permissions
+module.exports.permissions = async (req, res) => {
+  try {
+    let find = {
+      deleted: false,
+    }
+    const roles = await Role.find(find)
+    res.render('admin/pages/role/permissions/index', {
+      title: 'Phân quyền',
+      activePage: 'setting',
+      roles: roles,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Lỗi trang' })
+  }
+}
+
+//[patch]admin/role/permissions
+module.exports.permissionsPatch = async (req, res) => {
+  try {
+    const permissions = JSON.parse(req.body.permissions)
+    for (item of permissions) {
+      await Role.updateOne({ _id: item.id }, { permissions: item.permissions })
+    }
+    req.flash('success', 'Bạn đã cập nhật phân quyền thành công.')
+    res.redirect(req.get('Referer') || '/')
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Lỗi trang' })
+  }
+}
