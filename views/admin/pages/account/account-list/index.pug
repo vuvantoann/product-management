@@ -1,0 +1,62 @@
+extends ../../../layout/default.pug 
+include ../../../mixins/search.pug
+include ../../../mixins/pagination.pug
+include ../../../mixins/alert.pug
+include ../../../mixins/dropdown.pug
+
+
+
+block content
+  main
+    +alert-success(5000)
+    +alert-error(7000)
+
+    .action-section
+      
+      h2 Danh sách tài khoản
+      .action-wrap
+        +search(keyword)
+        
+        +dropdown-change-multi(`${prefixAdmin}/category/change-multi`)
+
+        .button-group
+            a(href=prefixAdmin + '/account/create' class='button')
+              i.bx.bx-plus
+              span Thêm tài khoản
+      
+      table
+        thead
+          tr
+            th: input(type="checkbox" name="checkAll")
+            th Tài khoản
+            th Phân quyền
+            th Trạng thái
+            th Hành động
+        tbody
+          each item in accounts
+            tr
+              td: input(type="checkbox" name='id' value=item.id)
+              td
+                .user-info
+                  img(src=item.avatar, alt="")
+                  div
+                    div #{item.fullName}
+                    small #{item.email}
+              td
+                span #{item.role.title}
+              td
+                if(item.status === 'active') 
+                  span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
+                else 
+                  span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
+              td 
+                .action-links
+                  a(href= `${prefixAdmin}/category/edit/${item.id}` )
+                    span Sửa
+                  span( style="color: red" button-delete data-id=item.id ) Xóa
+ 
+      
+  
+  form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/category/change-status/`) 
+  form(action="" method='POST' id='form-delete-product' path=`${prefixAdmin}/category/delete/`) 
+  script(src='/admin/js/product.js')
