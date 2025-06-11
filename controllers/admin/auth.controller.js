@@ -5,9 +5,13 @@ const md5 = require('md5')
 //[get]admin/auth/login
 module.exports.login = async (req, res) => {
   try {
-    res.render('admin/pages/auth/login/index', {
-      title: 'Đăng nhập',
-    })
+    if (req.cookies.token) {
+      res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
+    } else {
+      res.render('admin/pages/auth/login/index', {
+        title: 'Đăng nhập',
+      })
+    }
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Lỗi trang' })
