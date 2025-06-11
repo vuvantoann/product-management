@@ -8,6 +8,7 @@ const router = express.Router()
 
 router.get('/', controller.account)
 
+//create account
 router.get('/create', controller.createAccount)
 
 router.post(
@@ -16,6 +17,17 @@ router.post(
   uploadCloud.upload,
   validate.createPost,
   controller.createAccountPost
+)
+
+//edit account
+router.get('/edit/:id', controller.editAccount)
+
+router.patch(
+  '/edit/:id',
+  upload.single('avatar'),
+  uploadCloud.upload,
+  validate.editPatch,
+  controller.editAccountPatch
 )
 
 module.exports = router
