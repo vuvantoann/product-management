@@ -82,20 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebar.classList.add('hide')
     submenus.forEach((ul) => (ul.style.display = 'none'))
   }
-
-  menuBar.addEventListener('click', () => {
-    sidebar.classList.toggle('hide')
-    if (sidebar.classList.contains('hide')) {
-      submenus.forEach((ul) => (ul.style.display = 'none'))
-      localStorage.setItem('sidebar', 'hide')
-    } else {
-      const activeParent = document.querySelector(
-        '.menu-item.active + .submenu'
-      )
-      if (activeParent) activeParent.style.display = 'flex'
-      localStorage.setItem('sidebar', 'show')
-    }
-  })
+  if (menuBar) {
+    menuBar.addEventListener('click', () => {
+      sidebar.classList.toggle('hide')
+      if (sidebar.classList.contains('hide')) {
+        submenus.forEach((ul) => (ul.style.display = 'none'))
+        localStorage.setItem('sidebar', 'hide')
+      } else {
+        const activeParent = document.querySelector(
+          '.menu-item.active + .submenu'
+        )
+        if (activeParent) activeParent.style.display = 'flex'
+        localStorage.setItem('sidebar', 'show')
+      }
+    })
+  }
 })
 
 // kết thúc
@@ -103,23 +104,25 @@ document.addEventListener('DOMContentLoaded', () => {
 // phần sử lý logic chỗ chế độ sáng tối
 
 const switchMode = document.getElementById('switch-mode')
+if (switchMode) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const mode = localStorage.getItem('mode')
+    if (mode === 'dark') {
+      document.body.classList.add('dark')
+      switchMode.checked = true
+    } else {
+      document.body.classList.remove('dark')
+      switchMode.checked = false
+    }
+  })
 
-document.addEventListener('DOMContentLoaded', () => {
-  const mode = localStorage.getItem('mode')
-  if (mode === 'dark') {
-    document.body.classList.add('dark')
-    switchMode.checked = true
-  } else {
-    document.body.classList.remove('dark')
-    switchMode.checked = false
-  }
-})
+  switchMode.addEventListener('change', () => {
+    const isDark = switchMode.checked
+    document.body.classList.toggle('dark')
+    localStorage.setItem('mode', isDark ? 'dark' : 'light')
+  })
+}
 
-switchMode.addEventListener('change', () => {
-  const isDark = switchMode.checked
-  document.body.classList.toggle('dark')
-  localStorage.setItem('mode', isDark ? 'dark' : 'light')
-})
 // kết thúc sử lý logic chỗ chế độ sáng tối
 
 // sử lý logic lọc sản phẩm theo trạng thái
@@ -244,18 +247,3 @@ document.querySelectorAll('.alert-container').forEach((container) => {
   })
 })
 // end logic alert
-
-// // Mở và đóng dropdown
-// const toggleButton = document.getElementById('dropdownToggle')
-// const dropdownMenu = document.getElementById('dropdownMenu')
-
-// toggleButton.addEventListener('click', function (e) {
-//   e.stopPropagation()
-//   dropdownMenu.classList.toggle('show')
-// })
-
-// window.addEventListener('click', function (e) {
-//   if (!dropdownMenu.contains(e.target)) {
-//     dropdownMenu.classList.remove('show')
-//   }
-// })
