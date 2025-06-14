@@ -3,72 +3,73 @@ include ../../../mixins/alert.pug
 
 block content
   main
-    +alert-error(7000)
-    +alert-success(5000)
+    if(role.permissions.includes("account_edit"))
+      +alert-error(7000)
+      +alert-success(5000)
 
-    form(
-          action=`${prefixAdmin}/account/edit/${account._id}?_method=PATCH`,
-          method="POST",
-          class="form-wrapper",
-          enctype="multipart/form-data"
-        )
-      
-      .form-block
-        .form-header
-          div
-            h2 Chỉnh sửa tài khoản
-          .form-actions
-            a(href=prefixAdmin + '/account' class='btn-cancel')
-              span Quay lại trang danh sách
-            button.btn-submit(type="submit") Cập nhật
+      form(
+            action=`${prefixAdmin}/account/edit/${account._id}?_method=PATCH`,
+            method="POST",
+            class="form-wrapper",
+            enctype="multipart/form-data"
+          )
+        
+        .form-block
+          .form-header
+            div
+              h2 Chỉnh sửa tài khoản
+            .form-actions
+              a(href=prefixAdmin + '/account' class='btn-cancel')
+                span Quay lại trang danh sách
+              button.btn-submit(type="submit") Cập nhật
 
-      .form-block
-        .form-group
-          label(for="fullName") Họ tên*
-          input(type="text", id="fullName", placeholder="họ và tên", name='fullName' value=account.fullName)
-        .form-group
-          label(for="email") Email*
-          input(type="text", id="email", placeholder="abc@gmail.com", name='email' value=account.email)
-        .form-group
-          label(for="password") Mật khẩu*
-          input(type="password", id="password", name='password')
-        .form-group
-          label(for="phone") Số điện thoại
-          input(type="text", id="phone",  name='phone' value=account.phone)
+        .form-block
+          .form-group
+            label(for="fullName") Họ tên*
+            input(type="text", id="fullName", placeholder="họ và tên", name='fullName' value=account.fullName)
+          .form-group
+            label(for="email") Email*
+            input(type="text", id="email", placeholder="abc@gmail.com", name='email' value=account.email)
+          .form-group
+            label(for="password") Mật khẩu*
+            input(type="password", id="password", name='password')
+          .form-group
+            label(for="phone") Số điện thoại
+            input(type="text", id="phone",  name='phone' value=account.phone)
+            p
+            |
+            label Ảnh đại diện
+          .form-image(upload-image) 
+            input(type="file", id='file-upload', name="avatar" 
+            multiple , input-upload)
+            label(for="file-upload")
+              i.bx.bx-upload
+              span Chọn một ảnh 
+            p.num-of-files chưa có file nào được chọn
+            .images
+              if account && account.avatar
+                .file-item
+                  img(src=account.avatar)
+                  .file-name= account.avatar.split('/').pop()
+                  button(onclick="this.parentElement.remove()") Remove file
+            
           p
           |
-          label Ảnh đại diện
-        .form-image(upload-image) 
-          input(type="file", id='file-upload', name="avatar" 
-          multiple , input-upload)
-          label(for="file-upload")
-            i.bx.bx-upload
-            span Chọn một ảnh 
-          p.num-of-files chưa có file nào được chọn
-          .images
-            if account && account.avatar
-              .file-item
-                img(src=account.avatar)
-                .file-name= account.avatar.split('/').pop()
-                button(onclick="this.parentElement.remove()") Remove file
-          
-        p
-        |
-        .form-group
-          label(for="role_id") Phân quyền 
-          select(name="role_id", id="role_id") 
-            option(value="") -- Chọn --
-            each item in roles
-              option(value=item.id  selected=(item.id === account.role_id ? true : false)) #{item.title}
-             
-        .form-group
-          label Trạng thái
-        .radio-group
-          .form-radio
-            input(type="radio",id="statusActive", name="status", value="active", checked=account.status == 'active' ? true : false)
-            label(for="statusActive") Hoạt động
-          .form-radio
-            input(type="radio",id="statusInActive", name="status", value="active" checked=account.status == 'inactive' ? true : false)
-            label(for="statusInActive") Dừng hoạt động
-  
-  script(src='/admin/js/create-product.js')
+          .form-group
+            label(for="role_id") Phân quyền 
+            select(name="role_id", id="role_id") 
+              option(value="") -- Chọn --
+              each item in roles
+                option(value=item.id  selected=(item.id === account.role_id ? true : false)) #{item.title}
+              
+          .form-group
+            label Trạng thái
+          .radio-group
+            .form-radio
+              input(type="radio",id="statusActive", name="status", value="active", checked=account.status == 'active' ? true : false)
+              label(for="statusActive") Hoạt động
+            .form-radio
+              input(type="radio",id="statusInActive", name="status", value="active" checked=account.status == 'inactive' ? true : false)
+              label(for="statusInActive") Dừng hoạt động
+    
+    script(src='/admin/js/create-product.js')

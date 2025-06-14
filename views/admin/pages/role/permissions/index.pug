@@ -6,112 +6,139 @@ include ../../../mixins/alert.pug
 
 block content
   main
-    +alert-success(5000)
-    +alert-error(7000)
+    if(role.permissions.includes("role_permissions"))
+      +alert-success(5000)
+      +alert-error(7000)
 
-    .filter-section
-      .filter-header 
-        h2 Thiết lập phân quyền
-        div(data-roles=roles)
-        .filter-actions
-          button.btn-submit(type="submit" button-submit) Cập nhật
+      .filter-section
+        .filter-header 
+          h2 Thiết lập phân quyền
+          div(data-roles=roles)
+          .filter-actions
+            button.btn-submit(type="submit" button-submit) Cập nhật
 
-    .action-section
-      .permission-table
-        table(table-permission)
-          thead
-            tr
-              th
-              each item in roles
-                th #{item.title}
-            tr.select-all
-              td Chọn tất cả
-              each item in roles
-                td: input(type="checkbox" name="checkAll")
-          tbody
-            tr(data-name='id' class=" d-none")
-              each item in roles
+      .action-section
+        .permission-table
+          table(table-permission)
+            thead
+              tr
+                th
+                each item in roles
+                  th #{item.title}
+              tr.select-all
+                td Chọn tất cả
+                each item in roles
+                  td: input(type="checkbox" name="checkAll")
+            tbody
+              tr(data-name='id' class=" d-none")
+                each item in roles
+                  td
+                    input(
+                      type="text"
+                      name="ids"
+                      value=item.id
+                      class="form-control d-none"
+                    )
+              //- danh mục
+              tr.section-header
+                td(colspan="3") Danh mục 
+              tr(data-name='category_view')
+                td Xem
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='category_create')
+                td Thêm mới
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='category_status')
+                td Thay đổi trạng thái
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='category_edit')
+                td Chỉnh sửa
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='category_delete')
                 td
-                  input(
-                    type="text"
-                    name="ids"
-                    value=item.id
-                    class="form-control d-none"
-                  )
-            tr.section-header
-              td(colspan="3") Danh mục 
-            tr(data-name='category_view')
-              td Xem
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='category_create')
-              td Thêm mới
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='category_status')
-              td Thay đổi trạng thái
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='category_edit')
-              td Chỉnh sửa
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='category_delete')
-              td
-                span.text-danger Xóa
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr.section-header
-              td(colspan="3") Sản phẩm
-            tr(data-name='product_view')
-              td Xem
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='product_create')
-              td Thêm mới
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='product_status')
-              td Thay đổi trạng thái
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='product_edit')
-              td Chỉnh sửa
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='product_delete')
-              td
-                span.text-danger Xóa
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr.section-header
-              td(colspan="3") Nhóm quyền
-            tr(data-name='role_view')
-              td Xem
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='role_create')
-              td Thêm mới
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='role_edit')
-              td Chỉnh sửa
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='role_permissions')
-              td Phân quyền
-              each item in roles
-                td: input(type="checkbox" name='id')
-            tr(data-name='role_delete')
-              td
-                span.text-danger Xóa
-              each item in roles
-                td: input(type="checkbox" name='id')
-            
+                  span.text-danger Xóa
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              //- sản phẩm
+              tr.section-header
+                td(colspan="3") Sản phẩm
+              tr(data-name='product_view')
+                td Xem
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='product_create')
+                td Thêm mới
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='product_status')
+                td Thay đổi trạng thái
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='product_edit')
+                td Chỉnh sửa
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='product_delete')
+                td
+                  span.text-danger Xóa
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              //- nhóm quyền
+              tr.section-header
+                td(colspan="3") Nhóm quyền
+              tr(data-name='role_view')
+                td Xem
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='role_create')
+                td Thêm mới
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='role_edit')
+                td Chỉnh sửa
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='role_permissions')
+                td Phân quyền
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='role_delete')
+                td
+                  span.text-danger Xóa
+                each item in roles
+                  td: input(type="checkbox" name='id')
+                  //- tài khoản
+              tr.section-header
+                td(colspan="3") Tài khoản
+              tr(data-name='account_view')
+                td Xem
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='account_create')
+                td Thêm mới
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='account_status')
+                td Thay đổi trạng thái
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='account_edit')
+                td Chỉnh sửa
+                each item in roles
+                  td: input(type="checkbox" name='id')
+              tr(data-name='account_delete')
+                td
+                  span.text-danger Xóa
+                each item in roles
+                  td: input(type="checkbox" name='id')
 
-  
-  form(action=`${prefixAdmin}/role/permissions?_method=PATCH` method='POST' id='form-change-permissions' )
-    div(class='form-group')
-      input(type="text"  class="form-control d-none" name='permissions')
-  
+    
+    form(action=`${prefixAdmin}/role/permissions?_method=PATCH` method='POST' id='form-change-permissions' )
+      div(class='form-group')
+        input(type="text"  class="form-control d-none" name='permissions')
+    
   script(src='/admin/js/role.js')

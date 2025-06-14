@@ -9,36 +9,38 @@ include ../../../mixins/dropdown.pug
 
 block content
   main
-    +alert-success(5000)
-    +alert-error(7000)
+    if(role.permissions.includes("category_view"))
+      +alert-success(5000)
+      +alert-error(7000)
 
-    .action-section
-      h2 Danh mục sản phẩm
-      .action-wrap
-        +search(keyword)
-        
-        +dropdown-change-multi(`${prefixAdmin}/category/change-multi`)
+      .action-section
+        h2 Danh mục sản phẩm
+        .action-wrap
+          +search(keyword)
+          
+          +dropdown-change-multi(`${prefixAdmin}/category/change-multi`)
 
-        .button-group
-            a(href=prefixAdmin + '/category/create' class='button')
-              i.bx.bx-plus
-              span Thêm danh mục
-      table(table-checkbox-multi)
-        thead
-          tr
-            th 
-              input(type="checkbox" name="checkAll")
-            th Danh mục
-            th Vị trí
-            th Trạng thái
-            th Hành động
-        tbody
-          if(categories) 
-            +table-tree(categories)
-      +paginationStatic(pagination)
-  
-  form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/category/change-status/`) 
-  form(action="" method='POST' id='form-delete-product' path=`${prefixAdmin}/category/delete/`) 
+          .button-group
+            if(role.permissions.includes("category_create"))
+              a(href=prefixAdmin + '/category/create' class='button')
+                i.bx.bx-plus
+                span Thêm danh mục
+        table(table-checkbox-multi)
+          thead
+            tr
+              th 
+                input(type="checkbox" name="checkAll")
+              th Danh mục
+              th Vị trí
+              th Trạng thái
+              th Hành động
+          tbody
+            if(categories) 
+              +table-tree(categories)
+        +paginationStatic(pagination)
+    
+    form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/category/change-status/`) 
+    form(action="" method='POST' id='form-delete-product' path=`${prefixAdmin}/category/delete/`) 
   script(src='/admin/js/product.js')
 
 

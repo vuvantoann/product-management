@@ -3,30 +3,31 @@ include ../../../mixins/alert.pug
 
 block content
   main
-    +alert-error(7000)
-    +alert-success(5000)
-    
-    form(
-          action=`${prefixAdmin}/role/create`,
-          method="POST",
-          class="form-wrapper",
-        )
-      // Block 1: Header
-      .form-block
-        .form-header
-          div
-            h2 Thêm mới nhóm quyền
-            p các nhóm quyền cho tài khoản được thêm mới
-          .form-actions
-            a(href=prefixAdmin + '/role' class='btn-cancel')
-              span Quay lại trang danh sách
-            button.btn-submit(type="submit") Thêm mới
+    if(role.permissions.includes("role_create"))
+      +alert-error(7000)
+      +alert-success(5000)
+      
+      form(
+            action=`${prefixAdmin}/role/create`,
+            method="POST",
+            class="form-wrapper",
+          )
+        // Block 1: Header
+        .form-block
+          .form-header
+            div
+              h2 Thêm mới nhóm quyền
+              p các nhóm quyền cho tài khoản được thêm mới
+            .form-actions
+              a(href=prefixAdmin + '/role' class='btn-cancel')
+                span Quay lại trang danh sách
+              button.btn-submit(type="submit") Thêm mới
 
-      // Block 2: Tiêu đề và mô tả
-      .form-block
-        .form-group
-          label(for="title") Nhóm quyền*
-          input(type="text", id="title", placeholder="Nhập tên của nhóm quyền", name='title')
-        .form-group
-          label(for="description") Mô tả 
-          input(type="text", id="description", placeholder="Mô tả chi tiết nhóm quyền", name='description')
+        // Block 2: Tiêu đề và mô tả
+        .form-block
+          .form-group
+            label(for="title") Nhóm quyền*
+            input(type="text", id="title", placeholder="Nhập tên của nhóm quyền", name='title')
+          .form-group
+            label(for="description") Mô tả 
+            input(type="text", id="description", placeholder="Mô tả chi tiết nhóm quyền", name='description')

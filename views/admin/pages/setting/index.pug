@@ -24,21 +24,24 @@ block content
       .section
         .section-title Tài khoản
         .row.items
-          a.item.col-xl-3.col-lg-6.col-md-6.col-sm-12.col-12(href=`${prefixAdmin}/account`)
-            i.bx.bxs-user-account
-            div
-              .item-title Danh sách tài khoản
-              .item-desc Thiết lập tài khoản
-          a.item.col-xl-3.col-lg-6.col-md-6.col-sm-12.col-12(href=`${prefixAdmin}/role`)
-            i.bx.bx-group
-            div
-              .item-title Nhóm quyền
-              .item-desc Thiết lập nhóm quyền
-          a.item.col-xl-3.col-lg-6.col-md-6.col-sm-12.col-12(href=`${prefixAdmin}/role/permissions`)
-            i.bx.bxs-user-detail
-            div
-              .item-title Phân quyền
-              .item-desc Thiết lập phân quyền
+          if(role.permissions.includes("account_view"))
+            a.item.col-xl-3.col-lg-6.col-md-6.col-sm-12.col-12(href=`${prefixAdmin}/account`)
+              i.bx.bxs-user-account
+              div
+                .item-title Danh sách tài khoản
+                .item-desc Thiết lập tài khoản
+          if(role.permissions.includes("role_view"))
+            a.item.col-xl-3.col-lg-6.col-md-6.col-sm-12.col-12(href=`${prefixAdmin}/role`)
+              i.bx.bx-group
+              div
+                .item-title Nhóm quyền
+                .item-desc Thiết lập nhóm quyền
+          if(role.permissions.includes("role_permissions"))
+            a.item.col-xl-3.col-lg-6.col-md-6.col-sm-12.col-12(href=`${prefixAdmin}/role/permissions`)
+              i.bx.bxs-user-detail
+              div
+                .item-title Phân quyền
+                .item-desc Thiết lập phân quyền
           a.item.col-xl-3.col-lg-6.col-md-6.col-sm-12.col-12(href="#")
             i.bx.bx-edit-alt
             div

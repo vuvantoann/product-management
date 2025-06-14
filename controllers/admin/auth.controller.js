@@ -17,7 +17,7 @@ module.exports.login = async (req, res) => {
     res.status(500).json({ error: 'Lỗi trang' })
   }
 }
-//[post]]admin/auth/login
+//[post]admin/auth/login
 module.exports.loginPost = async (req, res) => {
   try {
     const email = req.body.email

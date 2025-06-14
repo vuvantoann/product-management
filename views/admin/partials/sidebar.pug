@@ -17,18 +17,21 @@ section.sidebar
             span.sidebar__text Sản phẩm
           i(class="bx bx-chevron-right")
       ul.submenu
-        li(class=(activeSub === 'product-list' ? 'active' : ''))
-          a(href=`${prefixAdmin}/product`)
-            i.bx.bx-circle
-            span.text Danh sách sản phẩm
-        li(class=(activeSub === 'add-product' ? 'active' : ''))
-          a(href=`${prefixAdmin}/product/create-product`)
-            i.bx.bx-circle
-            span.text Thêm sản phẩm
-        li(class=(activeSub === 'category-list' ? 'active' : ''))
-          a(href=`${prefixAdmin}/category`)
-            i.bx.bx-circle
-            span.text Danh mục sản phẩm        
+        if(role.permissions.includes("product_view"))
+          li(class=(activeSub === 'product-list' ? 'active' : ''))
+            a(href=`${prefixAdmin}/product`)
+              i.bx.bx-circle
+              span.text Danh sách sản phẩm
+        if(role.permissions.includes("product_create"))
+          li(class=(activeSub === 'add-product' ? 'active' : ''))
+            a(href=`${prefixAdmin}/product/create-product`)
+              i.bx.bx-circle
+              span.text Thêm sản phẩm
+        if(role.permissions.includes("category_view"))
+          li(class=(activeSub === 'category-list' ? 'active' : ''))
+            a(href=`${prefixAdmin}/category`)
+              i.bx.bx-circle
+              span.text Danh mục sản phẩm        
     li
       .menu-item
         a.trigger(href="#")

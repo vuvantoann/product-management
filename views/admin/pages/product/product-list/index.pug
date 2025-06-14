@@ -8,96 +8,102 @@ include ../../../mixins/dropdown.pug
 
 block content
   main
-    +alert-success(5000)
-    +alert-error(7000)
+    if(role.permissions.includes("product_view"))
+      +alert-success(5000)
+      +alert-error(7000)
 
-    .filter-section
-      h2 Danh sách sản phẩm
-      .filter-wrap
-        +search(keyword)
-        select#status-filter
-          option(value="" disabled selected) -- Trạng thái --
-          option(value="") Tất cả 
-          option(value="active") Hoạt động
-          option(value="inactive") Dừng hoạt động
-        select
-          option -- Danh mục -- 
-        select#sort-select
-          option(value="" disabled selected) -- Sắp xếp --
-          option(value="position-desc") Vị trí giảm dần 
-          option(value="position-asc") Vị trí tăng dần
-          option(value="price-desc") Giá giảm dần
-          option(value="price-asc") Giá tăng dần
-          option(value="title-asc") Tiêu đề A - Z
-          option(value="title-desc") Tiêu đề Z - A
+      .filter-section
+        h2 Danh sách sản phẩm
+        .filter-wrap
+          +search(keyword)
+          select#status-filter
+            option(value="" disabled selected) -- Trạng thái --
+            option(value="") Tất cả 
+            option(value="active") Hoạt động
+            option(value="inactive") Dừng hoạt động
+          select
+            option -- Danh mục -- 
+          select#sort-select
+            option(value="" disabled selected) -- Sắp xếp --
+            option(value="position-desc") Vị trí giảm dần 
+            option(value="position-asc") Vị trí tăng dần
+            option(value="price-desc") Giá giảm dần
+            option(value="price-asc") Giá tăng dần
+            option(value="title-asc") Tiêu đề A - Z
+            option(value="title-desc") Tiêu đề Z - A
+            
+          button 
+            i.bx.bx-refresh
           
-        button 
-          i.bx.bx-refresh
-        
-    .action-section
-      .action-wrap
-        .button-group
-          a(href=prefixAdmin + '/product/create-product' class='button')
-            i.bx.bx-plus
-            span Thêm sản phẩm 
-        
-        +dropdown-change-multi(`${prefixAdmin}/product/change-multi`)
+      .action-section
+        .action-wrap
+          .button-group
+            if(role.permissions.includes("product_create"))
+              a(href=prefixAdmin + '/product/create-product' class='button')
+                i.bx.bx-plus
+                span Thêm sản phẩm 
+          
+          +dropdown-change-multi(`${prefixAdmin}/product/change-multi`)
 
-      table(table-checkbox-multi)
-        thead
-          tr
-            th 
-              input(type="checkbox" name="checkAll")
-            th Tên sản phẩm
-            th Thuộc tính
-            th Hình ảnh
-            th Giá 
-            th Số lượng
-            th Vị trí
-            th Trạng thái
-            th Chi tiết
-        tbody
-          each item in products
+        table(table-checkbox-multi)
+          thead
             tr
-              td
-                input(type="checkbox" name='id' value=item.id)
-              td
-                | #{item.title}
-                br
-                .action-links
-                  a(href= `${prefixAdmin}/product/edit-product/${item.id}` )
-                    span Sửa
-                  span( style="color: red" button-delete data-id=item.id ) Xóa
+              th 
+                input(type="checkbox" name="checkAll")
+              th Tên sản phẩm
+              th Thuộc tính
+              th Hình ảnh
+              th Giá 
+              th Số lượng
+              th Vị trí
+              th Trạng thái
+              th Chi tiết
+          tbody
+            each item in products
+              tr
+                td
+                  input(type="checkbox" name='id' value=item.id)
+                td
+                  | #{item.title}
+                  br
+                  .action-links
+                    if(role.permissions.includes("product_edit"))
+                      a(href= `${prefixAdmin}/product/edit-product/${item.id}` )
+                        span Sửa
+                    if(role.permissions.includes("product_delete"))
+                      span( style="color: red" button-delete data-id=item.id ) Xóa
+                    if(role.permissions.includes("product_status"))
+                      if(item.status === 'active') 
+                        span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
+                      else 
+                        span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
+                td
+                  if(item.isItem) 
+                    span.status-active Sản phẩm mới
+                  else 
+                    span.status-inactive Sản phẩm cũ
+                td
+                  img(src=item.thumbnail, alt="")
+                td
+                  span.price #{item.price}đ
+
+                td.stock #{item.stock}
+                td.position
+                  input(type="number" name='position' class='square-number' value=item.position )
+                td
                   if(item.status === 'active') 
                     span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
                   else 
                     span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
-              td
-                if(item.isItem) 
-                  span.status-active Sản phẩm mới
-                else 
-                  span.status-inactive Sản phẩm cũ
-              td
-                img(src=item.thumbnail, alt="")
-              td
-                span.price #{item.price}đ
+                td 
+                  a(href= `${prefixAdmin}/product/detail-product/${item.id}` )
+                    span Xem
+        +paginationStatic(pagination)
+    else 
+      h1 Bạn không có quyền truy cập trang   
 
-              td.stock #{item.stock}
-              td.position
-                input(type="number" name='position' class='square-number' value=item.position )
-              td
-                if(item.status === 'active') 
-                  span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
-                else 
-                  span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
-              td 
-                a(href= `${prefixAdmin}/product/detail-product/${item.id}` )
-                  span Xem
-      +paginationStatic(pagination)
-      
-
-  
-  form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/product/change-status/`) 
-  form(action="" method='POST' id='form-delete-product' path=`${prefixAdmin}/product/delete/`) 
-  script(src='/admin/js/product.js')
+    
+    form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/product/change-status/`) 
+    form(action="" method='POST' id='form-delete-product' path=`${prefixAdmin}/product/delete/`) 
+    script(src='/admin/js/product.js')
 

@@ -12,15 +12,18 @@ mixin table-tree(categories, level = 1)
       td.position
         input(type="number" name='position' class='square-number' value=item.position )
       td
-        if(item.status === 'active') 
-          span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
-        else 
-          span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
+        if(role.permissions.includes("category_status"))
+          if(item.status === 'active') 
+            span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
+          else 
+            span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
       td
         .action-links
-          a(href= `${prefixAdmin}/category/edit/${item.id}` )
-            span Sửa
-          span( style="color: red" button-delete data-id=item.id ) Xóa
+          if(role.permissions.includes("category_edit"))
+            a(href= `${prefixAdmin}/category/edit/${item.id}` )
+              span Sửa
+          if(role.permissions.includes("category_delete"))
+            span( style="color: red" button-delete data-id=item.id ) Xóa
       if(item.children && item.children.length > 0)
         +table-tree(item.children, level + 1)
     

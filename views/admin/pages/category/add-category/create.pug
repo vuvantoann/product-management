@@ -4,68 +4,69 @@ include ../../../mixins/select-tree.pug
 
 block content
   main
-    +alert-error(7000)
-    +alert-success(5000)
+    if(role.permissions.includes("category_create"))
+      +alert-error(7000)
+      +alert-success(5000)
+      
+      form(
+            action=`${prefixAdmin}/category/create`,
+            method="POST",
+            class="form-wrapper",
+            enctype="multipart/form-data"
+          )
+        // Block 1: Header
+        .form-block
+          .form-header
+            div
+              h2 Thêm mới danh mục
+              p danh mục cho các sản phẩm trong cửu hàng của bạn
+            .form-actions
+              a(href=prefixAdmin + '/category' class='btn-cancel')
+                span Quay lại trang danh sách
+              button.btn-draft(type="button") Lưu nháp
+              button.btn-submit(type="submit") Thêm mới
+
+        // Block 2: Tiêu đề và mô tả
+        .form-block
+          .form-group
+            label(for="title") Tên danh mục
+            input(type="text", id="title", placeholder="Nhập tên của danh mục", name='title')
+          .form-group
+            label(for="parent_id") Danh mục cha
+            //- input(type="text", id="parent_id", placeholder="Nhập danh mục cha", name='parent_id')
+            select(name="parent_id", id="parent_id") 
+              option(value="") -- Chọn danh mục cha --
+                if(categories) 
+                  +select-tree(categories)
+          .form-group
+            label(for="description") Mô tả 
+              span (tuỳ chọn)
+            textarea(id="description", rows="4", placeholder="Mô tả chi tiết sản phẩm", name='description')
+        // Block 4: Hình ảnh
+        .form-block
+          .form-image(upload-image) 
+            input(type="file", id='file-upload', name="thumbnail" 
+            multiple , input-upload)
+            label(for="file-upload")
+              i.bx.bx-upload
+              span Chọn một ảnh 
+            p.num-of-files chưa có file nào được chọn
+            .images
+            
+
+        // Block 5: Vị trí và trạng thái
+        .form-block
+          .form-group
+            label(for="position") Vị trí hiển thị
+            input(type="text", id="position", name="position", placeholder="tự động tăng" )
+          .form-group
+            label Trạng thái
+          .radio-group
+            .form-radio
+              input(type="radio",id="statusActive", name="status", value="active", checked)
+              label(for="statusActive") Hoạt động
+            .form-radio
+              input(type="radio",id="statusInActive", name="status", value="active")
+              label(for="statusInActive") Dừng hoạt động
     
-    form(
-          action=`${prefixAdmin}/category/create`,
-          method="POST",
-          class="form-wrapper",
-          enctype="multipart/form-data"
-        )
-      // Block 1: Header
-      .form-block
-        .form-header
-          div
-            h2 Thêm mới danh mục
-            p danh mục cho các sản phẩm trong cửu hàng của bạn
-          .form-actions
-            a(href=prefixAdmin + '/category' class='btn-cancel')
-              span Quay lại trang danh sách
-            button.btn-draft(type="button") Lưu nháp
-            button.btn-submit(type="submit") Thêm mới
-
-      // Block 2: Tiêu đề và mô tả
-      .form-block
-        .form-group
-          label(for="title") Tên danh mục
-          input(type="text", id="title", placeholder="Nhập tên của danh mục", name='title')
-        .form-group
-          label(for="parent_id") Danh mục cha
-          //- input(type="text", id="parent_id", placeholder="Nhập danh mục cha", name='parent_id')
-          select(name="parent_id", id="parent_id") 
-            option(value="") -- Chọn danh mục cha --
-              if(categories) 
-                +select-tree(categories)
-        .form-group
-          label(for="description") Mô tả 
-            span (tuỳ chọn)
-          textarea(id="description", rows="4", placeholder="Mô tả chi tiết sản phẩm", name='description')
-      // Block 4: Hình ảnh
-      .form-block
-        .form-image(upload-image) 
-          input(type="file", id='file-upload', name="thumbnail" 
-          multiple , input-upload)
-          label(for="file-upload")
-            i.bx.bx-upload
-            span Chọn một ảnh 
-          p.num-of-files chưa có file nào được chọn
-          .images
-          
-
-      // Block 5: Vị trí và trạng thái
-      .form-block
-        .form-group
-          label(for="position") Vị trí hiển thị
-          input(type="text", id="position", name="position", placeholder="tự động tăng" )
-        .form-group
-          label Trạng thái
-        .radio-group
-          .form-radio
-            input(type="radio",id="statusActive", name="status", value="active", checked)
-            label(for="statusActive") Hoạt động
-          .form-radio
-            input(type="radio",id="statusInActive", name="status", value="active")
-            label(for="statusInActive") Dừng hoạt động
-  
   script(src='/admin/js/create-product.js')

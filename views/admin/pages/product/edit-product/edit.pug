@@ -4,88 +4,89 @@ include ../../../mixins/select-tree.pug
 
 block content
   main
-    +alert-error(7000)
-    +alert-success(5000)
-    
-    form(
-          action=`${prefixAdmin}/product/edit-product/${product._id}?_method=PATCH`,
-          method="POST",
-          class="form-wrapper",
-          enctype="multipart/form-data"
-        )
-      // Block 1: Header
-      .form-block
-        .form-header
-          div
-            h2 Chỉnh sửa sản phẩm
-            p Chỉnh sửa chi tiết sản phẩm của bạn
-          .form-actions
-            a(href=prefixAdmin + '/product' class='btn-cancel')
-              span Quay lại trang danh sách
-            button.btn-draft(type="button") Lưu nháp
-            button.btn-submit(type="submit") Cập nhật
+    if(role.permissions.includes("product_edit"))
+      +alert-error(7000)
+      +alert-success(5000)
+      
+      form(
+            action=`${prefixAdmin}/product/edit-product/${product._id}?_method=PATCH`,
+            method="POST",
+            class="form-wrapper",
+            enctype="multipart/form-data"
+          )
+        // Block 1: Header
+        .form-block
+          .form-header
+            div
+              h2 Chỉnh sửa sản phẩm
+              p Chỉnh sửa chi tiết sản phẩm của bạn
+            .form-actions
+              a(href=prefixAdmin + '/product' class='btn-cancel')
+                span Quay lại trang danh sách
+              button.btn-draft(type="button") Lưu nháp
+              button.btn-submit(type="submit") Cập nhật
 
-      // Block 2: Tiêu đề và mô tả
-      .form-block
-        .form-group
-          label(for="title") Tiêu đề sản phẩm
-          input(type="text", id="title", placeholder="Nhập tiêu đề sản phẩm", name='title' value=product.title)
-        .form-group
-          label(for="product_category_id") Danh mục 
-          //- input(type="text", id="parent_id", placeholder="Nhập danh mục cha", name='parent_id')
-          select(name="product_category_id", id="product_category_id") 
-            option(value="") -- Chọn danh mục --
-              if(categories) 
-                +select-tree(categories, 1, product.product_category_id)
-        .form-group
-          label(for="description") Mô tả 
-            span (tuỳ chọn)
-          textarea(id="description", rows="4", placeholder="Mô tả chi tiết sản phẩm", name='description' )= product.description
+        // Block 2: Tiêu đề và mô tả
+        .form-block
+          .form-group
+            label(for="title") Tiêu đề sản phẩm
+            input(type="text", id="title", placeholder="Nhập tiêu đề sản phẩm", name='title' value=product.title)
+          .form-group
+            label(for="product_category_id") Danh mục 
+            //- input(type="text", id="parent_id", placeholder="Nhập danh mục cha", name='parent_id')
+            select(name="product_category_id", id="product_category_id") 
+              option(value="") -- Chọn danh mục --
+                if(categories) 
+                  +select-tree(categories, 1, product.product_category_id)
+          .form-group
+            label(for="description") Mô tả 
+              span (tuỳ chọn)
+            textarea(id="description", rows="4", placeholder="Mô tả chi tiết sản phẩm", name='description' )= product.description
 
-      // Block 3: Giá, giảm giá, số lượng
-      .form-block
-        .form-group
-          label(for="price") Giá
-          input(type="number", id="price", min='0', name='price' value=product.price)
-        .form-group
-          label(for="discount") Giảm giá (%)
-          input(type="number", id="discount", min='0',step="0.01", name='discountPercentage' value=product.discountPercentage)
-        .form-group
-          label(for="quantity") Số lượng
-          input(type="number", id="quantity", name='stock' value=product.stock)
+        // Block 3: Giá, giảm giá, số lượng
+        .form-block
+          .form-group
+            label(for="price") Giá
+            input(type="number", id="price", min='0', name='price' value=product.price)
+          .form-group
+            label(for="discount") Giảm giá (%)
+            input(type="number", id="discount", min='0',step="0.01", name='discountPercentage' value=product.discountPercentage)
+          .form-group
+            label(for="quantity") Số lượng
+            input(type="number", id="quantity", name='stock' value=product.stock)
 
-      // Block 4: Hình ảnh
-      .form-block
-        .form-image(upload-image) 
-          input(type="file", id='file-upload', name="thumbnail" 
-          multiple , input-upload )
-          label(for="file-upload")
-            i.bx.bx-upload
-            span Chọn một ảnh 
-          if product && product.thumbnail  
-            p.num-of-files 
-          else
-            p.num-of-files chưa có file nào được chọn
-          .images
-            if product && product.thumbnail
-              .file-item
-                img(src=product.thumbnail)
-                .file-name= product.thumbnail.split('/').pop()
-                button(onclick="this.parentElement.remove()") Remove file
+        // Block 4: Hình ảnh
+        .form-block
+          .form-image(upload-image) 
+            input(type="file", id='file-upload', name="thumbnail" 
+            multiple , input-upload )
+            label(for="file-upload")
+              i.bx.bx-upload
+              span Chọn một ảnh 
+            if product && product.thumbnail  
+              p.num-of-files 
+            else
+              p.num-of-files chưa có file nào được chọn
+            .images
+              if product && product.thumbnail
+                .file-item
+                  img(src=product.thumbnail)
+                  .file-name= product.thumbnail.split('/').pop()
+                  button(onclick="this.parentElement.remove()") Remove file
 
-      // Block 5: Vị trí và trạng thái
-      .form-block
-        .form-group
-          label(for="position") Vị trí hiển thị
-          input(type="text", id="position", name="position", placeholder="tự động tăng" value=product.position )
-        .form-group
-          label Trạng thái
-        .radio-group
-          .form-radio
-            input(type="radio", id="statusActive", name="status", value="active", checked=product.status == 'active' ? true : false)
-            label(for="statusActive") Hoạt động
-          .form-radio
-            input(type="radio",id="statusInActive", name="status", value="active" checked=product.status == 'inactive' ? true : false)
-            label(for="statusInActive") Dừng hoạt động
+        // Block 5: Vị trí và trạng thái
+        .form-block
+          .form-group
+            label(for="position") Vị trí hiển thị
+            input(type="text", id="position", name="position", placeholder="tự động tăng" value=product.position )
+          .form-group
+            label Trạng thái
+          .radio-group
+            .form-radio
+              input(type="radio", id="statusActive", name="status", value="active", checked=product.status == 'active' ? true : false)
+              label(for="statusActive") Hoạt động
+            .form-radio
+              input(type="radio",id="statusInActive", name="status", value="active" checked=product.status == 'inactive' ? true : false)
+              label(for="statusInActive") Dừng hoạt động
   
   script(src='/admin/js/create-product.js')
