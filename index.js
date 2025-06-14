@@ -10,6 +10,7 @@ const bodyParser = require('body-parser')
 const flash = require('express-flash')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const moment = require('moment')
 const app = express()
 
 port = process.env.PORT
@@ -40,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // app locals
 app.locals.prefixAdmin = systemConfig.prefixAdmin
+app.locals.moment = moment
 
 // route client
 route(app)

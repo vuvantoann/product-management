@@ -3,6 +3,7 @@ include ../../../mixins/search.pug
 include ../../../mixins/pagination.pug
 include ../../../mixins/alert.pug
 include ../../../mixins/dropdown.pug
+include ../../../mixins/date-time.pug
 
 
 
@@ -57,6 +58,7 @@ block content
               th Số lượng
               th Vị trí
               th Trạng thái
+              th Người tạo
               th Chi tiết
           tbody
             each item in products
@@ -95,6 +97,9 @@ block content
                     span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
                   else 
                     span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
+                td 
+                  p #{item.accountFullName}
+                  +formatDate(item.createdBy.createdAt) 
                 td 
                   a(href= `${prefixAdmin}/product/detail-product/${item.id}` )
                     span Xem

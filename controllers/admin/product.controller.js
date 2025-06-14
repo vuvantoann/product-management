@@ -1,5 +1,7 @@
 const Product = require('../../modals/product.modal')
 const Category = require('../../modals/category.modal')
+const Account = require('../../modals/account.modal')
+
 const searchHelper = require('../../helper/search')
 const paginationHelper = require('../../helper/pagination')
 const systemConfig = require('../../config/system')
@@ -45,7 +47,15 @@ module.exports.product = async (req, res) => {
       .sort(sort)
       .limit(objectPagination.limitItem)
       .skip(objectPagination.skip)
+    for (const product of products) {
+      const user = await Account.findOne({
+        _id: product.createdBy.account_id,
+      })
 
+      if (user) {
+        product.accountFullName = user.fullName
+      }
+    }
     res.render('admin/pages/product/product-list/index', {
       title: 'Sản phẩm',
       activePage: 'product',
@@ -179,7 +189,9 @@ module.exports.createProductPost = async (req, res) => {
     } else {
       req.body.position = parseInt(req.body.position)
     }
-
+    req.body.createdBy = {
+      account_id: res.locals.user._id,
+    }
     const newProduct = new Product(req.body)
     await newProduct.save()
 
