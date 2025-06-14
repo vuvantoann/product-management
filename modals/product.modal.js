@@ -23,9 +23,9 @@ const productSchema = new mongoose.Schema(
         default: Date.now,
       },
     },
-    createdBy: {
+    deletedBy: {
       account_id: String,
-      createdAt: Date,
+      deletedAt: Date,
     },
     slug: { type: String, slug: 'title', unique: true, slugPaddingSize: 4 },
     deleted: {

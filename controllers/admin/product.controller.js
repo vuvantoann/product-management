@@ -114,7 +114,14 @@ module.exports.changeMultipleStates = async (req, res) => {
       case 'delete-all':
         await Product.updateMany(
           { _id: { $in: arrayIds } },
-          { deleted: true, deleteAt: new Date() }
+          {
+            deleted: true,
+
+            deletedBy: {
+              account_id: res.locals.user._id,
+              deletedAt: new Date(),
+            },
+          }
         )
         req.flash(
           'success',
@@ -150,7 +157,14 @@ module.exports.deleteProduct = async (req, res) => {
     // await Product.deleteOne({ _id: id })
     await Product.updateOne(
       { _id: id },
-      { deleted: true, deleteAt: new Date() }
+      {
+        deleted: true,
+
+        deletedBy: {
+          account_id: res.locals.user._id,
+          deletedAt: new Date(),
+        },
+      }
     )
     req.flash('success', `Bạn đã xóa sản phẩm thành công`)
     res.redirect(req.get('Referer') || '/')
