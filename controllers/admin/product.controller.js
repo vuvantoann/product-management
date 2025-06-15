@@ -75,8 +75,14 @@ module.exports.changeProductStatus = async (req, res) => {
   try {
     const status = req.params.status
     const id = req.params.id
-
-    await Product.updateOne({ _id: id }, { status: status })
+    let updatedBy = {
+      account_id: res.locals.user._id,
+      updatedAt: new Date(),
+    }
+    await Product.updateOne(
+      { _id: id },
+      { status: status, $push: { updatedBy: updatedBy } }
+    )
     req.flash('success', 'Bạn đã cập nhật trạng thái sản phẩm thành công.')
     res.redirect(req.get('Referer') || '/')
   } catch (error) {
@@ -90,11 +96,16 @@ module.exports.changeMultipleStates = async (req, res) => {
     const type = req.body.type
     const ids = req.body.ids
     const arrayIds = ids.split(',')
+
+    let updatedBy = {
+      account_id: res.locals.user._id,
+      updatedAt: new Date(),
+    }
     switch (type) {
       case 'active':
         await Product.updateMany(
           { _id: { $in: arrayIds } },
-          { status: 'active' }
+          { status: 'active', $push: { updatedBy: updatedBy } }
         )
         req.flash(
           'success',
@@ -104,7 +115,7 @@ module.exports.changeMultipleStates = async (req, res) => {
       case 'inactive':
         await Product.updateMany(
           { _id: { $in: arrayIds } },
-          { status: 'inactive' }
+          { status: 'inactive', $push: { updatedBy: updatedBy } }
         )
         req.flash(
           'success',
@@ -132,7 +143,10 @@ module.exports.changeMultipleStates = async (req, res) => {
         for (let item of arrayIds) {
           let [id, position] = item.split('-')
           position = parseInt(position)
-          await Product.updateOne({ _id: id }, { position: parseInt(position) })
+          await Product.updateOne(
+            { _id: id },
+            { position: position, $push: { updatedBy: updatedBy } }
+          )
         }
         req.flash(
           'success',
@@ -252,9 +266,17 @@ module.exports.editProductPatch = async (req, res) => {
     req.body.stock = parseInt(req.body.stock)
     req.body.position = parseInt(req.body.position)
 
-    // if (req.file) req.body.thumbnail = `/uploads/${req.file.filename}`
-
-    await Product.updateOne({ _id: id }, req.body)
+    let updatedBy = {
+      account_id: res.locals.user._id,
+      updatedAt: new Date(),
+    }
+    await Product.updateOne(
+      { _id: id },
+      {
+        ...req.body,
+        $push: { updatedBy: updatedBy },
+      }
+    )
     req.flash('success', 'Bạn đã chỉnh sửa sản phẩm thành công.')
     res.redirect(req.get('Referer') || '/')
   } catch (err) {
