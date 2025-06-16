@@ -1,0 +1,8 @@
+mixin sub-menu(items, path)
+  if items && items.length
+    each item in items 
+      li 
+        a(hre=`${path}/${item.slug}`) #{item.title}
+        if item.children && item.children.length > 0 
+          ul.dropdown 
+            +sub-menu(item.children, path )

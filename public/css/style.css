@@ -79,6 +79,96 @@ body {
   padding: 0 10px;
 }
 
+/* ===== DROPDOWN MENU NHIỀU CẤP ===== */
+.header__nav li {
+  position: relative;
+}
+
+.header__nav li ul.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  min-width: 180px;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  display: none;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.header__nav li ul.dropdown li {
+  padding: 0;
+}
+
+.header__nav li:hover > ul.dropdown {
+  display: block;
+}
+
+/* Cấp 2 trở đi */
+.header__nav li ul.dropdown li {
+  position: relative;
+}
+
+.header__nav li ul.dropdown li ul.dropdown {
+  top: 0;
+  left: 100%;
+}
+
+/* Item trong dropdown */
+.header__nav li ul.dropdown li a {
+  display: block;
+  padding: 10px 16px;
+  color: var(--color-one);
+  text-decoration: none;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header__nav li ul.dropdown li:last-child a {
+  border-bottom: none;
+}
+
+.header__nav li ul.dropdown li a:hover {
+  background-color: var(--light-blue);
+}
+
+/* Icon chỉ submenu
+.header__nav li ul.dropdown li > a::after {
+  content: '▶';
+  float: right;
+  font-size: 12px;
+  margin-left: 8px;
+  opacity: 0.6;
+}
+
+.header__nav li ul.dropdown li:not(:has(ul)) > a::after {
+  content: '';
+} */
+
+/* Bo góc và responsive */
+.header__nav li ul.dropdown {
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .header__nav {
+    flex-direction: column;
+  }
+
+  .header__nav li ul.dropdown {
+    position: static;
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  .header__nav li ul.dropdown li a {
+    color: var(--color-one);
+  }
+}
+
 /* end header */
 
 /* footer */

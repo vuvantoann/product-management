@@ -1,15 +1,25 @@
-header(class='header')
+include ../mixins/sub-menu.pug
+
+header.header
   .row
     .col-12 
       .header__inner 
         .header__logo 
-          img(src="/images/logo.png", alt="")
+          img(src="/images/logo.png", alt="Logo")
         ul.header__nav
-          li <a href='/'>Trang chủ </a>
-          li <a href='/product'>Sản phẩn</a>
-          li <a href='/service'>Dịch vụ</a>
-          li <a href='/blog'>Blog</a>
-          li <a href='/about'>Giới thiệu</a>
+          li
+            a(href='/') Trang chủ
+          li.sub-menu
+            -const pathProduct = '/product'
+            a(href='/product') Sản phẩm
+            ul.dropdown
+                +sub-menu(categories, pathProduct)
+          li
+            a(href='/service') Dịch vụ
+          li
+            a(href='/blog') Blog
+          li
+            a(href='/about') Giới thiệu
         .header__box
           .header__icon
             i.bx.bx-search

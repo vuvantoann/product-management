@@ -1,5 +1,7 @@
 const Product = require('../../modals/product.modal')
+
 const { formatCurrency } = require('../../helper/format')
+
 //[get]/
 module.exports.index = async (req, res) => {
   const products = await Product.find({
@@ -20,6 +22,7 @@ module.exports.index = async (req, res) => {
       priceNew: formatCurrency(priceNew),
     }
   })
+
   res.render('client/pages/home/index', {
     titlePage: 'Trang chủ',
     products: newProducts,
