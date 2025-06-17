@@ -39,6 +39,29 @@ block content
                 if(categories) 
                   +select-tree(categories, 1, product.product_category_id)
           .form-group
+            label Sản phẩm nổi bật
+          .radio-group
+            .form-radio
+              input(
+                type="radio"
+                id="featured1"
+                name="featured"
+                value="1"
+                checked=product.featured == '1' ? true : false
+              )
+              label(for="featured1" ) có
+
+            .form-radio
+              input(
+                type="radio"
+                id="featured0"
+                name="featured"
+                value="0"
+                checked=product.featured == '0' ? true : false
+              )
+              label(for="featured0" ) Không
+          p
+          .form-group
             label(for="description") Mô tả 
               span (tuỳ chọn)
             textarea(id="description", rows="4", placeholder="Mô tả chi tiết sản phẩm", name='description' )= product.description

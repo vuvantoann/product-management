@@ -1,0 +1,13 @@
+mixin product-item(item)
+  .col-3.mb-3
+    .product__item
+      .product__image 
+        img(src= item.thumbnail, alt= item.title)
+        if(item.featured == '1')
+          .inner-featured nổi bật
+      .product__content 
+        .product__title 
+          p #{item.title}
+        .product__expense 
+          span.product__price #{item.price}đ
+          span.product__discount #{item.discountPercentage}%

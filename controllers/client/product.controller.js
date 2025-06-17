@@ -1,5 +1,8 @@
 const Product = require('../../modals/product.modal')
-const { formatCurrency } = require('../../helper/format')
+const {
+  priceNewProduct,
+  priceNewSingleProduct,
+} = require('../../helper/product')
 //[get]/product
 module.exports.product = async (req, res) => {
   const products = await Product.find({
@@ -7,20 +10,8 @@ module.exports.product = async (req, res) => {
     deleted: false,
   }).sort({ position: 'desc' })
 
-  const newProducts = products.map((item) => {
-    const priceNew = (
-      (item.price * (100 - item.discountPercentage)) /
-      100
-    ).toFixed(0)
-
-    return {
-      ...item.toObject(),
-      price: formatCurrency(item.price),
-      priceNew: formatCurrency(priceNew),
-    }
-  })
-
-  res.render('client/pages/product/index', {
+  const newProducts = priceNewProduct(products)
+  res.render('client/pages/product/product-list/index', {
     titlePage: 'Trang sản phẩm',
     products: newProducts,
   })
@@ -34,15 +25,10 @@ module.exports.detailProduct = async (req, res) => {
     status: 'active',
     deleted: false,
   })
-  const productObj = product.toObject()
-  const priceNew = (
-    (product.price * (100 - product.discountPercentage)) /
-    100
-  ).toFixed(0)
+  if (!product) return res.status(404).send('Không tìm thấy sản phẩm')
 
-  productObj.price = formatCurrency(product.price)
-  productObj.priceNew = formatCurrency(priceNew)
-  res.render('client/pages/product/detail', {
+  const productObj = priceNewSingleProduct(product)
+  res.render('client/pages/product/product-detail/detail', {
     titlePage: 'Chi tiết sản phẩm',
     product: productObj,
   })
