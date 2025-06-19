@@ -1,34 +1,57 @@
 include ../mixins/sub-menu.pug
 
 header.header
-  .row
-    .col-12 
-      .header__inner 
-        .header__logo 
-          img(src="/images/logo.png", alt="Logo")
-        ul.header__nav
-          li
-            a(href='/') Trang chủ
-          li.sub-menu
-            -const pathProduct = '/product'
-            a(href='/product') Sản phẩm
-            ul.dropdown
-                +sub-menu(categories, pathProduct)
-          li
-            a(href='/service') Dịch vụ
-          li
-            a(href='/blog') Blog
-          li
-            a(href='/about') Giới thiệu
-        .header__box
-          .header__icon
-            i.bx.bx-search
-          .header__icon
-            i.bx.bx-user-circle
-          .header__icon
-            i.bx.bx-shopping-bag
+  .top-banner Miễn phí vận chuyển với đơn hàng trên 500K
+  header#mainHeader.main-header
+    .header-container
+      .logo
+        img(src="/images/logo.png", alt="Logo")
 
-            
+      form.search-box(action="/search", method="GET")
+        input(type="text", name="keyword", placeholder="Tìm kiếm sản phẩm..." value=keyword)
+        button(type="submit")
+          i.bx.bx-search
+
+
+      .header-right
+        .account
+          i.bx.bx-user
+          .account-text
+            a(href="#") Đăng nhập / Đăng ký
+            br
+            a(href="#") 
+              | Tài khoản của tôi 
+              i.bx.bx-chevron-down
+        .cart
+          i.bx.bx-shopping-bag
+          span Giỏ hàng
+          span.cart-count 0
+
+    nav.main-menu
+      ul
+        li
+          a(href="/") Trang chủ
+        li.sub-menu
+          -const pathProduct = '/product'
+          a(href='/product') 
+            span  Sản phẩm
+            i.bx.bx-chevron-down
+          ul.dropdown
+              +sub-menu(categories, pathProduct)
+        li
+          a(href='/service') 
+            | Dịch vụ 
+            i.bx.bx-chevron-down
+        li
+          a(href="#") 
+            | Blog 
+            i.bx.bx-chevron-down
+        li
+          a(href="#") Giới thiệu
+
+
+
+  
   
             
               
