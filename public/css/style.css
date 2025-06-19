@@ -404,6 +404,11 @@ end product-grid */
   font-weight: bold;
   margin: 0;
 }
+.detail-product-content .detail-product-category {
+  padding-bottom: 10px;
+}
+
+.detail-product-category,
 .detail-product-price,
 .detail-product-content .detail-product-title {
   border-bottom: 1px solid var(--light-grey);

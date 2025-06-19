@@ -1,6 +1,6 @@
 mixin product-item(item)
   .col-3.mb-3
-    a(href= `/product/${item.slug}` ) 
+    a(href= `/product/detail/${item.slug}` ) 
       .product__item
         .product__image 
           img(src= item.thumbnail, alt= item.title)

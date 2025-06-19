@@ -56,3 +56,27 @@ if (sidebarHero) {
     getImageChange(0)
   })
 }
+
+// sử lý phần tăng giảm số lượng sản phẩm
+
+const quantityButtons = document.querySelectorAll('.quantity-btn')
+
+if (quantityButtons) {
+  quantityButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const quantityInput = document.querySelector('.quantity-display')
+
+      let currentValue = parseInt(quantityInput.value)
+
+      const isDecreaseButton = button.querySelector('.bx-minus')
+      if (isDecreaseButton) {
+        currentValue = Math.max(1, currentValue - 1) // Giảm nhưng không nhỏ hơn 1
+      } else {
+        const maxValue = parseInt(quantityInput.max) // Lấy giá trị tối đa từ thuộc tính max
+        currentValue = Math.min(maxValue, currentValue + 1) // Tăng nhưng không vượt quá max
+      }
+
+      quantityInput.value = currentValue
+    })
+  })
+}
