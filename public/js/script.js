@@ -1,4 +1,5 @@
 const sidebarHero = document.querySelector('.hero')
+// phần trượt sidebar ở trang chủ
 if (sidebarHero) {
   document.addEventListener('DOMContentLoaded', () => {
     const thumbnail = document.querySelector('.hero__thumbnail img')
@@ -55,5 +56,3 @@ if (sidebarHero) {
     getImageChange(0)
   })
 }
-
-document.querySelectorAll('img').forEach((img) => console.log(img.src))
