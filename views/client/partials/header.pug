@@ -23,9 +23,11 @@ header.header
               | Tài khoản của tôi 
               i.bx.bx-chevron-down
         .cart
-          i.bx.bx-shopping-bag
-          span Giỏ hàng
-          span.cart-count 0
+          a(href="#")
+            i.bx.bx-shopping-bag
+            span Giỏ hàng
+            span.cart-count #{miniCart ? miniCart.totalQuantityInCart : 0}
+
 
     nav.main-menu
       ul

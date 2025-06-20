@@ -137,6 +137,15 @@ body {
   align-items: center;
   gap: 5px;
 }
+
+.cart a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: inherit; /* Giữ màu chữ như cũ */
+  position: relative; /* Để .cart-count dùng được absolute bên trong */
+}
 .cart i {
   font-size: 24px;
 }
