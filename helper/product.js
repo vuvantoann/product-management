@@ -2,15 +2,17 @@ const { formatCurrency } = require('./format')
 
 // Xử lý 1 sản phẩm
 function priceNewSingleProduct(product) {
-  const priceNew = (
-    (product.price * (100 - product.discountPercentage)) /
-    100
-  ).toFixed(0)
+  const priceRaw = product.price
+  const priceNewRaw = Math.floor(
+    (priceRaw * (100 - product.discountPercentage)) / 100
+  )
 
   return {
     ...product.toObject(),
-    price: formatCurrency(product.price),
-    priceNew: formatCurrency(priceNew),
+    price: formatCurrency(priceRaw), // chuỗi hiển thị
+    priceNew: formatCurrency(priceNewRaw), // chuỗi hiển thị
+    priceRaw, // số để tính toán
+    priceNewRaw, // số để tính toán
   }
 }
 

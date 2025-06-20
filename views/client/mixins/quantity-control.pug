@@ -1,0 +1,14 @@
+mixin quantity-control(stock, quantity, itemId)
+    .detail-product-quantity
+      .quantity-btn
+        i.bx.bx-minus
+      input.quantity-display(
+        type="number", 
+        name="quantity", 
+        value=quantity, 
+        min="1",
+        item-id=itemId 
+        max=stock
+      )
+      .quantity-btn
+        i.bx.bx-plus

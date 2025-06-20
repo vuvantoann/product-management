@@ -1,6 +1,7 @@
 extends ../../../layout/default.pug
 include ../../../mixins/box-head.pug
 include ../../../mixins/notyf.pug
+include ../../../mixins/quantity-control.pug
 block content
   +notyfSuccess(messages.success && messages.success[0])
   +notyfError(messages.error && messages.error[0])
@@ -32,18 +33,7 @@ block content
                   span -#{product.discountPercentage}%
 
               form(action=`/cart/add/${product._id}`, method="POST")
-                .detail-product-quantity
-                  .quantity-btn
-                    i.bx.bx-minus
-                  input.quantity-display(
-                    type="number", 
-                    name="quantity", 
-                    value="1", 
-                    min="1", 
-                    max=product.stock
-                  )
-                  .quantity-btn
-                    i.bx.bx-plus
+                +quantity-control(product.stock)
 
                 .detail-product-action
                   button.btn.btn-cart(type="submit")

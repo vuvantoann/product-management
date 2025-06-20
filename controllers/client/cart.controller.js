@@ -1,7 +1,44 @@
 const Cart = require('../../modals/cart.modal')
+const Product = require('../../modals/product.modal')
+const {
+  priceNewProduct,
+  priceNewSingleProduct,
+} = require('../../helper/product')
+const { formatCurrency } = require('../../helper/format')
+//[GET] /Cart
+module.exports.cart = async (req, res) => {
+  const cart = await Cart.findOne({ _id: req.cookies.cartId })
+
+  if (cart.products.length > 0) {
+    for (const item of cart.products) {
+      const productId = item.product_id
+      const productInfo = await Product.findOne({ _id: productId }).select(
+        'title thumbnail slug price discountPercentage stock'
+      )
+      const newProductInfo = priceNewSingleProduct(productInfo)
+
+      item.productInfo = newProductInfo
+      item.totalPriceRaw = newProductInfo.priceNewRaw * item.quantity
+
+      item.totalPrice = formatCurrency(item.totalPriceRaw)
+    }
+  }
+
+  const totalPriceCart = cart.products.reduce(
+    (sum, item) => sum + item.totalPriceRaw,
+    0
+  )
+
+  cart.totalPriceCart = formatCurrency(totalPriceCart)
+
+  res.render('client/pages/cart/index', {
+    titlePage: 'Giỏ hàng',
+    cart: cart,
+  })
+}
 
 // [POST] cart/add/productId
-module.exports.cart = async (req, res) => {
+module.exports.addPost = async (req, res) => {
   const productId = req.params.productId
   const quantity = parseInt(req.body.quantity)
   const cartId = req.cookies.cartId

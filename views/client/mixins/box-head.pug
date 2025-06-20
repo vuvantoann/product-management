@@ -1,3 +1,7 @@
-mixin box-head(title)
-  .box-head 
-    h1.box-head__title #{title}
+
+mixin box-head(title, subtitle)
+  .row
+    .col-12.box-head
+      h1= title
+      if subtitle
+        span= subtitle
