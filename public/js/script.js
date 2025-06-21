@@ -59,22 +59,24 @@ if (sidebarHero) {
 
 // sử lý phần tăng giảm số lượng sản phẩm
 
-const quantityButtons = document.querySelectorAll('.quantity-btn')
+if (!window.location.pathname.includes('/cart')) {
+  const quantityButtons = document.querySelectorAll('.quantity-btn')
 
-if (quantityButtons) {
   quantityButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      const quantityInput = document.querySelector('.quantity-display')
+      // Lấy input tương ứng với nút này
+      const quantityInput =
+        button.parentElement.querySelector('.quantity-display')
+
+      if (!quantityInput) return
 
       let currentValue = parseInt(quantityInput.value)
-
+      const maxValue = parseInt(quantityInput.max)
       const isDecreaseButton = button.querySelector('.bx-minus')
-      if (isDecreaseButton) {
-        currentValue = Math.max(1, currentValue - 1) // Giảm nhưng không nhỏ hơn 1
-      } else {
-        const maxValue = parseInt(quantityInput.max) // Lấy giá trị tối đa từ thuộc tính max
-        currentValue = Math.min(maxValue, currentValue + 1) // Tăng nhưng không vượt quá max
-      }
+
+      currentValue = isDecreaseButton
+        ? Math.max(1, currentValue - 1) // Không nhỏ hơn 1
+        : Math.min(maxValue, currentValue + 1) // Không vượt quá max
 
       quantityInput.value = currentValue
     })

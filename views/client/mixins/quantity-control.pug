@@ -1,4 +1,4 @@
-mixin quantity-control(stock, quantity, itemId)
+mixin quantity-control(stock, quantity, productId)
     .quantity-control
       .quantity-btn
         i.bx.bx-minus
@@ -7,7 +7,7 @@ mixin quantity-control(stock, quantity, itemId)
         name="quantity", 
         value=quantity? quantity: 1, 
         min="1",
-        item-id=itemId 
+        product-id=productId 
         max=stock
       )
       .quantity-btn
