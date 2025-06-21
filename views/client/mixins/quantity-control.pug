@@ -1,11 +1,11 @@
 mixin quantity-control(stock, quantity, itemId)
-    .detail-product-quantity
+    .quantity-control
       .quantity-btn
         i.bx.bx-minus
       input.quantity-display(
         type="number", 
         name="quantity", 
-        value=quantity, 
+        value=quantity? quantity: 1, 
         min="1",
         item-id=itemId 
         max=stock

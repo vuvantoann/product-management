@@ -9,42 +9,42 @@ block content
 
   p
   .detail-product   
-    .container
-      .detail-product-wrapper
-        .row
-          .col-md-5
-            .detail-product-image
-              img.product-img(src=product.thumbnail, alt=product.title)
+    .detail-product-wrapper
+      .row
+        .col-md-5
+          .detail-product-image
+            img.product-img(src=product.thumbnail, alt=product.title)
 
-          .col-md-7
-            .detail-product-content 
-              .detail-product-title 
-                h1 #{product.title}
-              if(product.category)
-                .detail-product-category 
-                  span Danh mục:  
-                  a(href=`/product/${product.category.slug}`) #{product.category.title}
-              .detail-product-price
-                .detail-product-new-price
-                  span #{product.priceNew}đ
-                .detail-product-old-price
-                  span #{product.price}đ
-                .detail-product-discount
-                  span -#{product.discountPercentage}%
+        .col-md-7
+          .detail-product-content 
+            .detail-product-title 
+              h1 #{product.title}
+            if(product.category)
+              .detail-product-category 
+                span Danh mục:  
+                a(href=`/product/${product.category.slug}`) #{product.category.title}
+            .detail-product-price
+              .detail-product-new-price
+                span #{product.priceNew}đ
+              .detail-product-old-price
+                span #{product.price}đ
+              .detail-product-discount
+                span -#{product.discountPercentage}%
 
-              form(action=`/cart/add/${product._id}`, method="POST")
+            form(action=`/cart/add/${product._id}`, method="POST")
+              .detail-product-quantity
                 +quantity-control(product.stock)
 
-                .detail-product-action
-                  button.btn.btn-cart(type="submit")
-                    i.bx.bx-cart-alt
-                    span Thêm Vào Giỏ Hàng
-                  a.btn.btn-buy(href="#") Mua Ngay
+              .detail-product-action
+                button.btn.btn-cart(type="submit")
+                  i.bx.bx-cart-alt
+                  span Thêm Vào Giỏ Hàng
+                a.btn.btn-buy(href="#") Mua Ngay
 
 
 
-            // Mô tả
-            .mt-4
-              h5.font-weight-bold Mô tả
-              p !{product.description}
-              
+          // Mô tả
+          .mt-4
+            h5.font-weight-bold Mô tả
+            p !{product.description}
+            

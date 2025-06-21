@@ -530,7 +530,9 @@ body {
 end product-grid */
 
 /* product detail */
-
+.detail-product {
+  padding: 0 85px;
+}
 .detail-product-wrapper {
   padding: 30px 30px;
   background: var(--while);
@@ -591,15 +593,20 @@ end product-grid */
   border-radius: 4px;
 }
 
+/* quantity-control */
+
 .detail-product-quantity {
+  margin: 20px 0;
+}
+
+.quantity-control {
   display: flex;
   align-items: center;
   border: 1px solid var(--grey);
   width: fit-content;
-  margin: 20px 0;
 }
 
-.detail-product-quantity .quantity-btn {
+.quantity-control .quantity-btn {
   width: 32px;
   height: 32px;
   display: flex;
@@ -611,7 +618,7 @@ end product-grid */
   font-size: 20px;
 }
 
-.detail-product-quantity .quantity-display {
+.quantity-control .quantity-display {
   width: 70px;
   height: 32px;
   line-height: 40px;
@@ -637,6 +644,8 @@ input[type='number'] {
 .quantity-btn:hover {
   background-color: #eaeaea;
 }
+
+/* end quantity-control */
 
 .detail-product-action {
   display: flex;
@@ -723,6 +732,9 @@ input[type='number'] {
   color: var(--color-one);
 }
 
+.item-details .item-price {
+  margin-bottom: 8px;
+}
 .item-total-price {
   font-weight: bold;
 }
@@ -736,10 +748,16 @@ input[type='number'] {
 .note-policy {
   display: flex;
   gap: 30px;
+  margin-bottom: 20px;
+}
+
+.note-box,
+.policy-box {
+  flex: 1;
 }
 .note-box textarea {
   width: 100%;
-  height: 130px;
+  height: 100px;
   background: #eee;
   border: 1px solid #ccc;
   padding: 10px;

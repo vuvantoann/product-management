@@ -3,59 +3,64 @@ include ../../mixins/box-head.pug
 include ../../mixins/box-content.pug
 include ../../mixins/product-layout.pug
 include ../../mixins/quantity-control.pug
+include ../../mixins/notyf.pug
 
 block content
-    +box-head('giỏ hàng của bạn',`có ${cart.products.length} sản phẩm trong giỏ hàng`)
 
-    if(cart.products.length > 0)
-      .cart-grid
-        .cart-left
-          .cart-items
-            each item in cart.products
-              .cart-item
-                img(src=item.productInfo.thumbnail, alt=item.productInfo.title)
-                .item-details
-                  a(href=`/product/detail/${item.productInfo.slug}`)
-                    h4 #{item.productInfo.title}
-                  p.item-price #{item.productInfo.priceNew}₫
-                  +quantity-control(item.productInfo.stock, item.quantity)
-                .item-total-price #{item.totalPrice}₫
-                a(href=`/cart/delete/${item.product_id}`)
-                  i.bx.bx-x.remove-item
+  +notyfSuccess(messages.success && messages.success[0])
+  +notyfError(messages.error && messages.error[0])
 
-          .note-policy
-            .note-box
-              h4 Ghi chú đơn hàng
-              textarea(placeholder="Ghi chú")
+  +box-head('giỏ hàng của bạn',`có ${cart.products.length} sản phẩm trong giỏ hàng`)
 
-            .policy-box
-              h4 Chính sách mua hàng
-              ul
-                li
-                  i.bx.bx-right-arrow-alt
-                  | Sản phẩm được đổi 1 lần duy nhất, không hỗ trợ trả.
-                li
-                  i.bx.bx-right-arrow-alt
-                  | Sản phẩm còn đủ tem mác, chưa qua sử dụng.
-                li
-                  i.bx.bx-right-arrow-alt
-                  | Sản phẩm nguyên giá được đổi trong 30 ngày.
-                li
-                  i.bx.bx-right-arrow-alt
-                  | Sản phẩm sale đổi size trong 7 ngày nếu còn hàng.
+  if(cart.products.length > 0)
+    .cart-grid
+      .cart-left
+        .cart-items
+          each item in cart.products
+            .cart-item
+              img(src=item.productInfo.thumbnail, alt=item.productInfo.title)
+              .item-details
+                a(href=`/product/detail/${item.productInfo.slug}`)
+                  h4 #{item.productInfo.title}
+                .item-price #{item.productInfo.priceNew}₫
+                +quantity-control(item.productInfo.stock, item.quantity)
+              .item-total-price #{item.totalPrice}₫
+              a(href=`/cart/delete/${item.product_id}`)
+                i.bx.bx-x.remove-item
 
-        .order-info
-          h3 Thông tin đơn hàng
-          .total
-            span Tổng tiền:
-            span.amount #{cart.totalPriceCart}₫
-          p.note
-            | Phí vận chuyển sẽ được tính ở trang thanh toán.
-            br
-            | Bạn cũng có thể nhập mã giảm giá ở trang thanh toán.
-          button.checkout-btn THANH TOÁN
-          a.continue-shopping(href="/product")
-            i.bx.bx-undo
-            | Tiếp tục mua hàng
-    else
-      +box-content('giỏ hàng trống')
+        .note-policy
+          .note-box
+            h4 Ghi chú đơn hàng
+            textarea(placeholder="Ghi chú")
+
+          .policy-box
+            h4 Chính sách mua hàng
+            ul
+              li
+                i.bx.bx-right-arrow-alt
+                | Sản phẩm được đổi 1 lần duy nhất, không hỗ trợ trả.
+              li
+                i.bx.bx-right-arrow-alt
+                | Sản phẩm còn đủ tem mác, chưa qua sử dụng.
+              li
+                i.bx.bx-right-arrow-alt
+                | Sản phẩm nguyên giá được đổi trong 30 ngày.
+              li
+                i.bx.bx-right-arrow-alt
+                | Sản phẩm sale đổi size trong 7 ngày nếu còn hàng.
+
+      .order-info
+        h3 Thông tin đơn hàng
+        .total
+          span Tổng tiền:
+          span.amount #{cart.totalPriceCart}₫
+        p.note
+          | Phí vận chuyển sẽ được tính ở trang thanh toán.
+          br
+          | Bạn cũng có thể nhập mã giảm giá ở trang thanh toán.
+        button.checkout-btn THANH TOÁN
+        a.continue-shopping(href="/product")
+          i.bx.bx-undo
+          | Tiếp tục mua hàng
+  else
+    +box-content('giỏ hàng trống')
