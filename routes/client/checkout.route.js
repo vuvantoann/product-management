@@ -9,4 +9,8 @@ router.post('/order', controller.order)
 
 router.get('/success/:orderId', controller.success)
 
+router.get('/buy-now/:productId', controller.buyNow)
+
+router.post('/order-buy-now', controller.orderBuyNow)
+
 module.exports = router

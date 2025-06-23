@@ -114,3 +114,44 @@ module.exports.success = async (req, res) => {
     order: order,
   })
 }
+
+//[GET]/checkout/buy-now/:productId
+module.exports.buyNow = async (req, res) => {
+  const productId = req.params.productId
+  const productInfo = await Product.findOne({ _id: productId }).select(
+    'title thumbnail  price discountPercentage '
+  )
+  const newProductInfo = priceNewSingleProduct(productInfo)
+
+  res.render('client/pages/checkout/index', {
+    titlePage: 'Thanh toán',
+    product: newProductInfo,
+  })
+}
+
+//[POST]/checkout/order-buy-now
+
+module.exports.orderBuyNow = async (req, res) => {
+  const { product_id, fullName, email, phone, address } = req.body
+  const userInfo = { fullName, email, phone, address }
+
+  const product = await Product.findById(product_id).select(
+    'price discountPercentage'
+  )
+  if (!product) return res.redirect('/')
+
+  const order = new Order({
+    userInfo,
+    products: [
+      {
+        product_id,
+        price: product.price,
+        discountPercentage: product.discountPercentage,
+        quantity: 1,
+      },
+    ],
+  })
+
+  await order.save()
+  res.redirect(`/checkout/success/${order.id}`)
+}

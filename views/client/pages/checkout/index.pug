@@ -9,45 +9,85 @@ block content
         .login-note
           p Bạn đã có tài khoản? 
             a(href="#") Đăng nhập
+        if cart
+          form.shipping-form(action='/checkout/order' , method='POST')
+            input(type="text", name='fullName', placeholder="Họ và tên", required)
+            .line
+              input(type="email", name='email', placeholder="Email", required)
+              input(type="tel",name='phone', placeholder="Số điện thoại" , required)
+            input(type="text",name='address', placeholder="Địa chỉ" ,required)
 
-        form.shipping-form(action='/checkout/order' , method='POST')
-          input(type="text", name='fullName', placeholder="Họ và tên", required)
-          .line
-            input(type="email", name='email', placeholder="Email", required)
-            input(type="tel",name='phone', placeholder="Số điện thoại" , required)
-          input(type="text",name='address', placeholder="Địa chỉ" ,required)
+            .actions
+              a.back-link(href="/cart") Giỏ hàng
+              button(type="submit")  Thanh toán
+        else if product
+          form.shipping-form(action='/checkout/order-buy-now', method='POST')
+            input(type="hidden", name="product_id", value=product._id)
+            input(type="hidden", name="quantity", value="1")
+            input(type="text", name='fullName', placeholder="Họ và tên", required)
+            .line
+              input(type="email", name='email', placeholder="Email", required)
+              input(type="tel",name='phone', placeholder="Số điện thoại" , required)
+            input(type="text",name='address', placeholder="Địa chỉ" ,required)
 
-          .actions
-            a.back-link(href="/cart") Giỏ hàng
-            button(type="submit") Tiếp tục đến phương thức thanh toán
+            .actions
+              a.back-link(href="/cart") Giỏ hàng
+              button(type="submit")  Thanh toán
 
       .right
         .order-summary
-          each item in cart.products
-            .order-item
-              .img-box
-                img(src=item.productInfo.thumbnail, alt=item.productInfo.title)
-                span.quantity #{item.quantity}
-              .item-info
-                p.name #{item.productInfo.title}
-                p.size #{item.productInfo.priceNew}₫
-              .item-price #{item.totalPrice}₫
+          if cart
+            each item in cart.products
+              .order-item
+                .img-box
+                  img(src=item.productInfo.thumbnail, alt=item.productInfo.title)
+                  span.quantity #{item.quantity}
+                .item-info
+                  p.name #{item.productInfo.title}
+                  p.size #{item.productInfo.priceNew}₫
+                .item-price #{item.totalPrice}₫
+
+              hr
+            .discount
+              input(type="text", placeholder="Mã giảm giá")
+              button Áp dụng
+            hr
+            .price-info
+              span Tạm tính
+              span #{cart.totalPriceCart}₫
+            .price-info
+              span Phí vận chuyển
+              span 0₫
 
             hr
-          .discount
-            input(type="text", placeholder="Mã giảm giá")
-            button Áp dụng
-          hr
-          .price-info
-            span Tạm tính
-            span #{cart.totalPriceCart}₫
-          .price-info
-            span Phí vận chuyển
-            span 0₫
 
-          hr
-
-          .total
-            span Tổng cộng
-            span 
-              strong #{cart.totalPriceCart}₫
+            .total
+              span Tổng cộng
+              span 
+                strong #{cart.totalPriceCart}₫
+          else 
+            if product
+              .order-item
+                .img-box
+                  img(src=product.thumbnail, alt=product.title)
+                  span.quantity x1
+                .item-info
+                  p.name #{product.title}
+                  p.size #{product.priceNew}₫
+                .item-price #{product.priceNew}₫
+              hr
+              .discount
+                input(type="text", placeholder="Mã giảm giá")
+                button Áp dụng
+              hr
+              .price-info
+                span Tạm tính
+                span #{product.priceNew}₫
+              .price-info
+                span Phí vận chuyển
+                span 0₫
+              hr
+              .total
+                span Tổng cộng
+                span 
+                  strong #{product.priceNew}₫
