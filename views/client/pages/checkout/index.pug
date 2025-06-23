@@ -1,0 +1,53 @@
+extends ../../layout/default.pug
+
+block content
+  
+  .checkout-wrapper 
+    .checkout
+      .left
+        h2 Thông tin giao hàng
+        .login-note
+          p Bạn đã có tài khoản? 
+            a(href="#") Đăng nhập
+
+        form.shipping-form(action='/checkout/order' , method='POST')
+          input(type="text", name='fullName', placeholder="Họ và tên", required)
+          .line
+            input(type="email", name='email', placeholder="Email", required)
+            input(type="tel",name='phone', placeholder="Số điện thoại" , required)
+          input(type="text",name='address', placeholder="Địa chỉ" ,required)
+
+          .actions
+            a.back-link(href="/cart") Giỏ hàng
+            button(type="submit") Tiếp tục đến phương thức thanh toán
+
+      .right
+        .order-summary
+          each item in cart.products
+            .order-item
+              .img-box
+                img(src=item.productInfo.thumbnail, alt=item.productInfo.title)
+                span.quantity #{item.quantity}
+              .item-info
+                p.name #{item.productInfo.title}
+                p.size #{item.productInfo.priceNew}₫
+              .item-price #{item.totalPrice}₫
+
+            hr
+          .discount
+            input(type="text", placeholder="Mã giảm giá")
+            button Áp dụng
+          hr
+          .price-info
+            span Tạm tính
+            span #{cart.totalPriceCart}₫
+          .price-info
+            span Phí vận chuyển
+            span 0₫
+
+          hr
+
+          .total
+            span Tổng cộng
+            span 
+              strong #{cart.totalPriceCart}₫

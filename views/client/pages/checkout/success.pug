@@ -1,0 +1,48 @@
+extends ../../layout/default.pug
+
+block content
+  
+  .checkout-success 
+    .success-icon
+      i.bx.bx-check-circle
+
+    h1 Cảm ơn bạn đã đặt hàng!
+    p
+      |Chúng tôi đã nhận được đơn hàng của bạn và sẽ giao trong khoảng thời gian sớm nhất!.
+      br
+      | mã đơn hàng của bạn là:
+      strong #B6CT3
+
+    .content
+      // Order Summary
+      .box
+        h2 Tóm tắt đơn hàng
+        .order-summary
+          each item in order.products
+            .order-item
+              .item-info
+                .img-box
+                  img(src=item.productInfo.thumbnail, alt=item.productInfo.title)
+                  span.quantity #{item.quantity}
+                span #{item.productInfo.title}
+              span #{item.totalPrice}₫
+
+          .total Tổng: #{order.totalPriceOrder}₫
+
+      // Customer Info
+      .box.customer-info
+        h2 Thông tin người mua
+        p
+          strong Name:
+          |  #{order.userInfo.fullName}
+        p
+          strong Phone:
+          |  #{order.userInfo.phone}
+        p
+          strong Email:
+          |  #{order.userInfo.email}
+        p
+          strong Address:
+          |  #{order.userInfo.address}
+
+    a.back-home(href="/") Trở lại trang chủ
