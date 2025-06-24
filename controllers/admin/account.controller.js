@@ -57,7 +57,7 @@ module.exports.createAccountPost = async (req, res) => {
       req.body.password = md5(req.body.password)
       const newAccount = new Account(req.body)
       await newAccount.save()
-      req.flash('success', 'Bạn đã tạo mới tài khoản phẩm thành công.')
+      req.flash('success', 'Bạn đã tạo mới tài khoản thành công.')
       res.redirect(`${systemConfig.prefixAdmin}/account`)
     }
   } catch (error) {

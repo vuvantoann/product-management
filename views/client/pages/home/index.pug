@@ -1,9 +1,12 @@
 extends ../../layout/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/product-layout.pug
-
+include ../../mixins/notyf.pug
 
 block content
+  +notyfSuccess(messages.success && messages.success[0])
+  +notyfError(messages.error && messages.error[0])
+  
   include ../../partials/hero.pug
   +box-head('Sản phẩm nổi bật')
   +product-grid(products)

@@ -1156,3 +1156,199 @@ input[type='number'] {
   color: var(--while);
 }
 /*END CHECKOUT SUCCESS */
+
+/* register and login */
+
+.register {
+  display: flex;
+  width: 1000px;
+  height: auto;
+  margin: 40px auto;
+  border-radius: 12px;
+  background: var(--while);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* === FORM BOX === */
+.form-register {
+  flex: 1;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.register .logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: var(--grass);
+  margin-bottom: 30px;
+}
+
+.register .logo i {
+  font-size: 22px;
+  margin-right: 8px;
+}
+
+.register h2 {
+  font-weight: 500;
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: var(--color-title);
+}
+
+.register form {
+  flex: 1;
+}
+
+.register form label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--gray);
+}
+
+.register form input[type='text'],
+.register form input[type='email'],
+.register form input[type='password'] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 6px;
+  background: #f2f6f7;
+  font-size: 14px;
+  color: var(--color-title);
+}
+
+.register .password-box {
+  position: relative;
+}
+
+.register .password-box .eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.register .terms {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: var(--gray);
+  margin-bottom: 20px;
+}
+
+.register .terms input {
+  margin-right: 10px;
+}
+
+.register .terms a {
+  color: var(--grass);
+  text-decoration: none;
+}
+
+.register .submit-btn {
+  width: 100%;
+  background: var(--grass);
+  color: var(--while);
+  padding: 13px;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.register .or-line {
+  text-align: center;
+  color: var(--color-text);
+  margin: 12px 0;
+}
+
+.register .social-btns {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.register .social-btns button {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid var(--input-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--while);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.register .social-btns button:hover {
+  background-color: #f2f2f2;
+}
+
+.register .google i {
+  color: #ea4335;
+}
+
+.register .facebook i {
+  color: #1877f2;
+}
+
+/* === LOGIN LINK === */
+.register .login-link {
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text);
+  margin-top: auto;
+}
+
+.register .login-link a {
+  color: var(--grass);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* === INFO BOX === */
+.info-box {
+  flex: 1;
+  background-image: url('../images/register.jpg');
+  background-size: cover;
+  background-position: center;
+  color: var(--while);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.register .overlay {
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.register .text h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.register .text p {
+  font-size: 13px;
+  color: var(--light-gray);
+  line-height: 1.6;
+}
+
+/* end register and login */
