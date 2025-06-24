@@ -17,13 +17,18 @@ header.header
         .account
           i.bx.bx-user
           .account-text
-            a(href="/user/login") Đăng nhập / Đăng ký
-            br
-            a(href="#") 
-              | Tài khoản của tôi 
-              i.bx.bx-chevron-down
+            if user
+              .dropdown
+                a.dropdown-toggle(href="#") 
+                  | Tài khoản của tôi 
+                  i.bx.bx-chevron-down
 
-          div #{user}
+                .dropdown-menu
+                  a(href="/user/profile") Thông tin tài khoản
+                  a(href="/user/logout") Đăng xuất
+            else
+              a(href="/user/login") Đăng nhập / Đăng ký
+
         .cart
           a(href="/cart")
             i.bx.bx-shopping-bag

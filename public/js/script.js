@@ -82,3 +82,26 @@ if (!window.location.pathname.includes('/cart')) {
     })
   })
 }
+
+// sử lý logic phần toggle dropdown menu đăng nhập đăng ký user người dùng
+
+document.addEventListener('DOMContentLoaded', function () {
+  const toggle = document.querySelector('.account .dropdown-toggle')
+  const dropdown = document.querySelector('.account .dropdown')
+
+  if (toggle && dropdown) {
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault()
+      dropdown.classList.toggle('show')
+    })
+
+    // Ẩn dropdown khi click ra ngoài
+    document.addEventListener('click', function (e) {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('show')
+      }
+    })
+  }
+})
+
+// kết thúc sử lý logic phần toggle dropdown menu đăng nhập đăng ký user người dùng
