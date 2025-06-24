@@ -1,0 +1,46 @@
+extends ../../layout/default.pug
+include ../../mixins/notyf.pug
+
+block content
+  +notyfSuccess(messages.success && messages.success[0])
+  +notyfError(messages.error && messages.error[0])
+  
+  .register
+    // LEFT FORM
+    .form-register
+      .logo
+        i.bx.bxs-circle
+        span ToanDecor
+
+      h2 Đăng nhập tài khoản
+
+      form(action='/user/login' method='POST')
+        label(for='email') Email
+        input(type="email", id='email', name='email', placeholder="Enter your email", required)
+
+        label(for='password') Password
+        .password-box
+          input(type="password", id='password', name='password', placeholder="Enter your password", required)
+
+        button.submit-btn(type="submit") Đăng nhập
+
+        .or-line Hoặc
+
+        .social-btns
+          button.google
+            i.bx.bxl-google
+            |  Google
+          button.facebook
+            i.bx.bxl-facebook
+            |  Facebook
+
+      p.login-link
+        | Bạn chưa có tài khoản? 
+        a(href="/user/register") Đăng ký
+
+    // RIGHT INFO
+    .info-box
+      .overlay
+        .text
+          h3 Chạm tới thiên nhiên theo cách thật đơn giản
+          p Chào mừng bạn đến với ToanDecor – nơi những chậu cây nhỏ mang lại sức sống lớn cho không gian của bạn.
