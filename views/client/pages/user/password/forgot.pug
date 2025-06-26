@@ -1,0 +1,33 @@
+extends ../../../layout/default.pug
+include ../../../mixins/notyf.pug
+
+block content
+
+  +notyfSuccess(messages.success && messages.success[0])
+  +notyfError(messages.error && messages.error[0])
+
+  .register
+    .form-register
+      .logo
+        i.bx.bxs-circle
+        span ToanDecor
+
+      h2 Quên mật khẩu?
+
+      p.description Nhập email để nhận liên kết đặt lại mật khẩu.
+
+      form(action='/user/password/forgot' method='POST')
+        label(for='email') Email
+        input(type="email", id="email", name="email", placeholder="Nhập email của bạn", required)
+
+        button.submit-btn(type="submit") Gửi liên kết đặt lại
+
+      p.login-link
+        | Nhớ lại mật khẩu rồi? 
+        a(href="/user/login") Đăng nhập
+
+    .info-box
+      .overlay
+        .text
+          h3 Xanh mát – An yên – Gần gũi
+          p Tái tạo năng lượng từ thiên nhiên với ToanDecor – nơi mỗi chậu cây đều có câu chuyện riêng của nó.

@@ -1,0 +1,35 @@
+extends ../../../layout/default.pug
+include ../../../mixins/notyf.pug
+
+block content
+  +notyfSuccess(messages.success && messages.success[0])
+  +notyfError(messages.error && messages.error[0])
+  
+  .register
+    // LEFT FORM
+    .form-register
+      .logo
+        i.bx.bxs-circle
+        span ToanDecor
+
+      h2 Xác minh mã OTP
+
+      form(action='/user/password/otp' method='POST')
+        label(for='email') Email
+        input(type="email", id='email', name='email', value=email, required, readonly)
+
+        label(for='otp') Mã OTP
+        input(type="text", id='otp', name='otp', placeholder="Nhập mã OTP", maxlength="8", required)
+
+        button.submit-btn(type="submit") Xác minh
+
+      p.login-link
+        | Bạn chưa nhận được mã? 
+        a(href="/user/password/forgot") Gửi lại OTP
+
+    // RIGHT INFO
+    .info-box
+      .overlay
+        .text
+          h3 Chạm tới thiên nhiên theo cách thật đơn giản
+          p Chào mừng bạn đến với ToanDecor – nơi những chậu cây nhỏ mang lại sức sống lớn cho không gian của bạn.
