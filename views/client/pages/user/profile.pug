@@ -1,0 +1,51 @@
+extends ../../layout/default.pug
+include ../../mixins/notyf.pug
+
+block content
+  .profile
+    .profile-left
+      .profile-card
+        if(user.avatar) 
+          img.avatar(src=user.avatar, alt="img-profile")
+        else 
+          img.avatar(src="/admin/images/user.jpg", alt="img-profile")
+        h2 #{user.fullName}
+        
+
+        .profile-info
+          p
+            i.bx.bx-envelope
+            span  #{user.email}
+          p
+            i.bx.bx-phone
+            span  0123 456 789
+          p
+            i.bx.bx-map
+            span  Hà Nội, Việt Nam
+
+
+    .profile-right
+      .shipping-card
+        h3 Thông tin giao hàng
+
+        form(action="/user/shipping" method="POST")
+          .field
+            label(for="address") Địa chỉ
+            input#address(type="text", name="address", placeholder="Số nhà, tên đường, phường/xã...")
+
+          .field
+            label(for="city") Tỉnh / Thành phố
+            input#city(type="text", name="city", placeholder="VD: Hà Nội")
+
+          .field
+            label(for="zipcode") Mã bưu điện
+            input#zipcode(type="text", name="zipcode", placeholder="VD: 100000")
+
+          .field
+            label(for="note") Ghi chú thêm
+            textarea#note(name="note", placeholder="VD: Giao vào buổi sáng, gọi trước khi đến...")
+
+          button.btn(type="submit")
+            i.bx.bx-save
+            |  Lưu thông tin
+

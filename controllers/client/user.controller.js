@@ -75,6 +75,13 @@ module.exports.logout = async (req, res) => {
   res.redirect('/')
 }
 
+//[GET]/user/profile
+module.exports.profile = async (req, res) => {
+  res.render('client/pages/user/profile', {
+    titlePage: 'Thông tin tài khoản',
+  })
+}
+
 //[GET]/user/password/forgot
 module.exports.forgotPassword = async (req, res) => {
   res.render('client/pages/user/password/forgot', {
