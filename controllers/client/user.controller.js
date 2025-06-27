@@ -3,7 +3,8 @@ const md5 = require('md5')
 
 const generateHelper = require('../../helper/generate')
 const Reset = require('../../modals/reset.modal')
-const e = require('express')
+const Cart = require('../../modals/cart.modal')
+const { cartId } = require('../../middlewares/client/cart.middleware')
 
 //[GET]/user/register
 module.exports.register = async (req, res) => {
@@ -64,6 +65,24 @@ module.exports.loginPost = async (req, res) => {
     res.redirect(req.get('Referer') || '/')
     return
   }
+
+  const cart = await Cart.findOne({
+    user_id: user.id,
+  })
+
+  if (cart) {
+    res.cookie('cartId', cart.id)
+  } else {
+    await Cart.updateOne(
+      {
+        _id: req.cookies.cartId,
+      },
+      {
+        user_id: user.id,
+      }
+    )
+  }
+
   req.flash('success', 'Đăng nhập tài khoản thành công.')
   res.cookie('tokenUser', user.tokenUser)
   res.redirect('/')
@@ -71,7 +90,8 @@ module.exports.loginPost = async (req, res) => {
 
 //[GET]/user/logout
 module.exports.logout = async (req, res) => {
-  res.clearCookie('tokenUser')
+  res.clearCookie('tokenUser', { path: '/' })
+  res.clearCookie('cartId', { path: '/' })
   res.redirect('/')
 }
 
