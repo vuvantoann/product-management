@@ -49,6 +49,13 @@ route(app)
 // route admin
 routeAdmin(app)
 
+// Route 404 đặt cuối
+app.use((req, res) => {
+  res.status(404).render('client/pages/error/404', {
+    pageTitle: '404 Not Found',
+  })
+})
+
 app.listen(port, () => {
   console.log('lắng nghe thành công')
 })
