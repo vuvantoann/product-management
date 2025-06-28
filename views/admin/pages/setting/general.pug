@@ -1,0 +1,63 @@
+extends ../../layout/default.pug 
+include ../../mixins/alert.pug
+
+block content
+  main
+    +alert-error(7000)
+    +alert-success(5000)
+
+    form(
+      action=`${prefixAdmin}/setting/general?_method=PATCH`,
+      method="POST",
+      class="form-wrapper",
+      enctype="multipart/form-data"
+    )
+      // Block 1: Header
+      .form-block
+        .form-header
+          div
+            h2 Cài đặt chung
+            p Thay đổi thông tin website hiển thị cho người dùng
+          .form-actions
+            a(href=prefixAdmin + '/dashboard' class='btn-cancel')
+              span Hủy
+            button.btn-submit(type="submit") Lưu thay đổi
+
+      // Block 2: Thông tin chung
+      .form-block
+        .form-group
+          label(for="websiteName") Tên website
+          input(type="text", id="websiteName", name="websiteName",value=(settingGeneral ? settingGeneral.websiteName : ''))
+        .form-group
+          label(for="email") Email
+          input(type="email", id="email", name="email", value=(settingGeneral ? settingGeneral.email : ''))
+        .form-group
+          label(for="phone") Số điện thoại
+          input(type="text", id="phone", name="phone", value=(settingGeneral ? settingGeneral.phone : ''))
+        .form-group
+          label(for="address") Địa chỉ
+          input(type="text", id="address", name="address" ,value=(settingGeneral ? settingGeneral.address : ''))
+        .form-group
+          label(for="copyright") Bản quyền website
+          input(type="text", id="copyright", name="copyright" ,value=(settingGeneral ? settingGeneral.copyright : ''))
+
+      // Block 3: Logo website
+      .form-block
+          .form-image(upload-image) 
+            input(type="file", id='logo-upload', name="logo" 
+            multiple , input-upload)
+            label(for="logo-upload")
+              i.bx.bx-upload
+              span Chọn logo website
+            if product && product.thumbnail  
+              p.num-of-files 
+            else
+              p.num-of-files chưa có logo được chọn
+            .images
+              if settingGeneral && settingGeneral.logo
+                .file-item
+                  img(src=settingGeneral.logo)
+                  .file-name= settingGeneral.logo.split('/').pop()
+                  button(onclick="this.parentElement.remove()") Remove file
+
+  script(src='/admin/js/create-product.js')
