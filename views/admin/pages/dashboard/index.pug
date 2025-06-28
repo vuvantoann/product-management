@@ -4,9 +4,95 @@ extends ../../layout/default.pug
 
 block content
   main
-    h2 Trang DASHBOARD
+    .dashboard
+      h4.section-title Tổng quan
 
-    div #{user}
-    p --------------------
-    div #{role}
+      .row
+        .col-lg-6
+          .box-order
+            .row
+              .col
+                h5.box-title Đơn hàng
+              .col(style="text-align: right")
+                select.select-filter
+                  option Tháng
+                  option Tuần
+
+            .row.order-list.mt-3
+              .col-6.mb-3
+                a.order-item(href="#")
+                  i.bx.bx-file.icon.purple
+                  div
+                    p.label Tổng đơn hàng
+                    span.value 0 Đơn hàng
+              .col-6.mb-3
+                a.order-item(href="#")
+                  i.bx.bx-clipboard.icon.pink
+                  div
+                    p.label Đơn hàng mới
+                    span.value 0 Đơn hàng
+              .col-6.mb-3
+                a.order-item(href="#")
+                  i.bx.bx-check.icon.green
+                  div
+                    p.label Thành công
+                    span.value 0 Đơn hàng
+              .col-6.mb-3
+                a.order-item(href="#")
+                  i.bx.bx-x.icon.dark
+                  div
+                    p.label Đơn huỷ
+                    span.value 0 Đơn hàng
+
+        .col-lg-6
+          .box-chart
+            h5.box-title Đơn hàng
+            .chart-placeholder (Biểu đồ sẽ hiển thị ở đây)
+            .legend.mt-2
+              span.time-frame
+                span.dot.blue
+                span  Tháng này
+              span.time-frame
+                span.dot.pink-bg
+                span  Tháng trước
+
+      .row.mt-4
+        .col-md-4.mb-3
+          a.info-card(href=`${prefixAdmin}/product`)
+            i.bx.bx-cube.icon.purple
+            div
+              p.label Tổng sản phẩm
+              span.value #{statistic.product.total} Sản phẩm
+          
+        .col-md-4.mb-3
+          a.info-card(href=`${prefixAdmin}/category`)
+            i.bx.bxs-category.icon.pink
+            div
+              p.label Danh mục sản phẩm
+              span.value #{statistic.category.total} Danh mục
+        .col-md-4.mb-3
+          a.info-card(href="#")
+            i.bx.bx-file.icon.blue-icon
+            div
+              p.label Tổng bài viết
+              span.value 43 Bài viết
+        .col-md-4.mb-3
+          a.info-card(href="#")
+            i.bx.bx-image.icon.yellow
+            div
+              p.label Ảnh
+              span.value 8 Bài viết
+        .col-md-4.mb-3
+          a.info-card(href="#")
+            i.bx.bx-video.icon.gray
+            div
+              p.label Video
+              span.value 0 Bài viết
+        .col-md-4.mb-3
+          a.info-card(href="#")
+            i.bx.bx-book.icon.dark
+            div
+              p.label Tài liệu
+              span.value 0 Bài viết
+
 
