@@ -5,8 +5,6 @@ include ../../../mixins/alert.pug
 include ../../../mixins/dropdown.pug
 include ../../../mixins/date-time.pug
 
-
-
 block content
   main
     if(role.permissions.includes("product_view"))
@@ -32,10 +30,9 @@ block content
             option(value="price-asc") Giá tăng dần
             option(value="title-asc") Tiêu đề A - Z
             option(value="title-desc") Tiêu đề Z - A
-            
           button 
             i.bx.bx-refresh
-          
+
       .action-section
         .action-wrap
           .button-group
@@ -63,21 +60,21 @@ block content
             each item in products
               tr
                 td
-                  input(type="checkbox" name='id' value=item.id)
+                  input(type="checkbox" name='id' value=item._id)
                 td
                   | #{item.title}
                   br
                   .action-links
                     if(role.permissions.includes("product_edit"))
-                      a(href= `${prefixAdmin}/product/edit-product/${item.id}` )
+                      a(href= `${prefixAdmin}/product/edit-product/${item._id}` )
                         span Sửa
                     if(role.permissions.includes("product_delete"))
-                      span( style="color: red" button-delete data-id=item.id ) Xóa
+                      span( style="color: red" button-delete data-id=item._id ) Xóa
                     if(role.permissions.includes("product_status"))
                       if(item.status === 'active') 
-                        span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
+                        span.status-active(button-change-status data-status=item.status data-id=item._id) Hoạt động
                       else 
-                        span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
+                        span.status-inactive(button-change-status data-status=item.status data-id=item._id) Ngừng hoạt động
                 td
                   img(src=item.thumbnail, alt="")
                 td
@@ -88,21 +85,22 @@ block content
                   input(type="number" name='position' class='square-number' value=item.position )
                 td
                   if(item.status === 'active') 
-                    span.status-active(button-change-status data-status=item.status data-id=item.id) Hoạt động
+                    span.status-active(button-change-status data-status=item.status data-id=item._id) Hoạt động
                   else 
-                    span.status-inactive(button-change-status data-status=item.status data-id=item.id) Ngừng hoạt động
+                    span.status-inactive(button-change-status data-status=item.status data-id=item._id) Ngừng hoạt động
                 td 
-                  p #{item.accountFullName}
-                  +formatDate(item.createdBy.createdAt) 
+                td
+                  p #{item.accountFullName || '---'}
+                  if item.createdBy && item.createdBy.createdAt
+                    +formatDate(item.createdBy.createdAt)
+
                 td 
-                  a(href= `${prefixAdmin}/product/detail-product/${item.id}` )
+                  a(href= `${prefixAdmin}/product/detail-product/${item._id}` )
                     span Xem
         +paginationStatic(pagination)
     else 
       h1 Bạn không có quyền truy cập trang   
 
-    
     form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/product/change-status/`) 
     form(action="" method='POST' id='form-delete-product' path=`${prefixAdmin}/product/delete/`) 
     script(src='/admin/js/product.js')
-

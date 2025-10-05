@@ -1,21 +1,31 @@
 const Setting = require('../../modals/setting.modal')
 
-//[get]admin/setting
-module.exports.setting = (req, res) => {
-  res.render('admin/pages/setting/index', {
-    title: 'Trang cài đặt',
-    activePage: 'setting',
-  })
+// [GET] admin/setting
+module.exports.setting = async (req, res) => {
+  try {
+    res.render('admin/pages/setting/index', {
+      title: 'Trang cài đặt',
+      activePage: 'setting',
+    })
+  } catch (error) {
+    console.error('Lỗi khi tải trang cài đặt:', error)
+    res.status(500).send('Lỗi máy chủ khi tải trang cài đặt')
+  }
 }
 
-//[GET]/admin/setting/general
+// [GET] /admin/setting/general
 module.exports.general = async (req, res) => {
-  const settingGeneral = await Setting.findOne({})
-  res.render('admin/pages/setting/general', {
-    title: 'Cài đặt chung',
-    activePage: 'setting',
-    settingGeneral: settingGeneral,
-  })
+  try {
+    const settingGeneral = await Setting.findOne({}).lean()
+    res.render('admin/pages/setting/general', {
+      title: 'Cài đặt chung',
+      activePage: 'setting',
+      settingGeneral: settingGeneral,
+    })
+  } catch (error) {
+    console.error('Lỗi khi tải cài đặt chung:', error)
+    res.status(500).send('Lỗi máy chủ khi tải cài đặt chung')
+  }
 }
 
 // [PATCH] /admin/setting/general
@@ -34,6 +44,6 @@ module.exports.generalPatch = async (req, res) => {
     res.redirect(req.get('Referer') || '/')
   } catch (err) {
     console.error('Lỗi khi cập nhật cài đặt:', err)
-    res.status(500).send('Đã xảy ra lỗi máy chủ')
+    res.status(500).send('Đã xảy ra lỗi máy chủ khi cập nhật cài đặt')
   }
 }

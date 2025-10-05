@@ -5,8 +5,6 @@ include ../../../mixins/alert.pug
 include ../../../mixins/table-tree.pug
 include ../../../mixins/dropdown.pug
 
-
-
 block content
   main
     if(role.permissions.includes("category_view"))
@@ -42,5 +40,3 @@ block content
     form(action="" method='POST' id='form-change-status' path=`${prefixAdmin}/category/change-status/`) 
     form(action="" method='POST' id='form-delete-product' path=`${prefixAdmin}/category/delete/`) 
   script(src='/admin/js/product.js')
-
-

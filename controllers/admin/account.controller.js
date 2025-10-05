@@ -3,25 +3,29 @@ const Role = require('../../modals/role.modal')
 const systemConfig = require('../../config/system')
 const md5 = require('md5')
 
-//[get]admin/account
+// [GET] admin/account
 module.exports.account = async (req, res) => {
   try {
-    let find = {
-      deleted: false,
-    }
+    const find = { deleted: false }
     const accounts = await Account.find(find).select('-password -token')
+
     for (const account of accounts) {
-      const role = await Role.findOne({
-        _id: account.role_id,
-        deleted: false,
-      })
-      account.role = role
+      try {
+        const role = await Role.findOne({
+          _id: account.role_id,
+          deleted: false,
+        })
+        account.role = role
+      } catch (err) {
+        console.error(`Không thể lấy role cho account ${account._id}:`, err)
+        account.role = null
+      }
     }
 
     res.render('admin/pages/account/account-list/index', {
       title: 'Danh sách tài khoản',
       activePage: 'setting',
-      accounts: accounts,
+      accounts,
     })
   } catch (error) {
     console.error(error)
@@ -29,20 +33,22 @@ module.exports.account = async (req, res) => {
   }
 }
 
-//[get]admin/account/create
+// [GET] admin/account/create
 module.exports.createAccount = async (req, res) => {
-  let find = {
-    deleted: false,
+  try {
+    const roles = await Role.find({ deleted: false })
+    res.render('admin/pages/account/add-account/create', {
+      title: 'Thêm tài khoản',
+      activePage: 'setting',
+      roles,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Không thể tải trang thêm tài khoản' })
   }
-  const roles = await Role.find(find)
-  res.render('admin/pages/account/add-account/create', {
-    title: 'Thêm tài khoản',
-    activePage: 'setting',
-    roles: roles,
-  })
 }
 
-//[post]admin/account/create
+// [POST] admin/account/create
 module.exports.createAccountPost = async (req, res) => {
   try {
     const emailExist = await Account.findOne({
@@ -51,48 +57,50 @@ module.exports.createAccountPost = async (req, res) => {
     })
 
     if (emailExist) {
-      req.flash('error', `email ${req.body.email} đã tồn tại`)
-      res.redirect(req.get('Referer') || '/')
-    } else {
-      req.body.password = md5(req.body.password)
-      const newAccount = new Account(req.body)
-      await newAccount.save()
-      req.flash('success', 'Bạn đã tạo mới tài khoản thành công.')
-      res.redirect(`${systemConfig.prefixAdmin}/account`)
+      req.flash('error', `Email ${req.body.email} đã tồn tại`)
+      return res.redirect(req.get('Referer') || '/')
     }
+
+    req.body.password = md5(req.body.password)
+    const newAccount = new Account(req.body)
+    await newAccount.save()
+
+    req.flash('success', 'Bạn đã tạo mới tài khoản thành công.')
+    res.redirect(`${systemConfig.prefixAdmin}/account`)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ error: 'Tạo tài khoản  thất bại' })
+    res.status(500).json({ error: 'Tạo tài khoản thất bại' })
   }
 }
 
-//[get]admin/account/edit/id
+// [GET] admin/account/edit/:id
 module.exports.editAccount = async (req, res) => {
   try {
     const id = req.params.id
-    let find = {
-      deleted: false,
-      _id: id,
-    }
+    const find = { deleted: false, _id: id }
     const account = await Account.findOne(find)
-    const roles = await Role.find({
-      deleted: false,
-    })
+
+    if (!account) {
+      req.flash('error', 'Tài khoản không tồn tại')
+      return res.redirect(`${systemConfig.prefixAdmin}/account`)
+    }
+
+    const roles = await Role.find({ deleted: false })
 
     res.render('admin/pages/account/edit-account/edit', {
       title: 'Chỉnh sửa tài khoản',
       activePage: 'setting',
-      account: account,
-      roles: roles,
+      account,
+      roles,
     })
   } catch (error) {
-    req.flash('error', `tài khoản này không tồn tại`)
-
+    console.error(error)
+    req.flash('error', 'Lỗi khi tải dữ liệu tài khoản')
     res.redirect(`${systemConfig.prefixAdmin}/account`)
   }
 }
 
-//[patch]admin/account/edit/:id
+// [PATCH] admin/account/edit/:id
 module.exports.editAccountPatch = async (req, res) => {
   try {
     const id = req.params.id
@@ -103,22 +111,21 @@ module.exports.editAccountPatch = async (req, res) => {
     })
 
     if (emailExist) {
-      req.flash('error', `email ${req.body.email} đã tồn tại`)
-      res.redirect(req.get('Referer') || '/')
-    } else {
-      if (req.body.password) {
-        req.body.password = md5(req.body.password)
-      } else {
-        delete req.body.password
-      }
-
-      await Account.updateOne({ _id: id }, req.body)
-      req.flash('success', 'Bạn đã chỉnh sửa tài khoản thành công.')
+      req.flash('error', `Email ${req.body.email} đã tồn tại`)
+      return res.redirect(req.get('Referer') || '/')
     }
 
+    if (req.body.password) {
+      req.body.password = md5(req.body.password)
+    } else {
+      delete req.body.password
+    }
+
+    await Account.updateOne({ _id: id }, req.body)
+    req.flash('success', 'Bạn đã chỉnh sửa tài khoản thành công.')
     res.redirect(req.get('Referer') || '/')
-  } catch (err) {
-    console.error(err)
+  } catch (error) {
+    console.error(error)
     res.status(500).json({ error: 'Chỉnh sửa tài khoản thất bại' })
   }
 }

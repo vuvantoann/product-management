@@ -1,4 +1,6 @@
 // controllers/client/service.controller.js
 module.exports.service = async (req, res) => {
-  res.send('Oke')
+  res.render('client/pages/service/index', {
+    titlePage: 'Dịch vụ',
+  })
 }

@@ -1,19 +1,21 @@
 function createTree(arr, parentId = '') {
   const tree = []
+
   arr.forEach((item) => {
-    if (item.parent_id === parentId) {
-      const newItem = item
-      const children = createTree(arr, item.id)
-      if (children.length > 0) {
-        newItem.children = children
-      }
-      tree.push(newItem)
+    // Chuyển document Mongoose sang plain object
+    const obj = item.toObject ? item.toObject() : { ...item }
+
+    if ((obj.parent_id || '').toString() === parentId.toString()) {
+      const children = createTree(arr, obj._id?.toString() || '')
+      if (children.length > 0) obj.children = children
+      tree.push(obj)
     }
   })
+
   return tree
 }
 
 module.exports.tree = (arr, parentId = '') => {
-  const tree = createTree(arr, (parentId = ''))
-  return tree
+  if (!Array.isArray(arr)) return []
+  return createTree(arr, parentId)
 }
