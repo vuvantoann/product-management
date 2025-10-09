@@ -11,6 +11,7 @@ const settingMiddleware = require('../../middlewares/client/setting.middleware')
 const cartRoute = require('./cart.route')
 const checkoutRoute = require('./checkout.route')
 const userRoute = require('./user.route')
+const contactRoute = require('./contact.route')
 
 module.exports = (app) => {
   app.use(categoryMiddleware.category)
@@ -21,6 +22,7 @@ module.exports = (app) => {
   app.use('/', homeRoute)
   app.use('/product', productRoute)
   app.use('/service', service)
+  app.use('/contact', contactRoute)
 
   app.use('/search', searchRoute)
   app.use('/cart', cartRoute)
