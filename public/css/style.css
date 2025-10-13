@@ -1739,6 +1739,38 @@ h3 {
   font-size: 18px;
 }
 
+/* Chat */
+
+.chat-button {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background-color: #007bff;
+  color: white;
+  font-size: 24px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+
+.chat-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.chat-button i {
+  font-size: 28px;
+  line-height: 1;
+  color: #ffffff;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .profile {

@@ -32,15 +32,7 @@ app.use(
 
 const { Server } = require('socket.io')
 const io = new Server(server)
-
-io.on('connection', (socket) => {
-  console.log('user - id', socket.id)
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg)
-
-    io.emit('chat message', msg)
-  })
-})
+global._io = io
 //end socket.io
 
 // use express-flash
