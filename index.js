@@ -12,6 +12,8 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const moment = require('moment')
 const app = express()
+const http = require('http')
+const server = http.createServer(app)
 
 port = process.env.PORT
 database.connect()
@@ -25,6 +27,22 @@ app.use(
   express.static(path.join(__dirname, 'node_modules', 'tinymce'))
 )
 // end tinyMCE
+
+//socket.io
+
+const { Server } = require('socket.io')
+const io = new Server(server)
+
+io.on('connection', (socket) => {
+  console.log('user - id', socket.id)
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg)
+
+    io.emit('chat message', msg)
+  })
+})
+//end socket.io
+
 // use express-flash
 
 app.use(cookieParser('authToken'))
@@ -56,6 +74,6 @@ app.use((req, res) => {
   })
 })
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log('lắng nghe thành công')
 })
