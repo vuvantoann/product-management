@@ -1,30 +1,31 @@
 extends ../../layout/default.pug
 
 block content
-  .chat-container
-    .chat
-      .chat-header
-        h2 Group Chat
-        .chat-tabs
-          span.chat-tab.active Messages
-          span.chat-tab Participants
+  .chat
+    .chat-header
+      h2 Group Chat
+      .chat-tabs
+        span.chat-tab.active Messages
+        span.chat-tab Participants
 
-      .chat-body#messages
-        //- Tin nhắn mẫu
-        .chat-message.received
-          img.avatar(src="https://i.pravatar.cc/40?img=1", alt="Kate Johnson")
-          .message-content
-            .message-name Kate Johnson
-            .message-text Recently I saw properties in a great location that I did not pay attention to before 😄
-            .message-time 11:24 AM
+    .chat-body#messages
+      //- Tin nhắn mẫu
+      each chat in chats
+        - const isSent = chat.user_id === user.id
+        .chat-message(class=isSent ? 'sent' : 'received')
+          if !isSent
+            img.avatar(src="https://i.pravatar.cc/40?img=1", alt=chat.fullName)
+            .message-content
+              .message-name #{chat.fullName}
+              .message-text #{chat.content}
+              .message-time #{chat.time}
+          else
+            .message-content
+              .message-text #{chat.content}
+              .message-time #{chat.time}
 
-        .chat-message.sent
-          .message-content
-            .message-text He creates an atmosphere of mystery 😎
-            .message-time 11:26 AM
-
-      .chat-footer
-        form#form(action="")
-          input#input(type="text" placeholder="Write your message...")
-          button(type="submit")
-            i.bx.bx-send
+    .chat-footer
+      form#form(action="")
+        input#input(type="text" name='content' placeholder="Write your message...")
+        button(type="submit")
+          i.bx.bx-send
