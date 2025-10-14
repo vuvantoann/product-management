@@ -1782,6 +1782,26 @@ h3 {
   color: #ffffff;
 }
 
+/* Emoji icon */
+.tooltip {
+  visibility: hidden;
+}
+.tooltip.shown {
+  visibility: visible;
+  opacity: 1;
+}
+.button-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button-icon i {
+  font-size: 25px;
+  color: #888;
+}
+
+/*end Emoji icon */
+
 /* Responsive */
 @media (max-width: 768px) {
   .profile {

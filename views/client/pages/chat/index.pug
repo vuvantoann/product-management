@@ -27,5 +27,8 @@ block content
     .chat-footer
       form#form(action="")
         input#input(type="text" name='content' placeholder="Write your message...")
+        span(class='button-icon btn btn-light ') <i class='bx bx-smile '></i>
         button(type="submit")
           i.bx.bx-send
+  div(class="tooltip" role="tooltip")
+    emoji-picker
