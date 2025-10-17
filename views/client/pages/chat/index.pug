@@ -1,7 +1,7 @@
 extends ../../layout/default.pug
 
 block content
-  .chat( my-id=user.id)
+  .chat(my-id=user.id)
     .chat-header
       h2 Group Chat
       .chat-tabs
@@ -9,28 +9,45 @@ block content
         span.chat-tab Participants
 
     .chat-body#messages
-      //- Tin nhắn mẫu
       each chat in chats
         - const isSent = chat.user_id === user.id
         .chat-message(class=isSent ? 'sent' : 'received')
           if !isSent
             img.avatar(src="https://i.pravatar.cc/40?img=1", alt=chat.fullName)
-            .message-content
+
+          .message-wrapper
+            if !isSent
               .message-name #{chat.fullName}
-              .message-text #{chat.content}
-              .message-time #{chat.time}
-          else
-            .message-content
-              .message-text #{chat.content}
-              .message-time #{chat.time}
-      // Typing indicator
+
+            if chat.content
+              .message-content
+                .message-text #{chat.content}
+
+            if chat.images && chat.images.length
+              .message-images
+                each image in chat.images
+                  img.message-image(src=image, alt="image")
+
+            .message-time #{chat.time}
+
       .inner-list-typing
+      .inner-preview-images
+        .form-image(upload-image)
+          input(type="file", id='file-upload', name="thumbnail" multiple, input-upload)
+          .images
+
 
     .chat-footer
       form#form(action="")
         input#input(type="text" name='content' placeholder="Write your message...")
-        span(class='button-icon btn btn-light ') <i class='bx bx-smile '></i>
+        label(for="file-upload" class='button-upload btn btn-light')
+          i.bx.bx-image-add
+        span(class='button-icon btn btn-light')
+          i.bx.bx-smile
         button(type="submit")
           i.bx.bx-send
+
   div(class="tooltip" role="tooltip")
     emoji-picker
+
+  script(src='/js/upload-images.js')

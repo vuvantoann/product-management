@@ -1611,12 +1611,9 @@ h3 {
   font-size: 1.4rem;
 }
 
-/* chat  */
-
 .chat {
   display: flex;
   flex-direction: column;
-
   background: #f5f7fa;
   position: sticky;
   top: 0;
@@ -1651,8 +1648,12 @@ h3 {
   padding: 16px;
 }
 
+/* ============================
+   MESSAGES
+============================ */
 .chat-message {
   display: flex;
+  align-items: flex-start;
   margin-bottom: 12px;
 }
 
@@ -1664,19 +1665,25 @@ h3 {
   justify-content: flex-start;
 }
 
-.chat-message .avatar {
+.avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 8px;
 }
 
-.chat-message .message-content {
+.message-wrapper {
   max-width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-content {
   background: #fff;
-  border-radius: 16px;
   padding: 8px 12px;
-  position: relative;
+  border-radius: 16px;
+  margin-bottom: 6px;
+  word-wrap: break-word;
 }
 
 .chat-message.sent .message-content {
@@ -1699,20 +1706,39 @@ h3 {
 
 .message-text {
   font-size: 14px;
+  line-height: 1.4;
 }
 
-.chat-message.sent .message-time {
-  color: #ddd;
+.message-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
 }
 
-.chat-message.received .message-time {
-  color: #888;
+.message-image {
+  width: 130px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.message-image:hover {
+  transform: scale(1.03);
 }
 
 .message-time {
   font-size: 12px;
   text-align: right;
+  color: #888;
   margin-top: 4px;
+}
+
+.chat-message.sent .message-time {
+  color: #ddd;
 }
 
 .chat-footer {
@@ -1749,8 +1775,6 @@ h3 {
 #form > button i {
   font-size: 18px;
 }
-
-/* Chat */
 
 .chat-button {
   position: fixed;
@@ -1851,6 +1875,77 @@ h3 {
 }
 
 /* end typing */
+
+/* upload images */
+
+.chat .form-image {
+  width: 100%;
+  overflow: hidden;
+}
+
+.chat .form-image input[type='file'] {
+  display: none;
+}
+
+.chat .form-image .images {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+  height: 0;
+  opacity: 0;
+}
+
+.chat .form-image .preview-item {
+  position: relative;
+  aspect-ratio: 1/1;
+  background: #f3f3f3;
+  overflow: hidden;
+}
+
+.chat .form-image .preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chat .form-image .preview-item .remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.chat .form-image .preview-item .remove-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.chat .form-image .preview-item .remove-btn i {
+  font-size: 16px;
+}
+
+.button-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button-upload i {
+  font-size: 25px;
+  color: #888;
+}
+
+/*end upload images */
 
 /* Responsive */
 @media (max-width: 768px) {

@@ -2,61 +2,102 @@ import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm
 
 //CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector('#form')
+const inputUpload = document.querySelector('#file-upload')
+const imagesPreview = document.querySelector('.form-image .images')
 let timeOut
+let files = []
+
+if (inputUpload) {
+  inputUpload.addEventListener('change', () => {
+    files = Array.from(inputUpload.files)
+  })
+}
 
 if (formSendData) {
   formSendData.addEventListener('submit', (e) => {
     e.preventDefault()
-    const content = e.target.elements.content.value
-    if (content) {
-      socket.emit('CLIENT_SEND_MESSAGE', content)
+    const content = e.target.elements.content.value.trim()
+
+    if (content || files.length > 0) {
+      socket.emit('CLIENT_SEND_MESSAGE', {
+        content: content || null,
+        images: files,
+      })
+
+      // reset
       e.target.elements.content.value = ''
+      inputUpload.value = ''
+      files = []
+
+      if (imagesPreview) {
+        imagesPreview.innerHTML = ''
+      }
       clearTimeout(timeOut)
       socket.emit('CLIENT_SEND_TYPING', 'hidden')
     }
   })
 }
+
 //END CLIENT_SEND_MESSAGE
 
-//SERVER_RETURN_MESSAGE
-
+// SERVER_RETURN_MESSAGE
 socket.on('SERVER_RETURN_MESSAGE', (data) => {
   const body = document.querySelector('.chat #messages')
   const myId = document.querySelector('[my-id]').getAttribute('my-id')
   const boxTyping = document.querySelector('.chat .inner-list-typing')
 
-  // Tạo phần tử chứa tin nhắn
   const div = document.createElement('div')
   div.classList.add('chat-message')
 
-  const isSent = myId === data.userId // 👈 xác định tin mình gửi hay nhận
+  const isSent = myId === data.userId
   div.classList.add(isSent ? 'sent' : 'received')
 
-  // Render HTML giống Pug
+  // Avatar (chỉ có khi là người khác gửi)
+  let html = ''
   if (!isSent) {
-    // 👉 Tin nhắn nhận
-    div.innerHTML = `
-      <img class="avatar" src="https://i.pravatar.cc/40?img=1" alt="${data.fullName}">
+    html += `<img class="avatar" src="https://i.pravatar.cc/40?img=1" alt="${data.fullName}">`
+  }
+
+  // Bọc nội dung chính
+  html += `<div class="message-wrapper">`
+
+  // Tên người gửi (nếu là người khác)
+  if (!isSent) {
+    html += `<div class="message-name">${data.fullName}</div>`
+  }
+
+  // Nếu có content → hiển thị khung message-content
+  if (data.content) {
+    html += `
       <div class="message-content">
-        <div class="message-name">${data.fullName}</div>
         <div class="message-text">${data.content}</div>
-        <div class="message-time">${data.time}</div>
-      </div>
-    `
-  } else {
-    // 👉 Tin nhắn mình gửi
-    div.innerHTML = `
-      <div class="message-content">
-        <div class="message-text">${data.content}</div>
-        <div class="message-time">${data.time}</div>
       </div>
     `
   }
 
-  // Gắn vào cuối danh sách tin nhắn
+  // Nếu có ảnh → hiển thị block ảnh riêng (không nền)
+  if (data.images && data.images.length > 0) {
+    html += `
+      <div class="message-images">
+        ${data.images
+          .map(
+            (image) =>
+              `<img class="message-image" src="${image}" alt="image" />`
+          )
+          .join('')}
+      </div>
+    `
+  }
+
+  // Time luôn nằm cuối cùng
+  html += `<div class="message-time">${data.time}</div></div>`
+
+  div.innerHTML = html
+
+  // Gắn vào danh sách tin nhắn
   body.insertBefore(div, boxTyping)
 
-  // Scroll xuống cuối cùng mỗi khi có tin nhắn mới
+  // Cuộn xuống cuối cùng
   body.scrollTop = body.scrollHeight
 })
 

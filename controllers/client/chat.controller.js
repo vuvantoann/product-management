@@ -1,5 +1,6 @@
 const Chat = require('../../modals/chat.modal')
 const User = require('../../modals/user.modal')
+const uploadToCloudinary = require('../../helper/uploadToCloudinary')
 
 // controllers/client/service.controller.js
 module.exports.index = async (req, res) => {
@@ -8,10 +9,18 @@ module.exports.index = async (req, res) => {
 
   console.log(userId)
   _io.once('connection', (socket) => {
-    socket.on('CLIENT_SEND_MESSAGE', async (content) => {
+    socket.on('CLIENT_SEND_MESSAGE', async (data) => {
+      let images = []
+
+      for (let imageBuffer of data.images) {
+        const link = await uploadToCloudinary(imageBuffer)
+        images.push(link)
+      }
+
       const chat = new Chat({
         user_id: userId,
-        content: content,
+        content: data.content,
+        images: images,
       })
       await chat.save()
 
@@ -23,7 +32,8 @@ module.exports.index = async (req, res) => {
       _io.emit('SERVER_RETURN_MESSAGE', {
         userId: userId,
         fullName: fullName,
-        content: content,
+        content: data.content,
+        images: images,
         time: time,
       })
     })
