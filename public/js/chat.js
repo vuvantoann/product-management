@@ -99,6 +99,9 @@ socket.on('SERVER_RETURN_MESSAGE', (data) => {
 
   // Cuộn xuống cuối cùng
   body.scrollTop = body.scrollHeight
+
+  //view image
+  const gallery = new Viewer(div)
 })
 
 //END SERVER_RETURN_MESSAGE
@@ -200,3 +203,10 @@ if (elementListTyping) {
 }
 
 // END SERVER_RETURN_TYPING
+
+// views images
+const bodyViewImage = document.querySelector('.chat #messages')
+if (bodyViewImage) {
+  const gallery = new Viewer(bodyViewImage)
+}
+// end views images
