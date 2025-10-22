@@ -1,0 +1,9 @@
+nav
+  a(href="/admin" class="notification")
+    i(class="bx bxs-bell")
+    span.num 8
+  a(href=`${prefixAdmin}/my-account` class="profile")
+    if(user.avatar) 
+      img(src=user.avatar, alt="img-profile")
+    else 
+      img(src="/admin/images/user.jpg", alt="img-profile")

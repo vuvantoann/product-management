@@ -14,11 +14,12 @@ module.exports.index = async (req, res) => {
 
   for (let chat of chatsRaw) {
     const infoUser = await User.findOne({ _id: chat.user_id }).select(
-      'fullName'
+      'fullName avatar'
     )
     const chatObj = chat.toObject()
 
     chatObj.fullName = infoUser ? infoUser.fullName : 'Unknown'
+    chatObj.avatar = infoUser ? infoUser.avatar : 'Unknown'
     chatObj.time = chat.createdAt.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',

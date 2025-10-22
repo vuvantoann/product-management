@@ -1,0 +1,16 @@
+extends ../../layout/chatLayout.pug
+
+block content
+  main.page-users-not-friend
+    .users-container
+      h2.users-title Mọi người
+        each user in users
+          .user-item
+            img.user-avatar(src=src=(user.avatar ? user.avatar : "/images/user.jpg"), alt="avatar")
+            .user-info
+              .user-name #{user.fullName}
+              .user-desc Người sáng tạo nội dung số · 4,1K người theo dõi · Bắc Giang
+            button.user-btn.add-btn( btn-add-friend=user.id) Thêm bạn bè
+            button.user-btn.cancel-btn( btn-cancel-friend=user.id) Hủy kết bạn
+
+      button.show-all Xem tất cả

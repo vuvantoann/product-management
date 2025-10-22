@@ -1,0 +1,39 @@
+section.sidebar
+  ul.sidebar__menu.top 
+    //- li
+    //-   .menu-item(class=(activePage === 'dashboard' ? 'active' : ''))
+    //-     a.trigger(href=`${prefixAdmin}/dashboard`)
+    //-       i(class="bx bxs-dashboard") 
+    //- li
+    //-   .menu-item(class=(activePage === 'product' ? 'active' : ''))
+    //-     a.trigger(href=`${prefixAdmin}/products`)
+    //-       i(class='bx bx-package') 
+    li
+      .menu-item
+        a.trigger(href="/users/not-friend")
+          i.bx.bxs-group
+    li
+      .menu-item
+        a.trigger(href="#")
+          i.bx.bx-user-check
+    li
+      .menu-item
+        a.trigger(href="/chat")
+          i.bx.bxs-message-dots
+    li
+      .menu-item
+        a.trigger(href="#")
+          i.bx.bx-user-plus
+    li
+      .menu-item
+        a.trigger(href="#")
+          i.bx.bx-user-minus
+  ul.sidebar__menu
+    li
+      .menu-item(class=(activePage === 'setting' ? 'active' : ''))
+        a.trigger(href=`${prefixAdmin}/setting`)
+          i.bx.bxs-cog
+    li
+      .menu-item
+        a.trigger.logout(href=`${prefixAdmin}/auth/logout`)
+          i.bx.bx-log-out

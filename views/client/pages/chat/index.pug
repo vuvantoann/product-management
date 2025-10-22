@@ -1,51 +1,81 @@
-extends ../../layout/default.pug
+extends ../../layout/chatLayout.pug
 
 block content
-  .chat(my-id=user.id)
-    .chat-header
-      h2 Group Chat
-      .chat-tabs
-        span.chat-tab.active Messages
-        span.chat-tab Participants
+  .chat-page
+    // LEFT SIDEBAR - CHAT LIST
+    .chat-sidebar
+      .chat-sidebar-header
+        h2 Messages
+        .chat-sidebar-actions
+          i.bx.bx-search
+          i.bx.bx-dots-vertical-rounded
 
-    .chat-body#messages
-      each chat in chats
-        - const isSent = chat.user_id === user.id
-        .chat-message(class=isSent ? 'sent' : 'received')
-          if !isSent
-            img.avatar(src="https://i.pravatar.cc/40?img=1", alt=chat.fullName)
+      //- .chat-sidebar-section
+      //-   p.chat-sidebar-title Pinned
+      //-   ul.chat-sidebar-list
+      //-     each chat in [1,2,3]
+      //-       li.chat-sidebar-item.active
+      //-         img.avatar(src="https://i.pravatar.cc/40?img=" + chat)
+      //-         .chat-sidebar-info
+      //-           .chat-sidebar-name Odama Studio
+      //-           .chat-sidebar-last-message Mas Happy Typing...
+      //-         .chat-sidebar-meta
+      //-           span.chat-sidebar-time 05:11 PM
+      //-           span.chat-sidebar-badge 3
 
-          .message-wrapper
+      .chat-sidebar-section
+        p.chat-sidebar-title All Messages
+        ul.chat-sidebar-list
+          each chat in [4,5,6,7]
+            li.chat-sidebar-item
+              img.avatar(src=(chat.avatar ? chat.avatar : "/images/user.jpg"))
+              .chat-sidebar-info
+                .chat-sidebar-name Mas Rohmad
+                .chat-sidebar-last-message Oke suwun
+              .chat-sidebar-meta
+                span.chat-sidebar-time Yesterday
+
+    // RIGHT PANEL - CHAT WINDOW (Cậu đã có thật)
+    .chat(my-id=user.id)
+      .chat-header
+        h2 Group Chat
+        .chat-tabs
+          span.chat-tab.active Messages
+          span.chat-tab Participants
+
+      .chat-body#messages
+        each chat in chats
+          - const isSent = chat.user_id === user.id
+          .chat-message(class=isSent ? 'sent' : 'received')
             if !isSent
-              .message-name #{chat.fullName}
+              img.avatar(src=(chat.avatar ? chat.avatar : "/images/user.jpg"), alt=chat.fullName)
+            .message-wrapper
+              if !isSent
+                .message-name #{chat.fullName}
+              if chat.content
+                .message-content
+                  .message-text #{chat.content}
+              if chat.images && chat.images.length
+                .message-images
+                  each image in chat.images
+                    img.message-image(src=image, alt="image")
+              .message-time #{chat.time}
 
-            if chat.content
-              .message-content
-                .message-text #{chat.content}
+        .inner-list-typing
+        .inner-preview-images
+          .form-image(upload-image)
+            input(type="file", id='file-upload', name="thumbnail" multiple, input-upload)
+            .images
 
-            if chat.images && chat.images.length
-              .message-images
-                each image in chat.images
-                  img.message-image(src=image, alt="image")
-
-            .message-time #{chat.time}
-
-      .inner-list-typing
-      .inner-preview-images
-        .form-image(upload-image)
-          input(type="file", id='file-upload', name="thumbnail" multiple, input-upload)
-          .images
-
-
-    .chat-footer
-      form#form(action="")
-        input#input(type="text" name='content' placeholder="Write your message...")
-        label(for="file-upload" class='button-upload btn btn-light')
-          i.bx.bx-image-add
-        span(class='button-icon btn btn-light')
-          i.bx.bx-smile
-        button(type="submit")
-          i.bx.bx-send
+      .chat-footer
+        form#form(action="")
+          input#input(type="text" name='content' placeholder="Write your message...")
+          label(for="file-upload" class='button-upload btn btn-light')
+            i.bx.bx-image-add
+          span(class='button-icon btn btn-light')
+            i.bx.bx-smile
+          button(type="submit")
+            i.bx.bx-send
 
   div(class="tooltip" role="tooltip")
     emoji-picker
