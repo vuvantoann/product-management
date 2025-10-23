@@ -5,7 +5,6 @@ module.exports = async (res) => {
   const userId = res.locals.user._id
   const fullName = res.locals.user.fullName
 
-  console.log(userId)
   _io.once('connection', (socket) => {
     socket.on('CLIENT_SEND_MESSAGE', async (data) => {
       let images = []

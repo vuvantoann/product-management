@@ -30,10 +30,10 @@ section.sidebar
           i.bx.bx-user-minus
   ul.sidebar__menu
     li
-      .menu-item(class=(activePage === 'setting' ? 'active' : ''))
-        a.trigger(href=`${prefixAdmin}/setting`)
+      .menu-item
+        a.trigger(href="#")
           i.bx.bxs-cog
     li
       .menu-item
-        a.trigger.logout(href=`${prefixAdmin}/auth/logout`)
+        a.trigger.logout(href="#")
           i.bx.bx-log-out
