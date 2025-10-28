@@ -5,7 +5,7 @@ const generateHelper = require('../../helper/generate')
 const Reset = require('../../modals/reset.modal')
 const Cart = require('../../modals/cart.modal')
 const { cartId } = require('../../middlewares/client/cart.middleware')
-
+const sendMailHelper = require('../../helper/sendMail')
 //[GET]/user/register
 module.exports.register = async (req, res) => {
   try {
@@ -145,14 +145,27 @@ module.exports.forgotPasswordPost = async (req, res) => {
     }
 
     const otp = generateHelper.generateRandomNumber(8)
+
+    const timeExpire = 5
     const objectForgotPassword = {
       email: email,
       otp: otp,
-      expireAt: Date.now(),
+      expireAt: new Date(Date.now() + timeExpire * 60 * 1000),
     }
     const forgotPassword = new Reset(objectForgotPassword)
     await forgotPassword.save()
 
+    //Gửi mã OTP cho khách hàng
+
+    const subject = 'Mã OTP xác minh lấy lại mật khẩu'
+    const html = `
+          Mã OTP để lấy lại mật khẩu của bạn là <b>${otp}</b>
+          (Sử dụng trong ${timeExpire} phút).<br>
+          Vui lòng không chia sẻ mã OTP này với bất kỳ ai.
+        `
+
+    sendMailHelper.sendMail(email, subject, html)
+    req.flash('success', 'Đã gửi mã otp qua email!')
     res.redirect(`/user/password/otp?email=${email}`)
   } catch (error) {
     console.error(error)

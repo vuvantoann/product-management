@@ -4,9 +4,6 @@ module.exports = async (res) => {
   const myUserId = res.locals.user.id
   _io.once('connection', (socket) => {
     socket.on('CLIENT_ADD_FRIEND', async (userId) => {
-      console.log(userId)
-      console.log(myUserId)
-
       // thêm id của người gửi vào data của người nhận
       const existIdSenderInReceiver = await User.findOne({
         _id: userId,
