@@ -3,9 +3,9 @@ extends ../../layout/chatLayout.pug
 block content
   main.page-users-not-friend
     .users-container
-      h2.users-title Mọi người
+      h2.users-title Lời mời đã gửi
         each user in users
-          .user-item
+          .user-item.add
             img.user-avatar(src=src=(user.avatar ? user.avatar : "/images/user.jpg"), alt="avatar")
             .user-info
               .user-name #{user.fullName}
