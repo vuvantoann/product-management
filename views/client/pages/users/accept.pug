@@ -1,0 +1,19 @@
+extends ../../layout/chatLayout.pug
+
+block content
+  main.page-users-not-friend
+    .users-container
+      h2.users-title Lời mời đã nhận
+        each user in users
+          .user-item
+            img.user-avatar(src=src=(user.avatar ? user.avatar : "/images/user.jpg"), alt="avatar")
+            .user-info
+              .user-name #{user.fullName}
+              .user-desc Người sáng tạo nội dung số · 4,1K người theo dõi 
+            button.user-btn.accept-btn( btn-accept-friend=user.id) Chấp nhận
+            button.user-btn.refuse-btn( btn-refuse-friend=user.id) Xóa
+            button.user-btn( btn-deleted-friend) Đã xóa
+
+      button.show-all Xem tất cả
+
+  script(src='/js/users.js')

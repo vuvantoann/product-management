@@ -84,5 +84,50 @@ module.exports = async (res) => {
       }
     })
     //kết thúc chức năng hủy yêu cầu kết bạn
+
+    // chức năng từ chối kết bạn
+    socket.on('CLIENT_REFUSE_FRIEND', async (userId) => {
+      const myUserId = res.locals.user.id
+      //console.log(myUserId)id của người hủy
+      //console.log(userId) id của người gửi tới
+
+      // xóa id của người gửi khỏi data của người nhận
+      const existIdSenderInReceiver = await User.findOne({
+        _id: myUserId,
+        acceptFriend: userId,
+      })
+
+      if (existIdSenderInReceiver) {
+        await User.updateOne(
+          {
+            _id: myUserId,
+          },
+          {
+            $pull: {
+              acceptFriend: userId,
+            },
+          }
+        )
+      }
+      // xóa id của người khỏi vào data của người gửi
+      const existIdReceiverInSender = await User.findOne({
+        _id: userId,
+        requestFriend: myUserId,
+      })
+
+      if (existIdReceiverInSender) {
+        await User.updateOne(
+          {
+            _id: userId,
+          },
+          {
+            $pull: {
+              requestFriend: myUserId,
+            },
+          }
+        )
+      }
+    })
+    //kết thúc chức năng từ chối kết bạn
   })
 }

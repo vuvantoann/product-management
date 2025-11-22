@@ -666,25 +666,31 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.12s ease, background 0.12s ease;
+  margin-right: 5px;
 }
 
-/* Trạng thái: Thêm bạn */
-.page-users-not-friend .users-container .user-item .user-btn.add-btn {
+/* Thêm bạn / Chấp nhận */
+.page-users-not-friend .users-container .user-item .user-btn.add-btn,
+.page-users-not-friend .users-container .user-item .user-btn.accept-btn {
   background: #e7f3ff;
   color: #1877f2;
 }
 
-.page-users-not-friend .users-container .user-item .user-btn.add-btn:hover {
+.page-users-not-friend .users-container .user-item .user-btn.add-btn:hover,
+.page-users-not-friend .users-container .user-item .user-btn.accept-btn:hover {
   background: #dbe9ff;
   transform: translateY(-1px);
 }
 
-/* Trạng thái: Hủy kết bạn */
-.page-users-not-friend .users-container .user-item .user-btn.cancel-btn {
+/* Hủy kết bạn / Xóa lời mời */
+.page-users-not-friend .users-container .user-item .user-btn.cancel-btn,
+.page-users-not-friend .users-container .user-item .user-btn.refuse-btn {
   background: #f0f2f5;
   color: #111;
 }
-.page-users-not-friend .users-container .user-item .user-btn.cancel-btn:hover {
+
+.page-users-not-friend .users-container .user-item .user-btn.cancel-btn:hover,
+.page-users-not-friend .users-container .user-item .user-btn.refuse-btn:hover {
   background: #e6e9ee;
   transform: translateY(-1px);
 }
@@ -724,5 +730,33 @@ body {
   .users-container
   .user-item.add
   .user-btn[btn-cancel-friend] {
+  display: inline-block;
+}
+
+.page-users-not-friend
+  .users-container
+  .user-item
+  .user-btn[btn-deleted-friend] {
+  display: none;
+}
+
+.page-users-not-friend
+  .users-container
+  .user-item.refuse
+  .user-btn[btn-accept-friend] {
+  display: none;
+}
+
+.page-users-not-friend
+  .users-container
+  .user-item.refuse
+  .user-btn[btn-refuse-friend] {
+  display: none;
+}
+
+.page-users-not-friend
+  .users-container
+  .user-item.refuse
+  .user-btn[btn-deleted-friend] {
   display: inline-block;
 }
