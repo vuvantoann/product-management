@@ -42,3 +42,19 @@ if (listBtnRefuseFriend.length > 0) {
   })
 }
 // kết thúc chức năng hủy yêu cầu kết bạn
+
+// kết thúc chức năng hủy yêu cầu kết bạn
+
+const listBtnAcceptFriend = document.querySelectorAll('[btn-accept-friend]')
+
+if (listBtnAcceptFriend.length > 0) {
+  listBtnAcceptFriend.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      btn.closest('.user-item').classList.add('accepted')
+      const userId = btn.getAttribute('btn-accept-friend')
+
+      socket.emit('CLIENT_ACCEPT_FRIEND', userId)
+    })
+  })
+}
+// kết thúc chức năng hủy yêu cầu kết bạn

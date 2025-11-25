@@ -733,6 +733,8 @@ body {
   display: inline-block;
 }
 
+/* phần xóa yêu cầu */
+
 .page-users-not-friend
   .users-container
   .user-item
@@ -758,5 +760,35 @@ body {
   .users-container
   .user-item.refuse
   .user-btn[btn-deleted-friend] {
+  display: inline-block;
+}
+
+/* chấp nhận yêu cầu */
+
+.page-users-not-friend
+  .users-container
+  .user-item
+  .user-btn[btn-accepted-friend] {
+  display: none;
+}
+
+.page-users-not-friend
+  .users-container
+  .user-item.accepted
+  .user-btn[btn-accept-friend] {
+  display: none;
+}
+
+.page-users-not-friend
+  .users-container
+  .user-item.accepted
+  .user-btn[btn-refuse-friend] {
+  display: none;
+}
+
+.page-users-not-friend
+  .users-container
+  .user-item.accepted
+  .user-btn[btn-accepted-friend] {
   display: inline-block;
 }
